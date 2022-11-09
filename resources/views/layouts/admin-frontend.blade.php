@@ -166,15 +166,10 @@
             return answer;
         }
     </script>
-    <script src="{{URL::asset('admin/libraries/custom.js?v=1666701143')}}"></script>
-
-    <script src="{{URL::asset('admin/apex/js/vendors.js')}}"></script>
-
-    <script src="{{URL::asset('admin/apex/js/app.js')}}"></script>
-    <script src="{{URL::asset('admin/apex/js/bootstrap.min.js')}}"></script>
     <script>
         $(function(){
             $('#editRate').click(function(){
+                console.log('hello');
                 var id = ($(this).data("id"));
                 var currency = ($(this).data("currency"));
                 var sell_rate = ($(this).data("sell_rate"));
@@ -227,6 +222,13 @@
             })
         })
     </script>
+    <script src="{{URL::asset('admin/libraries/custom.js?v=1666701143')}}"></script>
+
+    <script src="{{URL::asset('admin/apex/js/vendors.js')}}"></script>
+
+    <script src="{{URL::asset('admin/apex/js/app.js')}}"></script>
+    <script src="{{URL::asset('admin/apex/js/bootstrap.min.js')}}"></script>
+
 </body>
 
 </html>
