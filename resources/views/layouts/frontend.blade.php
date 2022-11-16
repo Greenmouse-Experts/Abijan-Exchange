@@ -19,7 +19,7 @@
     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
     <div class="elfsight-app-c6270b09-80d5-400b-9c3a-55622bfadb28"></div>
     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-<div class="elfsight-app-6f64cf03-5f75-4125-89ba-f0b4bbd328c8"></div>
+    <div class="elfsight-app-260cbd82-25a5-4d3b-8275-b9b68a08171c"></div>
     {!! NoCaptcha::renderJs() !!}
     <title> {{config('app.name')}} </title>
     <style type="text/css">
