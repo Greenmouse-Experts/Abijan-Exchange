@@ -7,7 +7,7 @@
             <div class="col-lg-3"></div>
             <div class="col-lg-6">
                 <div class="sign">
-                    {{-- <form class="sign-div" method="POST" action="{{ route('email.confirmation', Crypt::encrypt($user->id))}}">
+                    <form class="sign-div" method="POST" action="{{ route('email.confirmation', Crypt::encrypt(Auth::user()->id))}}">
                         @csrf
                         <a href="/">
                             <img src="{{URL::asset('assets/images/logo.png')}}" draggable="false" alt="">
@@ -32,9 +32,9 @@
                                 <button type="submit">Verify Account</button>
                             </div>
                         </div>
-                    </form> --}}
+                    </form>
 
-                    <div class="text-center">
+                    {{-- <div class="text-center">
                         <div class="mt-3">
                             <h4 class="mb-0 mt-2">Verify Your Account</h4>
                             <p class="pt-1 opacity-50">Before proceeding, please check your email for a verification.</p>
@@ -46,7 +46,7 @@
                                 <button style="border: none; background: transparent; color: #EA5B0C;"type="submit">{{ __('Click here to request another') }}</button>
                             </div>
                         </form>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="col-lg-3"></div>

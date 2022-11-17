@@ -138,16 +138,67 @@
                                                             </td>
                                                             <td>
                                                                 <p class="" style="cursor: pointer;">
-                                                                    <button data-toggle="tooltip" data-id="{{ $item->id }}" data-currency="{{ $item->e_currency }}"
-                                                                        data-sell_rate="{{ $item->sell_rate }}"
-                                                                        data-buy_rate="{{ $item->buy_rate }}"
-                                                                        data-fee="{{ $item->fee }}"
-                                                                        data-port_short="{{ $item->port_short }}"
-                                                                        data-placement="top"
-                                                                        title="Edit Rate"
-                                                                        id="editRate"
-                                                                        style="border: 0;background: transparent;color: #373063;"><i
-                                                                            class=" ti-pencil-alt "></i></button>
+                                                                    @if ($item->e_currency == "BitcoinCash")
+                                                                        <button data-toggle="tooltip" data-id="{{ $item->id }}" data-currency="{{ $item->e_currency }}"
+                                                                            data-sell_rate="{{ $item->sell_rate }}"
+                                                                            data-buy_rate="{{ $item->buy_rate }}"
+                                                                            data-fee="{{ $item->fee }}"
+                                                                            data-port_short="{{ $item->port_short }}"
+                                                                            data-placement="top"
+                                                                            title="Edit Rate"
+                                                                            id="editRate"
+                                                                            style="border: 0;background: transparent;color: #373063;"><i
+                                                                                class=" ti-pencil-alt "></i></button>
+                                                                    @endif
+                                                                    @if ($item->e_currency == "USDT TRC20")
+                                                                        <button data-toggle="tooltip" data-id="{{ $item->id }}" data-currency="{{ $item->e_currency }}"
+                                                                            data-sell_rate="{{ $item->sell_rate }}"
+                                                                            data-buy_rate="{{ $item->buy_rate }}"
+                                                                            data-fee="{{ $item->fee }}"
+                                                                            data-port_short="{{ $item->port_short }}"
+                                                                            data-placement="top"
+                                                                            title="Edit Rate"
+                                                                            id="editRateUSDT"
+                                                                            style="border: 0;background: transparent;color: #373063;"><i
+                                                                                class=" ti-pencil-alt "></i></button>
+                                                                    @endif
+                                                                    @if ($item->e_currency == "Ethereum")
+                                                                        <button data-toggle="tooltip" data-id="{{ $item->id }}" data-currency="{{ $item->e_currency }}"
+                                                                            data-sell_rate="{{ $item->sell_rate }}"
+                                                                            data-buy_rate="{{ $item->buy_rate }}"
+                                                                            data-fee="{{ $item->fee }}"
+                                                                            data-port_short="{{ $item->port_short }}"
+                                                                            data-placement="top"
+                                                                            title="Edit Rate"
+                                                                            id="editRateETH"
+                                                                            style="border: 0;background: transparent;color: #373063;"><i
+                                                                                class=" ti-pencil-alt "></i></button>
+                                                                    @endif
+                                                                    @if ($item->e_currency == "Perfect Money")
+                                                                        <button data-toggle="tooltip" data-id="{{ $item->id }}" data-currency="{{ $item->e_currency }}"
+                                                                            data-sell_rate="{{ $item->sell_rate }}"
+                                                                            data-buy_rate="{{ $item->buy_rate }}"
+                                                                            data-fee="{{ $item->fee }}"
+                                                                            data-port_short="{{ $item->port_short }}"
+                                                                            data-placement="top"
+                                                                            title="Edit Rate"
+                                                                            id="editRatePM"
+                                                                            style="border: 0;background: transparent;color: #373063;"><i
+                                                                                class=" ti-pencil-alt "></i></button>
+                                                                    @endif
+                                                                    @if ($item->e_currency == "Bitcoin")
+                                                                        <button data-toggle="tooltip" data-id="{{ $item->id }}" data-currency="{{ $item->e_currency }}"
+                                                                            data-sell_rate="{{ $item->sell_rate }}"
+                                                                            data-buy_rate="{{ $item->buy_rate }}"
+                                                                            data-fee="{{ $item->fee }}"
+                                                                            data-port_short="{{ $item->port_short }}"
+                                                                            data-placement="top"
+                                                                            title="Edit Rate"
+                                                                            id="editRateBTC"
+                                                                            style="border: 0;background: transparent;color: #373063;"><i
+                                                                                class=" ti-pencil-alt "></i></button>
+                                                                    @endif
+
                                                                     <!--<button data-id="{{ $item->id }}" id="deleteRate" data-toggle="tooltip" data-placement="top"
                                                                         title="Delete Rate"
                                                                         style="background: transparent;color: red;border: 0;"><i

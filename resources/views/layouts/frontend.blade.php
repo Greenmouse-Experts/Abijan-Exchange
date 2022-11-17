@@ -375,7 +375,7 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="exampleModalLabel"> PRICE LIST FOR TODAY <span class="fw-bold" id="todayDate">10/17/2022</span> </h6>
+                    <h6 class="modal-title" id="exampleModalLabel"> PRICE LIST FOR TODAY <span class="fw-bold" id="todayDate">{{date('Y-m-d')}}</span> </h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -407,8 +407,8 @@
                             </d>
                         </div>
 
-                        <div class="col-3 fw-bold fs-sm">₦860/$</div>
-                        <div class="col-3 fw-bold fs-sm">₦700/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[0]['buy_rate']}}/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[0]['sell_rate']}}/$</div>
 
                     </div>
                     <div class="row mt-4">
@@ -420,8 +420,8 @@
                             </d>
                         </div>
 
-                        <div class="col-3 fw-bold fs-sm">₦860/$</div>
-                        <div class="col-3 fw-bold fs-sm">₦700/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[1]['buy_rate']}}/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[1]['sell_rate']}}/$</div>
 
                     </div>
                     <div class="row mt-4">
@@ -433,8 +433,8 @@
                             </d>
                         </div>
 
-                        <div class="col-3 fw-bold fs-sm">₦920/$</div>
-                        <div class="col-3 fw-bold fs-sm">₦650/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[2]['buy_rate']}}/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[2]['sell_rate']}}/$</div>
 
                     </div>
                     <div class="row mt-4">
@@ -446,8 +446,8 @@
                             </d>
                         </div>
 
-                        <div class="col-3 fw-bold fs-sm">₦860/$</div>
-                        <div class="col-3 fw-bold fs-sm">₦700/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[3]['buy_rate']}}/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[4]['sell_rate']}}/$</div>
 
                     </div>
                     <div class="row mt-4">
@@ -459,8 +459,8 @@
                             </d>
                         </div>
 
-                        <div class="col-3 fw-bold fs-sm">₦920/$</div>
-                        <div class="col-3 fw-bold fs-sm">₦650/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[4]['buy_rate']}}/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[4]['sell_rate']}}/$</div>
 
                     </div>
                 </div>
@@ -603,7 +603,7 @@
 						var unit = this.coins.find(e => e.name == this.active_coin_selected).sell_in_ngn;
 					}
 					if(this.usd=="NaN"){
-						
+
 					}
 					if(unit=='' || unit=='0.00'){
 						this.btc = '';
@@ -614,7 +614,7 @@
 				handle_ngn_convert() {
 					if(this.current_option=="buy"){
 						this.usd = (Number(this.ngn) / this.coins.find(e => e.name == this.active_coin_selected).buy_one).toFixed(2);
-						
+
 						if(this.active_coin_selected=="BTC" || this.active_coin_selected=="ETH"){
 							this.btc = (Number(this.ngn) / this.coins.find(e => e.name == this.active_coin_selected).buy_in_ngn).toFixed(8);
 						}else{
@@ -622,7 +622,7 @@
 						}
 					}else{
 						this.usd = (Number(this.ngn) / this.coins.find(e => e.name == this.active_coin_selected).sell_one).toFixed(2);
-						
+
 						if(this.active_coin_selected=="BTC" || this.active_coin_selected=="ETH"){
 							this.btc = (Number(this.ngn) / this.coins.find(e => e.name == this.active_coin_selected).sell_in_ngn).toFixed(8);
 						}else{
@@ -654,7 +654,7 @@
 						}
 					}else{
 						this.ngn = (Number(this.usd) * this.coins.find(e => e.name == this.active_coin_selected).sell_one).toFixed(2);
-						
+
 						if(this.active_coin_selected=="BTC" || this.active_coin_selected=="ETH"){
 							this.btc = (Number(this.usd) / this.coins.find(e => e.name == this.active_coin_selected).buy_in_usd).toFixed(8);
 						}else{
@@ -675,7 +675,7 @@
 						this.usd= '';
 						this.errors.push('The '+ this.current_option +' price for '+ this.active_coin_selected +' is currently not available');
 					}
-					
+
 				},
 				checkForm: function (e){
 					if(this.btc && this.ngn && this.usd){
@@ -688,7 +688,7 @@
 						.then(response => {
 							window.open(
 							response.data,
-                            '_self' 
+                            '_self'
                             );
 						});
 						//return true;
@@ -736,7 +736,7 @@
 					}
 				}
 			},
-			
+
 		})
 	</script>
     </div>
