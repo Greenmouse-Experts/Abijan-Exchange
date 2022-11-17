@@ -93,7 +93,7 @@
                 </div>
             </a>
         </li> --}}
-        <li>
+        {{-- <li>
             <a href="{{route('view_referral')}}" class="creferral" aria-expanded="false">
                 <div class="nav_icon_small">
                     <img src="{{URL::asset('admin/libraries/5.svg')}}" alt="">
@@ -112,7 +112,7 @@
                     <span>My Profile</span>
                 </div>
             </a>
-        </li>
+        </li> --}}
         <li>
             <a class="has-arrow cmailbox" href="#" aria-expanded="false">
                 <div class="nav_icon_small">
@@ -124,13 +124,13 @@
             </a>
             <ul>
                 <li><a href="{{route('message_center')}}">Inbox</a></li>
-                {{-- <li><a href="{{route('sent_mails')}}">Sent Mails</a></li>
+                <li><a href="{{route('sent_mails')}}">Sent Mails</a></li>
                 <li><a href="{{route('mailbox_trash')}}">Trash</a></li>
-                <li><a href="{{route('mailbox_archive')}}">Archived Mails</a></li> --}}
+                <li><a href="{{route('mailbox_archive')}}">Archived Mails</a></li>
             </ul>
         </li>
         <li>
-            <a class="cmailbox" href="{{route('settings')}}" aria-expanded="false">
+            <a class="has-arrow cmailbox" href="#" aria-expanded="false">
                 <div class="nav_icon_small">
                     <img src="{{URL::asset('admin/libraries/General.svg')}}" alt="">
                 </div>
@@ -138,6 +138,11 @@
                     <span>Settings </span>
                 </div>
             </a>
+            <ul>
+                <li><a href="{{route('settings')}}">Settings</a></li>
+                <li><a href="{{route('view_referral')}}">Referrals</a></li>
+                <li><a href="{{route('adminprofile')}}">My Profile</a></li>
+            </ul>
         </li>
         <li>
             <a href="#" onclick="event.preventDefault();

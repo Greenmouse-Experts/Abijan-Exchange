@@ -112,8 +112,6 @@
     <script src="{{URL::asset('admin/libraries/metisMenu.js')}}"></script>
     <!-- waypoints js -->
     <script src="{{URL::asset('admin/libraries/jquery_003.js')}}"></script>
-    <!-- waypoints js -->
-    <script src="{{URL::asset('admin/libraries/Chart.js')}}"></script>
     <!-- counterup js -->
     <script src="{{URL::asset('admin/libraries/jquery_002.js')}}"></script>
 
@@ -189,7 +187,75 @@
     <script>
         $(function(){
             $('#editRate').click(function(){
-                console.log('hello');
+                //console.log('hello');
+                var id = ($(this).data("id"));
+                var currency = ($(this).data("currency"));
+                var sell_rate = ($(this).data("sell_rate"));
+                var buy_rate = ($(this).data("buy_rate"));
+                var port_short = ($(this).data("port_short"));
+                var fee = ($(this).data("fee"));
+                $('#edit_id').val(id);
+                $('#edit_currency').val(currency);
+                $('#edit_sell_rate').val(sell_rate);
+                $('#edit_port_short').val(port_short);
+                $('#edit_buy_rate').val(buy_rate);
+                $('#edit_fee').val(fee);
+                $('#editRateModal').modal('show')
+
+            })
+            $('#editRateBTC').click(function(){
+                //console.log('hello');
+                var id = ($(this).data("id"));
+                var currency = ($(this).data("currency"));
+                var sell_rate = ($(this).data("sell_rate"));
+                var buy_rate = ($(this).data("buy_rate"));
+                var port_short = ($(this).data("port_short"));
+                var fee = ($(this).data("fee"));
+                $('#edit_id').val(id);
+                $('#edit_currency').val(currency);
+                $('#edit_sell_rate').val(sell_rate);
+                $('#edit_port_short').val(port_short);
+                $('#edit_buy_rate').val(buy_rate);
+                $('#edit_fee').val(fee);
+                $('#editRateModal').modal('show')
+
+            })
+            $('#editRateETH').click(function(){
+                //console.log('hello');
+                var id = ($(this).data("id"));
+                var currency = ($(this).data("currency"));
+                var sell_rate = ($(this).data("sell_rate"));
+                var buy_rate = ($(this).data("buy_rate"));
+                var port_short = ($(this).data("port_short"));
+                var fee = ($(this).data("fee"));
+                $('#edit_id').val(id);
+                $('#edit_currency').val(currency);
+                $('#edit_sell_rate').val(sell_rate);
+                $('#edit_port_short').val(port_short);
+                $('#edit_buy_rate').val(buy_rate);
+                $('#edit_fee').val(fee);
+                $('#editRateModal').modal('show')
+
+            })
+            $('#editRatePM').click(function(){
+                //console.log('hello');
+                var id = ($(this).data("id"));
+                var currency = ($(this).data("currency"));
+                var sell_rate = ($(this).data("sell_rate"));
+                var buy_rate = ($(this).data("buy_rate"));
+                var port_short = ($(this).data("port_short"));
+                var fee = ($(this).data("fee"));
+                $('#edit_id').val(id);
+                $('#edit_currency').val(currency);
+                $('#edit_sell_rate').val(sell_rate);
+                $('#edit_port_short').val(port_short);
+                $('#edit_buy_rate').val(buy_rate);
+                $('#edit_fee').val(fee);
+                $('#editRateModal').modal('show')
+
+            })
+            $('#editRateUSDT').click(function(){
+                //console.log('hello');
                 var id = ($(this).data("id"));
                 var currency = ($(this).data("currency"));
                 var sell_rate = ($(this).data("sell_rate"));

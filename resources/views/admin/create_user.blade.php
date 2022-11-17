@@ -101,8 +101,8 @@
                                                         colspan="1" style="width: 177px;">Email</th>
                                                     <th scope="col" class="sorting_disabled" rowspan="1"
                                                         colspan="1" style="width: 111px;">Role</th>
-                                                    <th scope="col" class="sorting_disabled" rowspan="1"
-                                                        colspan="1" style="width: 138px;">Action</th>
+                                                    {{-- <th scope="col" class="sorting_disabled" rowspan="1"
+                                                        colspan="1" style="width: 138px;">Action</th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -117,6 +117,7 @@
                                                                 style="cursor: pointer;"
                                                                 >
                                                                {{\App\Models\UserProfile::where('user_id', $item->id)->first()->firstname}}
+                                                               {{\App\Models\UserProfile::where('user_id', $item->id)->first()->middlename}}
                                                                {{\App\Models\UserProfile::where('user_id', $item->id)->first()->surname}}
                                                             </p>
                                                         </td>
@@ -133,12 +134,12 @@
                                                                 {{ $item->user_type }}
                                                             </p>
                                                         </td>
-                                                        <td>
+                                                        {{-- <td>
                                                             <p class=""
                                                                 style="cursor: pointer;"
                                                                 >
                                                                aa </p>
-                                                        </td>
+                                                        </td> --}}
                                                     </tr>
                                                     @endforeach
                                                 @else
