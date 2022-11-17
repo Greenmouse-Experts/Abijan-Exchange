@@ -57,7 +57,7 @@
 
                 <div class="col-2"></div>
                 <div class="col-lg-5 order-0 order-lg-2 mb-5">
-                    <img src="{{URL::asset('assets/images/mobile_wallet.png')}}" alt="">
+                    <img src="{{URL::asset('assets/images/buying.jpg')}}" alt="">
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
                     </button>
                 </div>
                 <div class="col-lg-5 order-2 order-lg-0 mb-5">
-                    <img src="{{URL::asset('assets/images/mobile_wallet.png')}}" alt="">
+                    <img src="{{URL::asset('assets/images/Frame 492.png')}}" alt="">
                 </div>
                 <div class="col-2"></div>
             </div>
