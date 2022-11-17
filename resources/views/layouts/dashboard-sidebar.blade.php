@@ -25,13 +25,13 @@
                         <img src="{{URL::asset('dash/libraries/2_002.svg')}}" alt="">
                     </div>
                     <div class="nav_title">
-                        <span>Naira Wallet</span>
+                        <span>Wallet</span>
                     </div>
                 </a>
                 <ul>
-                    <li><a href="{{route('naira')}}">Withdraw Naira</a></li>
-                    <li><a href="{{route('deposit')}}">Deposit Naira</a></li>
-                    <li><a href="{{route('transaction')}}">Transactions</a></li>
+                    <li><a href="{{route('naira')}}">Naira</a></li>
+                    <li><a href="#">Ethereum</a></li>
+                    <li><a href="#">USDT</a></li>
                 </ul>
             </li>
             <li>
@@ -83,7 +83,7 @@
                         <span>USDT</span>
                     </div>
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="#" aria-expanded="false" class="cbuynsell">
                     <div class="nav_icon_small">
@@ -101,19 +101,21 @@
                     </div>
                     <div class="nav_title">
                         <span>P2P</span>
+                        <small style="font-size: 10px;color: #ff3000;">coming soon!</small>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="" aria-expanded="false" class="cbuynsell">
+                <a href="#" aria-expanded="false" class="cbuynsell">
                     <div class="nav_icon_small">
                         <img src="{{URL::asset('dash/libraries/bill (1).png')}}" alt="">
                     </div>
                     <div class="nav_title">
                         <span>Utility Bill</span>
+                        <small style="font-size: 10px;color: #ff3000;">coming soon!</small>
                     </div>
                 </a>
-            </li> --}}
+            </li>
             <li>
                 <a href="{{route('referrals')}}" class="creferral" aria-expanded="false">
                     <div class="nav_icon_small">
@@ -121,6 +123,7 @@
                     </div>
                     <div class="nav_title">
                         <span>Referrals</span>
+                        <small style="font-size: 10px;color: #ff3000;">coming soon!</small>
                     </div>
                 </a>
             </li>

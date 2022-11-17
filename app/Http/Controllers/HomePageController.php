@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
+use Cookie;
 
 class HomePageController extends Controller
 {
@@ -24,21 +26,28 @@ class HomePageController extends Controller
     {
         $this->validate($request, [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            // 'g-recaptcha-response' => 'required|captcha',
+            //'g-recaptcha-response' => 'required|captcha',
         ]);
+
+        $referred_by = Cookie::get('referral');
 
         $user = User::create([
             'user_type' => 'Client',
             'email' => $request->email,
+            'username' => $request->username,
             'password' => Hash::make($request->password),
+            'affiliate_id' => Str::random(10),
+            'referred_by'   => $referred_by || $request->referral
         ]);
 
         $code = mt_rand(100000, 999999);
-
         $user->update([
             'code' => $code
         ]);
+
+        Cookie::queue(Cookie::forget('referral'));
 
         // Send email to user
         $user->notify(new SendVerificationCode($user));

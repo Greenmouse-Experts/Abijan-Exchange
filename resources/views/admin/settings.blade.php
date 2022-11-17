@@ -50,7 +50,7 @@
 
                                     <li>
                                         <a href="{{ 'create_admin' }}">
-                                            <i class="ti-user"></i> <span> <span>Create Admin</span> </span>
+                                            <i class="ti-user"></i> <span> <span>Admin User</span> </span>
                                         </a>
                                     </li>
 

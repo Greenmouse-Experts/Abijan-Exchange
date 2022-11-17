@@ -48,16 +48,16 @@ Route::post('/contact', [ContactUsFormController::class, 'ContactUsForm'])->name
 Route::get('/admin/login', [App\Http\Controllers\HomePageController::class, 'admin_login'])->name('admin.login');
 Route::post('/admin/login', [App\Http\Controllers\HomePageController::class, 'post_admin_login'])->name('admin.post.login');
 Route::get('/register', [App\Http\Controllers\HomePageController::class, 'register'])->name('register')->middleware('CheckReferral');
-/*Route::post('/register', [App\Http\Controllers\HomePageController::class, 'post_register'])->name('post.register');
+Route::post('/register-user', [App\Http\Controllers\HomePageController::class, 'post_register'])->name('post.register');
 Route::get('/verify/account/{email}', [App\Http\Controllers\HomePageController::class, 'verify_account'])->name('verify.account');
-Route::post('/email/verify/resend/{email}', [App\Http\Controllers\HomePageController::class, 'email_verify_resend'])->name('email.verify.resend');
+Route::post('/email/verify/resend/{email}', [App\Http\Controllers\HomePageController::class, 'email_verify_resend'])->name('email.verify.resend-2');
 Route::post('/email/confirm/{token}', [App\Http\Controllers\HomePageController::class, 'registerConfirm'])->name('email.confirmation');
 Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])->name('login');
 Route::post('/user/login', [App\Http\Controllers\HomePageController::class, 'user_login'])->name('user.login');
 Route::get('/forget', [App\Http\Controllers\HomePageController::class, 'forget'])->name('forget');
 Route::post('/password/forget',  [App\Http\Controllers\HomePageController::class, 'forget_password'])->name('user.forget.password');
 Route::get('/reset/password/email', [App\Http\Controllers\HomePageController::class, 'password_reset_email'])->name('user.reset.password');
-Route::post('update/password/reset/', [App\Http\Controllers\HomePageController::class, 'reset_password'])->name('user.update.password'); */
+Route::post('update/password/reset/', [App\Http\Controllers\HomePageController::class, 'reset_password'])->name('user.update.password');
 
 
 /* Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout'); */
