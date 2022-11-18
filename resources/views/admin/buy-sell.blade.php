@@ -109,7 +109,7 @@
                                                                 </td>
                                                                 <td>
                                                                     @if ($item->currency == 'Ethereum')
-                                                                        {{ $item->eth_wallet }}
+                                                                    Ethereum Wallet
                                                                     @endif
                                                                     @if ($item->currency == 'Bitcoin')
                                                                         BTC Wallet
@@ -118,7 +118,7 @@
                                                                         {{ $item->btc_wallet }}
                                                                     @endif
                                                                     @if ($item->currency == 'USDT TRC20')
-                                                                        {{ $item->usdt_wallet }}
+                                                                        USDT Wallet
                                                                     @endif
                                                                     @if ($item->currency == 'bitcoin Cash')
                                                                         {{ $item->bth_wallet }}
@@ -148,6 +148,40 @@
                                                                                 <button type="submit"
                                                                                     class="btn btn-success">Approve</button>
                                                                             </form>
+                                                                        @elseif ($item->currency == 'Ethereum')
+                                                                            <form action="{{ route('buy.update') }}"
+                                                                            method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="id"
+                                                                                value="{{ $item->id }}">
+                                                                                <input type="hidden" name="user_id"
+                                                                                value="{{ $item->user_id }}">
+                                                                                <input type="hidden" name="type"
+                                                                                value="eth">
+                                                                                <input type="hidden" name="unit"
+                                                                                value="{{ $item->unit }}">
+                                                                                <input type="hidden" name="amount"
+                                                                                value="{{ $item->amount }}">
+                                                                                <button type="submit"
+                                                                                    class="btn btn-success">Approve</button>
+                                                                            </form>
+                                                                        @elseif ($item->currency == 'USDT TRC20')
+                                                                            <form action="{{ route('buy.update') }}"
+                                                                            method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="id"
+                                                                                value="{{ $item->id }}">
+                                                                                <input type="hidden" name="user_id"
+                                                                                value="{{ $item->user_id }}">
+                                                                                <input type="hidden" name="type"
+                                                                                value="usdt">
+                                                                                <input type="hidden" name="unit"
+                                                                                value="{{ $item->unit }}">
+                                                                                <input type="hidden" name="amount"
+                                                                                value="{{ $item->amount }}">
+                                                                                <button type="submit"
+                                                                                    class="btn btn-success">Approve</button>
+                                                                            </form>
                                                                         @else
                                                                             <form action="{{ route('buy.update') }}"
                                                                             method="POST">
@@ -158,7 +192,7 @@
                                                                                     class="btn btn-success">Approve</button>
                                                                             </form>
                                                                         @endif
-                                                                        
+
                                                                     @endif
                                                                     @if ($item->status == 2)
                                                                          @if ($item->currency == 'Bitcoin')
@@ -372,7 +406,7 @@
                                                                                 @if ($item->status == 0)
                                                                                     <span style="color: orange">Awaiting Fund</span>
                                                                                 @endif
-                                                                                
+
                                                                                 @if ($item->status == 3)
                                                                                     <span
                                                                                         style="font-size: 11px; background: #fbabab;padding: 5px;border-radius: 5px;color: #e15d5d;font-weight: 600;text-transform: capitalize;">
@@ -406,7 +440,7 @@
                                                                                         Order Approved
                                                                                     </span>
                                                                                 @endif
-    
+
                                                                                 @if ($item->status == 3)
                                                                                     <span
                                                                                         style="font-size: 11px; background: #fbabab;padding: 5px;border-radius: 5px;color: #e15d5d;font-weight: 600;text-transform: capitalize;">

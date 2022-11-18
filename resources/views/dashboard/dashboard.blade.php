@@ -245,6 +245,30 @@
                                             </span>
                                         </div>
                                         <div class="single_media d-flex justify-content-between align-items-center">
+                                            <span class="mediaName"> <img src="libraries/1.svg" alt="">
+                                                Ethereum</span>
+                                            <span class="earning_amount">
+                                                <a href="javascript: void(0)" title="">
+                                                    <h4><span class="btcbal balspan">{{ Auth::user()->wallet->eth ?? '0.00'}}
+                                                            ETH</span></h4>
+                                                </a>
+                                                <p><span class="usdbal balspan">${{ round((Auth::user()->wallet->eth * getCurrentEthDollar()), 2) ?? '0.00' }}</span>
+                                                </p>
+                                            </span>
+                                        </div>
+                                        <div class="single_media d-flex justify-content-between align-items-center">
+                                            <span class="mediaName"> <img src="libraries/1.svg" alt="">
+                                                USDT TRC20</span>
+                                            <span class="earning_amount">
+                                                <a href="javascript: void(0)" title="">
+                                                    <h4><span class="btcbal balspan">{{ Auth::user()->wallet->usdt ?? '0.00'}}
+                                                            USDT</span></h4>
+                                                </a>
+                                                <p><span class="usdbal balspan">${{ round((Auth::user()->wallet->usdt * getCurrentUSDTDollar()), 2) ?? '0.00' }}</span>
+                                                </p>
+                                            </span>
+                                        </div>
+                                        <div class="single_media d-flex justify-content-between align-items-center">
                                             <span class="mediaName"> <img src="libraries/naira.png" alt="">
                                                 Naira</span>
                                             <span class="earning_amount">

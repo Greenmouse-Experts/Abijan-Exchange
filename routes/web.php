@@ -74,7 +74,10 @@ Route::prefix('dashboard')->middleware(['verified', 'auth', 'userprofile'])->gro
     Route::get('/sendbtn', [App\Http\Controllers\HomeController::class, 'sendbtn'])->name('sendbtn');
     Route::get('/wallet_receive', [App\Http\Controllers\HomeController::class, 'wallet_receive'])->name('wallet_receive');
     Route::get('/wallet_transactions', [App\Http\Controllers\HomeController::class, 'wallet_transactions'])->name('wallet_transactions');
+    Route::get('/eth_transactions', [App\Http\Controllers\HomeController::class, 'eth_transactions'])->name('eth_trans');
+    Route::get('/usdt_transactions', [App\Http\Controllers\HomeController::class, 'usdt_transactions'])->name('usdt_trans');
     Route::get('/ethereum', [App\Http\Controllers\HomeController::class, 'ethereum'])->name('ethereum');
+    Route::get('/usdt', [App\Http\Controllers\HomeController::class, 'usdt'])->name('usdt');
     Route::get('/receive_eth', [App\Http\Controllers\HomeController::class, 'receive_eth'])->name('receive_eth');
     Route::get('/referrals', [App\Http\Controllers\HomeController::class, 'referrals'])->name('referrals');
     Route::get('/profile', [App\Http\Controllers\HomeController::class, 'edit_profile'])->name('edit_profile');
@@ -97,6 +100,8 @@ Route::prefix('dashboard')->middleware(['verified', 'auth', 'userprofile'])->gro
     Route::post('/mail/achiveMail', [App\Http\Controllers\HomeController::class, 'achiveMail'])->middleware(['verified', 'auth'])->name('mail.achiveMail');
     Route::post('/mail/readMail', [App\Http\Controllers\HomeController::class, 'readMail'])->middleware(['verified', 'auth'])->name('mail.readMail');
     Route::post('/sendBtc', [App\Http\Controllers\BtcTransController::class, 'store'])->middleware(['verified', 'auth'])->name('btc.send');
+    Route::post('/sendETH', [App\Http\Controllers\EthTransController::class, 'store'])->middleware(['verified', 'auth'])->name('eth.send');
+    Route::post('/sendUSDT', [App\Http\Controllers\USDTTransController::class, 'store'])->middleware(['verified', 'auth'])->name('usdt.send');
     Route::post('/depositnaira', [App\Http\Controllers\NairaTransactionController::class, 'deposit'])->middleware(['verified', 'auth'])->name('naira.deposit');
     Route::post('/sendnaira', [App\Http\Controllers\NairaTransactionController::class, 'sendnaira'])->middleware(['verified', 'auth'])->name('naira.sendnaira');
     Route::post('/getInstructions', [App\Http\Controllers\HomeController::class, 'getInstructions'])->middleware(['verified', 'auth'])->name('getInstructions');
@@ -123,6 +128,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/withdraw_request', [App\Http\Controllers\AdminController::class, 'withdraw_request'])->name('Wrequest');
     Route::get('/deposit_request', [App\Http\Controllers\AdminController::class, 'deposit_request'])->name('Drequest');
     Route::get('/send_request', [App\Http\Controllers\AdminController::class, 'send_request'])->name('send_request');
+    Route::get('/send_eth', [App\Http\Controllers\AdminController::class, 'send_eth'])->name('send_eth');
+    Route::get('/send_usdt', [App\Http\Controllers\AdminController::class, 'send_usdt'])->name('send_usdt');
     Route::get('/receive_request', [App\Http\Controllers\AdminController::class, 'receive_request'])->name('receive_request');
     Route::get('/swap_request', [App\Http\Controllers\AdminController::class, 'swap_request'])->name('swap_request');
     Route::get('/message-center', [App\Http\Controllers\AdminController::class, 'message_center'])->name('message_center');
@@ -145,6 +152,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('/updateNairaDeposit', [App\Http\Controllers\NairaTransactionController::class, 'updateDepositNaira'])->middleware(['verified', 'auth'])->name('naira.updateDeposit');
     Route::post('/updateNairaWithdraw', [App\Http\Controllers\NairaTransactionController::class, 'updateWithdrawNaira'])->middleware(['verified', 'auth'])->name('naira.updateWithdraw');
     Route::post('/updateBTC', [App\Http\Controllers\BtcTransController::class, 'btcNaira'])->middleware(['verified', 'auth'])->name('btc.update');
+    Route::post('/updateUSDT', [App\Http\Controllers\USDTTransController::class, 'usdtNaira'])->middleware(['verified', 'auth'])->name('usdt.update');
+    Route::post('/updateETH', [App\Http\Controllers\EthTransController::class, 'ethNaira'])->middleware(['verified', 'auth'])->name('eth.update');
     Route::post('/updateBuy', [App\Http\Controllers\OrderController::class, 'buyUpdate'])->middleware(['verified', 'auth'])->name('buy.update');
     Route::post('/InvoiceUpdate', [App\Http\Controllers\OrderController::class, 'InvoiceUpdate'])->middleware(['verified', 'auth'])->name('invoice.update');
     Route::post('/mail/readMail', [App\Http\Controllers\AdminController::class, 'readMail'])->middleware(['verified', 'auth'])->name('mail.readMail');

@@ -31,8 +31,8 @@
                 <ul>
                     <li><a href="{{route('naira')}}">Naira</a></li>
                     <li><a href="{{route('sendbtn')}}">Bitcoin</a></li>
-                    <li><a href="#">Ethereum</a></li>
-                    <li><a href="#">USDT</a></li>
+                    <li><a href="{{route('ethereum')}}">Ethereum</a></li>
+                    <li><a href="{{route('usdt')}}">USDT</a></li>
                 </ul>
             </li>
             <li>

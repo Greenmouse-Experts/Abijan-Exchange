@@ -16,6 +16,8 @@ use App\Models\UserWallet;
 use App\Models\SecurityQuestion;
 use App\Models\Order;
 use App\Models\BtcTrans;
+use App\Models\USDTTrans;
+use App\Models\EthTrans;
 use App\Models\NairaTransaction;
 use App\Models\User;
 use Response;
@@ -339,17 +341,17 @@ class HomeController extends Controller
         //$res = $response->object();
         //dd($res->message);
         //if($res->message == 'BVN Verified Successfully'){
-        
+
         $res = "BVN Verified Successfully";
         if($res == 'BVN Verified Successfully'){
-            
+
             $user->firstname = $firstname;
             $user->middlename = $middlename;
             $user->surname = $surname;
             $user->dob = $surname;
             $user->gender = $gender;
             $user->phone_no = $phone;
-            
+
             $bank->bank_name = $bank_name;
             $bank->account_num = $acct_num;
             $bank->user_id = Auth::user()->id;
@@ -535,13 +537,35 @@ class HomeController extends Controller
 
     public function wallet_receive()
     {
-        return view('dashboard.wallet_receive');
+        $user_wallet = Auth::user()->wallet;
+
+        if (is_null($user_wallet->btc_wallet_address)) {
+            $address = Http::quidax()->post('wallets/btc/addresses');
+            //dd($address->json());
+
+            $user_wallet->btc_wallet_address = $address->json('data.address');
+            $user_wallet->save();
+        }
+
+        return view('dashboard.wallet_receive', compact('user_wallet'));
     }
 
     public function wallet_transactions()
     {
         $trans = BtcTrans::where('user_id', Auth::user()->id)->get();
         return view('dashboard.wallet_transactions', compact('trans'));
+    }
+
+    public function eth_transactions()
+    {
+        $trans = EthTrans::where('user_id', Auth::user()->id)->get();
+        return view('dashboard.eth_transaction', compact('trans'));
+    }
+
+    public function usdt_transactions()
+    {
+        $trans = USDTTrans::where('user_id', Auth::user()->id)->get();
+        return view('dashboard.usdt_transaction', compact('trans'));
     }
 
     public function ethereum()
@@ -552,6 +576,11 @@ class HomeController extends Controller
     public function receive_eth()
     {
         return view('dashboard.receive-eth');
+    }
+
+    public function usdt()
+    {
+        return view('dashboard.usdt');
     }
 
     public function referrals()

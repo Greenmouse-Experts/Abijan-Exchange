@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'quidax' => [
+        'public' => env('QUI_PUB_KEY'),
+        'secret' => env('QUI_SEC_KEY'),
+    ]
+
 ];
