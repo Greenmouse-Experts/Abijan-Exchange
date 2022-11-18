@@ -69,6 +69,13 @@
                             </div>
                         </div>
                     </div>
+<<<<<<< HEAD
+                </div>
+                <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                    <div class="position-relative bg-gradient-primary h-100 m-3 px-5 border-radius-lg d-flex flex-column justify-content-center overflow-hidden">
+                        <div class="container"><a href="/" target="_blank" rel="noopener noreferrer"><img src="{{URL::asset('assets/images/logoo.png')}}" alt="Logo" width="200"></a>
+                            <h4 class="mt-5 text-white position-relative mb-5">The Most Trusted E-currency Exchange and Bills Payment Platform</h4>
+=======
                     <div
                         class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
                         <div
@@ -79,6 +86,7 @@
                                 <h4 class="mt-5 text-white position-relative mb-5">The Most Trusted E-currency Exchange and
                                     Bills Payment Platform</h4>
                             </div>
+>>>>>>> ce92a2caca93598b8aeb3be4a6bf8e39709e4274
                         </div>
                     </div>
                 </div>
