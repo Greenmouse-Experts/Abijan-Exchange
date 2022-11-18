@@ -50,11 +50,13 @@
                     <img src="{{URL::asset('admin/libraries/6.svg')}}" alt="">
                 </div>
                 <div class="nav_title">
-                    <span>Bitcoin Request</span>
+                    <span>Wallet Request</span>
                 </div>
             </a>
             <ul>
                 <li><a href="{{route('send_request')}}">Send BTC</a></li>
+                <li><a href="{{route('send_usdt')}}">Send USDT</a></li>
+                <li><a href="{{route('send_eth')}}">Send ETH</a></li>
                 {{-- <li><a href="{{route('receive_request')}}">Receive BTC</a></li> --}}
                 <!-- <li><a href="wallet_transactions">Transactions</a></li> -->
             </ul>
@@ -140,8 +142,9 @@
             </a>
             <ul>
                 <li><a href="{{route('settings')}}">Settings</a></li>
+                <li><a href="#">Support</a></li>
                 <li><a href="{{route('view_referral')}}">Referrals</a></li>
-                <li><a href="{{route('adminprofile')}}">My Profile</a></li>
+                <li><a href="{{route('adminprofile')}}">Profile</a></li>
             </ul>
         </li>
         <li>

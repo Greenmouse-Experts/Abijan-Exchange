@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BtcTrans;
+use App\Models\USDTTrans;
 use App\Models\UserWallet;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Auth;
 use Hash;
 
-class BtcTransController extends Controller
+class USDTTransController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -39,15 +39,14 @@ class BtcTransController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $trf_wallet = $request->trf_wallet;
+        $usdt_wallet = $request->usdt_wallet;
         $bit_amount =  $request->bit_amount;
         $transfee_btc =  $request->transfee_btc;
         $fee_method_btc = $request->fee_method_btc;
         $send_pass = $request->send_pass;
         $user_id = Auth::user()->id;
-        $btc_bal =  Auth::user()->wallet->btc;
-        $btc_fee =  settings()->btc_trans_fee;
+        $btc_bal =  Auth::user()->wallet->usdt;
+        $btc_fee =  settings()->eth_trans_fee;
         $new_ammount = $bit_amount + $btc_fee;
 
         if(!Hash::check($request->send_pass, Auth::user()->password)){
@@ -55,17 +54,17 @@ class BtcTransController extends Controller
             return response()->json(['error'=>"Your Password is incorrect!", 'status'=>"password_error"]);
         }
         else if ($new_ammount < $bit_amount) {
-            return response()->json(['error'=>"You have enough in your btc wallet balance to complete this transaction!, please fund your btc wallet",
+            return response()->json(['error'=>"You have enough in your USDT wallet balance to complete this transaction!, please fund your USDT wallet",
                 'status'=>"balance_error"]);
         }
         else{
             $wallet = UserWallet::where('user_id', Auth::user()->id)->first();
-            $bal = $wallet->btc;
-            //dd($wallet->btc - $new_ammount);
-            $wallet->btc = $wallet->btc - $new_ammount;
+            $bal = $wallet->usdt;
+            //dd($wallet->usdt - $new_ammount);
+            $wallet->usdt = $wallet->usdt - $new_ammount;
             $wallet->update();
-            $trns = new BtcTrans();
-            $trns->trf_wallet = $trf_wallet;
+            $trns = new USDTTrans();
+            $trns->trf_wallet = $usdt_wallet;
             $trns->btc_amount =  $request->bit_amount;
             $trns->transfer_fee =  $btc_fee;
             $trns->user_id = Auth::user()->id;
@@ -75,20 +74,13 @@ class BtcTransController extends Controller
         }
     }
 
-    public function btcNaira(Request $request)
-    {
-        BtcTrans::findOrFail($request->id)->update(["status"=>1]);
-        Alert::success('Success', 'Your Approved Transaction!');
-        return back();
-    }
-
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\BtcTrans  $btcTrans
+     * @param  \App\Models\USDTTrans  $uSDTTrans
      * @return \Illuminate\Http\Response
      */
-    public function show(BtcTrans $btcTrans)
+    public function show(USDTTrans $uSDTTrans)
     {
         //
     }
@@ -96,10 +88,10 @@ class BtcTransController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\BtcTrans  $btcTrans
+     * @param  \App\Models\USDTTrans  $uSDTTrans
      * @return \Illuminate\Http\Response
      */
-    public function edit(BtcTrans $btcTrans)
+    public function edit(USDTTrans $uSDTTrans)
     {
         //
     }
@@ -108,21 +100,28 @@ class BtcTransController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\BtcTrans  $btcTrans
+     * @param  \App\Models\USDTTrans  $uSDTTrans
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BtcTrans $btcTrans)
+    public function update(Request $request, USDTTrans $uSDTTrans)
     {
         //
+    }
+
+    public function usdtNaira(Request $request)
+    {
+        USDTTrans::findOrFail($request->id)->update(["status"=>1]);
+        Alert::success('Success', 'Your Approved Transaction!');
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\BtcTrans  $btcTrans
+     * @param  \App\Models\USDTTrans  $uSDTTrans
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BtcTrans $btcTrans)
+    public function destroy(USDTTrans $uSDTTrans)
     {
         //
     }

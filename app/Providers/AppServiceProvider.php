@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Http::macro('quidax', function ($user_id = 'me') {
+            return Http::baseUrl(
+                sprintf('https://www.quidax.com/api/v1/users/%s/', $user_id)
+            )->withToken(config('services.quidax.secret'));
+        });
+
         Schema::defaultStringLength(191);
     }
 }

@@ -18,17 +18,17 @@
                             <div class="white_card_header">
                                 <div class="box_header m-0">
                                     <div class="main-title">
-                                        <h4 class="m-0">Send Ethereum</h4>
+                                        <h4 class="m-0">Send USDT TRC20</h4>
                                         <br />
                                         <ul class="nav nav-pills custom_bootstrap_nav">
                                             <li class="nav-item">
-                                                <a class="nav-link active" href="#bitdiv" data-toggle="tab">Send Eth</a>
+                                                <a class="nav-link active" href="#bitdiv" data-toggle="tab">Send USDT</a>
                                             </li>
                                             {{-- <li class="nav-item">
-                                                <a class="nav-link" href="{{route('receive_eth')}}"> Receive Eth</a>
+                                                <a class="nav-link" href="{{route('receive_usdt')}}"> Receive USDT</a>
                                             </li> --}}
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{route('eth_trans')}}"> Transactions</a>
+                                                <a class="nav-link" href="{{route('usdt_trans')}}">Transactions</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -39,56 +39,56 @@
                                     <div class="white_card_body tab-pane fade active show" id="bitdiv">
                                         <div class="exchange_widget">
                                             <div class="form-group" id="walletdiv">
-                                                <label id="header_trf_wallet">Ethereum Address</label>
+                                                <label id="header_trf_wallet">USDT TRC20 Address</label>
                                                 <p class="dangerP error_address" style="display: none;"></p>
                                                 <div class="input-group">
                                                     <input type="text" name="trf_wallet" class="form-control" id="trf_wallet" />
                                                 </div>
                                             </div>
                                             <p class="formText">
-                                                <a href="verify_me?type=identity"><b>Click here</b></a><b> to verify your identity to be able to send Ethereum.</b>
+                                                <a href="verify_me?type=identity"><b>Click here</b></a><b> to verify your identity to be able to send USDT TRC20.</b>
                                             </p>
-                                            <p class="formText">After verification, you can send Ethereum to any Ethereum address comfortably.</p>
+                                            <p class="formText">After verification, you can send USDT TRC20 to any USDT TRC20 address comfortably.</p>
                                         </div>
                                     </div>
                                 @else
                                     <div class="white_card_body tab-pane fade active show" id="bitdiv">
                                         <div class="exchange_widget">
-                                            <form name="myETHform" id="myETHform" class="currency_validate">
+                                            <form name="myUSDTform" id="myUSDTform" class="currency_validate">
                                                 <div class="form-group" id="walletdiv">
-                                                    <label id="header_trf_wallet">Ethereum Address</label>
+                                                    <label id="header_trf_wallet">USDT TRC20 Address</label>
                                                     <p class="dangerP error_address" style="display: none;"></p>
                                                     <div class="input-group">
-                                                        <input type="text" name="eth_wallet" class="form-control"
-                                                            id="eth_wallet">
+                                                        <input type="text" name="usdt_wallet" class="form-control"
+                                                            id="usdt_wallet">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Enter amount in ETH</label>
+                                                    <label>Enter amount in USDT</label>
                                                     <div class="input-group">
                                                         <input type="text" name="bit_amount" class="form-control"
                                                             id="bit_amount">
                                                     </div>
                                                     <div class="d-flex justify-content-between mt-3">
                                                         <p class="mb-0">Transfer Fee</p>
-                                                        <h6 class="mb-0 showwithfee_btc">{{settings()->eth_trans_fee}}ETH</h6>
+                                                        <h6 class="mb-0 showwithfee_btc">{{settings()->usdt_trans_fee}} USDT</h6>
                                                         <input type="hidden" name="transfee_btc" id="transfee_btc"
-                                                            value="{{settings()->eth_trans_fee}}">
+                                                            value="{{settings()->usdt_trans_fee}}">
                                                         <input type="hidden" name="fee_method_btc" id="fee_method_btc"
                                                             value="flat_rate">
-                                                        <input type="hidden" name="balbtc" id="balbtc" value="{{Auth::user()->wallet->eth}}">
-                                                        <input type="hidden" name="rateUnit" id="rateUnit" value="{{getCurrentEthDollar()}}">
-                                                        <input type="hidden" name="above_amount_eth" id="above_amount_eth"
+                                                        <input type="hidden" name="balbtc" id="balbtc" value="{{Auth::user()->wallet->usdt}}">
+                                                        <input type="hidden" name="rateUnit" id="rateUnit" value="{{getCurrentUSDTDollar()}}">
+                                                        <input type="hidden" name="above_amount_usdt" id="above_amount_usdt"
                                                             value="">
                                                     </div>
-                                                    <div class="d-flex justify-content-between mt-3" id="availBal_eth">
+                                                    <div class="d-flex justify-content-between mt-3" id="availBal_usdt">
                                                         <p class="mb-0">Current Balance</p>
-                                                        <h6 class="mb-0 btcbal_upto balspan" id="balspanOne_eth">{{Auth::user()->wallet->eth}} ETH</h6>
+                                                        <h6 class="mb-0 btcbal_upto balspan" id="balspanOne_usdt">{{Auth::user()->wallet->usdt}} USDT</h6>
                                                     </div>
                                                     <div class="d-flex justify-content-between mt-3 hidden"
-                                                        id="availBalwith_eth">
+                                                        id="availBalwith_usdt">
                                                         <p class="mb-0">Balance after this withdrawal</p>
-                                                        <h6 class="mb-0 ngnbal_upto balspanwith_eth"></h6>
+                                                        <h6 class="mb-0 ngnbal_upto balspanwith_usdt"></h6>
 
                                                     </div>
                                                 </div>
@@ -100,7 +100,7 @@
                                                             id="send_pass">
                                                     </div>
                                                 </div>
-                                                <button type="button" name="send_submit2" id="send_submit2"
+                                                <button type="button" name="send_submit3" id="send_submit3"
                                                     class="btn_1 w-100">Send Now <span
                                                         class="loadingText fa fa-spinner fa-spin fa-2x"
                                                         style="display:none;float:right;"
@@ -116,7 +116,7 @@
                         <div class="white_box mb_30">
                             <div class="box_header">
                                 <div class="main-title">
-                                    <h3 class="mb-0">Ethereum FAQs</h3>
+                                    <h3 class="mb-0">USDT TRC20 FAQs</h3>
                                 </div>
                             </div>
                             <!-- accordian -->
@@ -125,14 +125,14 @@
                                     <div class="card-header" id="headingOne">
                                         <h2 class="mb-0">
                                             <a href="#" class="btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                How long does a Ethereum transaction take?
+                                                How long does a USDT TRC20 transaction take?
                                             </a>
                                         </h2>
                                     </div>
 
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_ex">
                                         <div class="card-body">
-                                            <p>Ethereum transactions normally take about 10 to 30 minutes to send, on occasion it can take a few hours if the Ethereum network is slow.</p>
+                                            <p>USDT TRC20 transactions normally take about 10 to 30 minutes to send, on occasion it can take a few hours if the USDT TRC20 network is slow.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -140,14 +140,14 @@
                                     <div class="card-header" id="headingTwo">
                                         <h2 class="mb-0">
                                             <a href="#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                Ethereum refunds and payouts
+                                                USDT TRC20 refunds and payouts
                                             </a>
                                         </h2>
                                     </div>
                                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion_ex">
                                         <div class="card-body">
                                             <p>
-                                                Abijan Exchange wallet is a web wallet - outgoing Ethereum addresses are not connected to your account. If you are asking for a refund from a merchant, please ask them to send the refund to your
+                                                Abijan Exchange wallet is a web wallet - outgoing USDT TRC20 addresses are not connected to your account. If you are asking for a refund from a merchant, please ask them to send the refund to your
                                                 receiving address.
                                             </p>
                                         </div>
@@ -157,7 +157,7 @@
                                     <div class="card-header" id="headingThree">
                                         <h2 class="mb-0">
                                             <a href="#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                Ethereum transfer fees
+                                                USDT TRC20 transfer fees
                                             </a>
                                         </h2>
                                     </div>
@@ -166,7 +166,7 @@
                                             <p>Transactions to wallets of other Abijan Exchange users are free.</p>
 
                                             <p>
-                                                Transactions to other Ethereum wallets are subject to a sending fee. The size of the fee changes depending on the current usage rate of the Ethereum blockchain, we automatically adjust this fee
+                                                Transactions to other USDT TRC20 wallets are subject to a sending fee. The size of the fee changes depending on the current usage rate of the USDT TRC20 blockchain, we automatically adjust this fee
                                                 based on the current network congestion to make sure your transactions are confirmed as quickly as possible. The sending fee is paid from your Abijan Exchange wallet when you send a transaction.
                                             </p>
 

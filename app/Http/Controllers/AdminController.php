@@ -8,6 +8,8 @@ use App\Models\UserProfile;
 use App\Models\NairaTransaction;
 use App\Models\Setting;
 use App\Models\BtcTrans;
+use App\Models\USDTTrans;
+use App\Models\EthTrans;
 use App\Models\Rate;
 use App\Models\UserWallet;
 use App\Models\MailBox;
@@ -17,6 +19,7 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Auth;
 
@@ -49,6 +52,16 @@ class AdminController extends Controller
     public function send_request(){
         $btc = BtcTrans::where('fee_method', 'flat_rate')->paginate(10);
         return view('admin.send-request', compact('btc'));
+    }
+
+    public function send_usdt(){
+        $btc = USDTTrans::where('fee_method', 'flat_rate')->paginate(10);
+        return view('admin.send-usdt', compact('btc'));
+    }
+
+    public function send_eth(){
+        $btc = EthTrans::where('fee_method', 'flat_rate')->paginate(10);
+        return view('admin.send-eth', compact('btc'));
     }
 
     public function receive_request(){
@@ -179,12 +192,17 @@ class AdminController extends Controller
 
     public function createAdminPost(Request $request)
     {
+        if (User::where('email', '=', $request->email)->exists()) {
+            Alert::warning('Warning', 'Email already exist!');
+             return back();
+        }
         $role = $request->role;
         $user = new User();
         $profile = new UserProfile();
         $user->email = $request->email;
         $user->is_admin = 1;
         $user->user_type = $role;
+        $user->affiliate_id = Str::random(10);
         $user->email_verified_at = \Carbon\Carbon::now();
         $user->password = Hash::make($request->password);
         if($user->save()){

@@ -25,6 +25,30 @@ if (!function_exists("getCurrentBtcDollar")) {
     }
 }
 
+if (!function_exists("getCurrentEthDollar")) {
+    function getCurrentEthDollar() {
+        //
+        /* $url='https://bitpay.com/api/rates';
+        $json=json_decode( file_get_contents( $url ) );
+        $btc=0; */
+        $response = \Illuminate\Support\Facades\Http::get('https://bitpay.com/api/rates/ETH');
+
+        return $response->json()[2]['rate'];
+    }
+}
+
+if (!function_exists("getCurrentUSDTDollar")) {
+    function getCurrentUSDTDollar() {
+        //
+        /* $url='https://bitpay.com/api/rates';
+        $json=json_decode( file_get_contents( $url ) );
+        $btc=0; */
+        $response = \Illuminate\Support\Facades\Http::get('https://bitpay.com/api/rates/USDT');
+
+        return $response->json()[2]['rate'];
+    }
+}
+
 if (!function_exists("settings")) {
     function settings() {
         //

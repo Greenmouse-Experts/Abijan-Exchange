@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BtcTrans;
+use App\Models\EthTrans;
 use App\Models\UserWallet;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Auth;
 use Hash;
 
-class BtcTransController extends Controller
+class EthTransController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -39,15 +39,14 @@ class BtcTransController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $trf_wallet = $request->trf_wallet;
+        $eth_wallet = $request->eth_wallet;
         $bit_amount =  $request->bit_amount;
         $transfee_btc =  $request->transfee_btc;
         $fee_method_btc = $request->fee_method_btc;
         $send_pass = $request->send_pass;
         $user_id = Auth::user()->id;
-        $btc_bal =  Auth::user()->wallet->btc;
-        $btc_fee =  settings()->btc_trans_fee;
+        $btc_bal =  Auth::user()->wallet->eth;
+        $btc_fee =  settings()->eth_trans_fee;
         $new_ammount = $bit_amount + $btc_fee;
 
         if(!Hash::check($request->send_pass, Auth::user()->password)){
@@ -55,17 +54,17 @@ class BtcTransController extends Controller
             return response()->json(['error'=>"Your Password is incorrect!", 'status'=>"password_error"]);
         }
         else if ($new_ammount < $bit_amount) {
-            return response()->json(['error'=>"You have enough in your btc wallet balance to complete this transaction!, please fund your btc wallet",
+            return response()->json(['error'=>"You have enough in your ethereum wallet balance to complete this transaction!, please fund your Ethereum wallet",
                 'status'=>"balance_error"]);
         }
         else{
             $wallet = UserWallet::where('user_id', Auth::user()->id)->first();
-            $bal = $wallet->btc;
-            //dd($wallet->btc - $new_ammount);
-            $wallet->btc = $wallet->btc - $new_ammount;
+            $bal = $wallet->eth;
+            //dd($wallet->eth - $new_ammount);
+            $wallet->eth = $wallet->eth - $new_ammount;
             $wallet->update();
-            $trns = new BtcTrans();
-            $trns->trf_wallet = $trf_wallet;
+            $trns = new EthTrans();
+            $trns->trf_wallet = $eth_wallet;
             $trns->btc_amount =  $request->bit_amount;
             $trns->transfer_fee =  $btc_fee;
             $trns->user_id = Auth::user()->id;
@@ -75,20 +74,13 @@ class BtcTransController extends Controller
         }
     }
 
-    public function btcNaira(Request $request)
-    {
-        BtcTrans::findOrFail($request->id)->update(["status"=>1]);
-        Alert::success('Success', 'Your Approved Transaction!');
-        return back();
-    }
-
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\BtcTrans  $btcTrans
+     * @param  \App\Models\EthTrans  $ethTrans
      * @return \Illuminate\Http\Response
      */
-    public function show(BtcTrans $btcTrans)
+    public function show(EthTrans $ethTrans)
     {
         //
     }
@@ -96,22 +88,29 @@ class BtcTransController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\BtcTrans  $btcTrans
+     * @param  \App\Models\EthTrans  $ethTrans
      * @return \Illuminate\Http\Response
      */
-    public function edit(BtcTrans $btcTrans)
+    public function edit(EthTrans $ethTrans)
     {
         //
+    }
+
+    public function ethNaira(Request $request)
+    {
+        EthTrans::findOrFail($request->id)->update(["status"=>1]);
+        Alert::success('Success', 'Your Approved Transaction!');
+        return back();
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\BtcTrans  $btcTrans
+     * @param  \App\Models\EthTrans  $ethTrans
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BtcTrans $btcTrans)
+    public function update(Request $request, EthTrans $ethTrans)
     {
         //
     }
@@ -119,10 +118,10 @@ class BtcTransController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\BtcTrans  $btcTrans
+     * @param  \App\Models\EthTrans  $ethTrans
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BtcTrans $btcTrans)
+    public function destroy(EthTrans $ethTrans)
     {
         //
     }

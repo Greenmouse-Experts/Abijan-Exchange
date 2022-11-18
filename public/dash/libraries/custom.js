@@ -1343,7 +1343,22 @@ $(function() {
             $("#acctnameBuy").val('');
             $("#header_acct_buy").html('');
             $("#header_acctname_buy").html('');
-        } else {
+        }
+        else if (currency == "Ethereum") {
+            $(".acctInfodivbuy").hide();
+            $("#acctnoBuy").val('');
+            $("#acctnameBuy").val('');
+            $("#header_acct_buy").html('');
+            $("#header_acctname_buy").html('');
+        }
+        else if (currency == "USDT TRC20") {
+            $(".acctInfodivbuy").hide();
+            $("#acctnoBuy").val('');
+            $("#acctnameBuy").val('');
+            $("#header_acct_buy").html('');
+            $("#header_acctname_buy").html('');
+        }
+        else {
 
             if (typecurr == "ecurrency") {
                 $(".acctInfodivbuy").show();
@@ -1473,7 +1488,22 @@ $(function() {
             $("#acctnameSell").val('');
             $("#header_acct").html('');
             $("#header_acctname").html('');
-        } else {
+        }
+        else if (currency == "Ethereum") {
+            $(".acctInfodiv").hide();
+            $("#acctnoSell").val('');
+            $("#acctnameSell").val('');
+            $("#header_acct").html('');
+            $("#header_acctname").html('');
+        }
+        else if (currency == "USDT TRC20") {
+            $(".acctInfodiv").hide();
+            $("#acctnoSell").val('');
+            $("#acctnameSell").val('');
+            $("#header_acct").html('');
+            $("#header_acctname").html('');
+        }
+        else {
 
             if (typecurr == "ecurrency") {
                 $(".acctInfodiv").show();
@@ -1533,7 +1563,8 @@ $(function() {
             $("#sellfrom_pm").hide();
             $("#acctnoSell").val('');
             $("#acctnameSell").val('');
-        } else {
+        }
+        else {
 
             if (typecurr == "crypto") {
                 //var msg = "Selected option is a crypto";
@@ -1616,7 +1647,44 @@ $(function() {
             $("#header_acctname_buy").html('');
             $("#acctnoBuy").val('');
             $("#acctnameBuy").val('');
-        } else {
+        }
+        else if (ps == "Ethereum") {
+            $('#currencyBuy')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="USD" data-display="USD" selected="selected">USD</option><option value="BTC">BTC</option><option value="NGN">NGN</option>')
+                .val('USD');
+
+            $(".availbuy").show();
+            $("#buyfrom_btc").show();
+            $("#buyfrom_account").hide();
+            $("#buy_from_acct").val('');
+            $(".acctInfodivbuy").hide();
+            $("#header_acct_buy").html('');
+            $("#header_acctname_buy").html('');
+            $("#acctnoBuy").val('');
+            $("#acctnameBuy").val('');
+        }
+        else if (ps == "USDT TRC20") {
+            $('#currencyBuy')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="USD" data-display="USD" selected="selected">USD</option><option value="BTC">BTC</option><option value="NGN">NGN</option>')
+                .val('USD');
+
+            $(".availbuy").show();
+            $("#buyfrom_btc").show();
+            $("#buyfrom_account").hide();
+            $("#buy_from_acct").val('');
+            $(".acctInfodivbuy").hide();
+            $("#header_acct_buy").html('');
+            $("#header_acctname_buy").html('');
+            $("#acctnoBuy").val('');
+            $("#acctnameBuy").val('');
+        }
+        else {
             $("#acctnoBuy").val('');
             $("#acctnameBuy").val('');
             $(".acctInfodivbuy").show();
@@ -2291,12 +2359,15 @@ $(function() {
         var u = this.value.substring(0, this.value.length - 1);
         $("#passdiv_send").hide();
         var wallet = $("#trf_wallet").val();
+        var wallet2 = $("#trf_wallet").val();
 
         var fee_method = $('#fee_method_btc').val();
         var depfee = $('#depfee').val();
         var withfee = $('#transfee_btc').val();
         var balngn = $('#balbtc').val();
         var above_amount = $("#above_amount_btc").val();
+        var above_amount2 = $("#above_amount_eth").val();
+        var above_amount3 = $("#above_amount_usdt").val();
         var enableFee = false;
         var rateUnit = $("#rateUnit").val();
 
@@ -2313,7 +2384,20 @@ $(function() {
                 //Enable transfer fee
                 var enableFee = true;
             }
-        } else {
+        }
+        else if (above_amount2) {
+            if (Number(above_amount2) <= s) {
+                //Enable transfer fee
+                var enableFee = true;
+            }
+        }
+        else if (above_amount3) {
+            if (Number(above_amount3) <= s) {
+                //Enable transfer fee
+                var enableFee = true;
+            }
+        }
+        else {
             //Enable transfer fee
             var enableFee = true;
         }
@@ -2375,10 +2459,20 @@ $(function() {
                     }
                     $('#availBal_btc').removeClass('hidden');
                     $('#availBalwith_btc').removeClass('hidden');
+                    $('#availBal_eth').removeClass('hidden');
+                    $('#availBalwith_eth').removeClass('hidden');
+                    $('#availBal_usdt').removeClass('hidden');
+                    $('#availBalwith_usdt').removeClass('hidden');
                     $('#balspanOne_btc').html(balngn + 'BTC');
                     $('.balspanwith_btc').html(availNow + 'BTC');
+                    $('#balspanOne_eth').html(balngn + 'ETH');
+                    $('.balspanwith_eth').html(availNow + 'ETH');
+                    $('#balspanOne_usdt').html(balngn + 'USDT');
+                    $('.balspanwith_usdt').html(availNow + 'USDT');
                     if (availNow < 0) {
                         $('.balspanwith_btc').html('0 BTC');
+                        $('.balspanwith_eth').html('0 ETH');
+                        $('.balspanwith_usdt').html('0 USDT');
                     }
                     break;
                 default:
@@ -2410,8 +2504,14 @@ $(function() {
             $('.showdepfee_btc').html(depS);
             $('.showwithfee_btc').html(withS);
             $('#balspanOne_btc').html(balngn + 'BTC');
+            $('#balspanOne_eth').html(balngn + 'ETH');
+            $('#balspanOne_usdt').html(balngn + 'USDT');
             $('#availBal_btc').removeClass('hidden');
             $('#availBalwith_btc').addClass('hidden');
+            $('#availBal_eth').removeClass('hidden');
+            $('#availBalwith_eth').addClass('hidden');
+            $('#availBal_usdt').removeClass('hidden');
+            $('#availBalwith_usdt').addClass('hidden');
 
         }
     });
@@ -2507,6 +2607,176 @@ $(function() {
                             $("#bit_amount").val('')
                             swal({
                                 title: "BTC Sent",
+                                text: '' + mymsg2,
+                                icon: "success",
+                            }).then((value) => {
+                                if (value) {
+                                    location.reload();
+                                }
+                            });
+                        } else if (mystat == "password_error") {
+                            swal({
+                                title: "Error",
+                                text: '' + mymsg,
+                                icon: "error",
+                            });
+                            if (value) {
+                                location.reload();
+                            }
+                        }
+                        else if (mystat == "balance_error") {
+                            swal({
+                                title: "Error",
+                                text: '' + mymsg,
+                                icon: "error",
+                            });
+                            if (value) {
+                                location.reload();
+                            }
+                        }
+                        else {
+                            swal({
+                                    title: "Unknown error",
+                                    text: 'Please try again',
+                                    icon: "error",
+                                })
+                                .then((value) => {
+                                    if (value) {
+                                        location.reload();
+                                    }
+                                });
+
+                        }
+                    }
+                }
+            });
+        } else {
+            $("#passdiv_send").show();
+            swal({
+                title: "Error",
+                text: 'Please fill all the fields',
+                icon: "error",
+            });
+        }
+    });
+    $('#send_submit2').click(function() {
+        var wallet = $("#eth_wallet").val();
+        var bit_amount = $("#bit_amount").val();
+        var send_pass = $("#send_pass").val();
+
+        if (wallet && bit_amount && send_pass) {
+
+            $('#send_submit2').attr('disabled', 'disabled');
+            $("#loadingText_send").show();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "/dashboard/sendETH",
+                data: $("#myETHform").serialize(),
+                dataType: 'json',
+                success: function(result) {
+                    $('#send_submit').removeAttr('disabled');
+                    $("#loadingText_send").hide();
+                    console.log(result.error);
+                    var mystat = result.status;
+                    var mymsg = result.error;
+                    var mymsg2 = result.success;
+
+                    if (mystat != "") {
+                        if (mystat == "success") {
+                            $("#trf_wallet").val('');
+                            $("#bit_amount").val('')
+                            swal({
+                                title: "ETH SENT",
+                                text: '' + mymsg2,
+                                icon: "success",
+                            }).then((value) => {
+                                if (value) {
+                                    location.reload();
+                                }
+                            });
+                        } else if (mystat == "password_error") {
+                            swal({
+                                title: "Error",
+                                text: '' + mymsg,
+                                icon: "error",
+                            });
+                            if (value) {
+                                location.reload();
+                            }
+                        }
+                        else if (mystat == "balance_error") {
+                            swal({
+                                title: "Error",
+                                text: '' + mymsg,
+                                icon: "error",
+                            });
+                            if (value) {
+                                location.reload();
+                            }
+                        }
+                        else {
+                            swal({
+                                    title: "Unknown error",
+                                    text: 'Please try again',
+                                    icon: "error",
+                                })
+                                .then((value) => {
+                                    if (value) {
+                                        location.reload();
+                                    }
+                                });
+
+                        }
+                    }
+                }
+            });
+        } else {
+            $("#passdiv_send").show();
+            swal({
+                title: "Error",
+                text: 'Please fill all the fields',
+                icon: "error",
+            });
+        }
+    });
+    $('#send_submit3').click(function() {
+        var wallet = $("#usdt_wallet").val();
+        var bit_amount = $("#bit_amount").val();
+        var send_pass = $("#send_pass").val();
+
+        if (wallet && bit_amount && send_pass) {
+
+            $('#send_submit3').attr('disabled', 'disabled');
+            $("#loadingText_send").show();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "/dashboard/sendUSDT",
+                data: $("#myUSDTform").serialize(),
+                dataType: 'json',
+                success: function(result) {
+                    $('#send_submit').removeAttr('disabled');
+                    $("#loadingText_send").hide();
+                    console.log(result.error);
+                    var mystat = result.status;
+                    var mymsg = result.error;
+                    var mymsg2 = result.success;
+
+                    if (mystat != "") {
+                        if (mystat == "success") {
+                            $("#trf_wallet").val('');
+                            $("#bit_amount").val('')
+                            swal({
+                                title: "USDT SENT",
                                 text: '' + mymsg2,
                                 icon: "success",
                             }).then((value) => {

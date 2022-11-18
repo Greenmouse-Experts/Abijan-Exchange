@@ -402,7 +402,7 @@ class OrderController extends Controller
 
     public function buyUpdate(Request $request)
     {
-        
+
         if($request->type == "btc" AND $request->unit == "USD"){
             $btc = getCurrentBtcDollar();
             $user = UserWallet::where('user_id', $request->user_id)->first();
@@ -429,6 +429,65 @@ class OrderController extends Controller
             $user = UserWallet::where('user_id', $request->user_id)->first();
             $usercurr = $user->btc;
             $user->btc = $usercurr + $round;
+            $user->update();
+        }
+
+        //eth
+        if($request->type == "eth" AND $request->unit == "USD"){
+            $btc = getCurrentEthDollar();
+            $user = UserWallet::where('user_id', $request->user_id)->first();
+            $total = $request->amount/$btc;
+            $round = number_format($total, 7);
+            $usercurr = $user->eth;
+            $user->eth = $usercurr + $round;
+            $user->update();
+        }
+        if($request->type == "eth" AND $request->unit == "BTC"){
+            $btc = getCurrentEthDollar();
+            $user = UserWallet::where('user_id', $request->user_id)->first();
+            $usercurr = $user->eth;
+            $user->eth = $usercurr + $request->amount;
+            $user->update();
+        }
+        if($request->type == "eth" AND $request->unit == "NGN"){
+            //dd($request->unit, $request->type);
+            $btc = getCurrentEthDollar();
+            $rate = rates()[2]['buy_rate'];
+            $pr = $btc*$rate;
+            $sp = $request->amount/$pr;
+            $round = number_format($sp, 7);
+            $user = UserWallet::where('user_id', $request->user_id)->first();
+            $usercurr = $user->eth;
+            $user->eth = $usercurr + $round;
+            $user->update();
+        }
+        //usdt
+        if($request->type == "usdt" AND $request->unit == "USD"){
+            $btc = getCurrentUSDTDollar();
+            $user = UserWallet::where('user_id', $request->user_id)->first();
+            $total = $request->amount/$btc;
+            $round = number_format($total, 7);
+            $usercurr = $user->usdt;
+            $user->usdt = $usercurr + $round;
+            $user->update();
+        }
+        if($request->type == "usdt" AND $request->unit == "BTC"){
+            $btc = getCurrentUSDTDollar();
+            $user = UserWallet::where('user_id', $request->user_id)->first();
+            $usercurr = $user->usdt;
+            $user->usdt = $usercurr + $request->amount;
+            $user->update();
+        }
+        if($request->type == "usdt" AND $request->unit == "NGN"){
+            //dd($request->unit, $request->type);
+            $btc = getCurrentUSDTDollar();
+            $rate = rates()[3]['buy_rate'];
+            $pr = $btc*$rate;
+            $sp = $request->amount/$pr;
+            $round = number_format($sp, 7);
+            $user = UserWallet::where('user_id', $request->user_id)->first();
+            $usercurr = $user->usdt;
+            $user->usdt = $usercurr + $round;
             $user->update();
         }
         Order::findOrFail($request->id)->update(["status"=>1]);
