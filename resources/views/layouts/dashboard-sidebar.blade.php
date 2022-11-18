@@ -30,6 +30,7 @@
                 </a>
                 <ul>
                     <li><a href="{{route('naira')}}">Naira</a></li>
+                    <li><a href="{{route('sendbtn')}}">Bitcoin</a></li>
                     <li><a href="#">Ethereum</a></li>
                     <li><a href="#">USDT</a></li>
                 </ul>
@@ -37,14 +38,14 @@
             <li>
                 <a href="{{route('buynsell')}}" aria-expanded="false" class="cbuynsell">
                     <div class="nav_icon_small">
-                        <img src="{{URL::asset('dash/libraries/3_002.svg')}}" alt="">
+                        <img src="{{URL::asset('dash/libraries/6.svg')}}" alt="">
                     </div>
                     <div class="nav_title">
                         <span>Buy &amp; Sell</span>
                     </div>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a class="has-arrow cbitwallet" href="#" aria-expanded="false">
                     <div class="nav_icon_small">
                         <img src="{{URL::asset('dash/libraries/6.svg')}}" alt="">
@@ -58,7 +59,7 @@
                     <li><a href="{{route('wallet_receive')}}">Receive BTC</a></li>
                     <li><a href="{{route('wallet_transactions')}}">Transactions</a></li>
                 </ul>
-            </li>
+            </li> --}}
             {{-- <li>
                 <a class="has-arrow cbitwallet" href="#" aria-expanded="false">
                     <div class="nav_icon_small">
@@ -91,6 +92,7 @@
                     </div>
                     <div class="nav_title">
                         <span>Swap</span>
+                        <small style="font-size: 10px;color: #ff3000;">coming soon!</small>
                     </div>
                 </a>
             </li>
@@ -123,7 +125,7 @@
                     </div>
                     <div class="nav_title">
                         <span>Referrals</span>
-                        <small style="font-size: 10px;color: #ff3000;">coming soon!</small>
+
                     </div>
                 </a>
             </li>

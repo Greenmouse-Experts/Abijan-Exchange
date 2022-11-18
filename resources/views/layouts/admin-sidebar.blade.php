@@ -141,7 +141,7 @@
             <ul>
                 <li><a href="{{route('settings')}}">Settings</a></li>
                 <li><a href="{{route('view_referral')}}">Referrals</a></li>
-                <li><a href="{{route('adminprofile')}}">My Profile</a></li>
+                <li><a href="{{route('adminprofile')}}">Profile</a></li>
             </ul>
         </li>
         <li>
