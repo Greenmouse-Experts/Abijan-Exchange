@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{--<div class="col-lg-12">
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         {!! app('captcha')->display() !!}
@@ -60,7 +60,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                             <!--Password-->
                             <div class="col-md-12 mb-3">
                                 <button type="submit">Login</button>
