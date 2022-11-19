@@ -541,6 +541,9 @@ class HomeController extends Controller
 
         if (is_null($user_wallet->btc_wallet_address)) {
             $address = Http::quidax()->post('wallets/btc/addresses');
+
+            sleep(3);
+            $address = Http::quidax()->get('wallets/btc/addresses/' . $address->json('data.id'));
             //dd($address->json());
 
             $user_wallet->btc_wallet_address = $address->json('data.address');
