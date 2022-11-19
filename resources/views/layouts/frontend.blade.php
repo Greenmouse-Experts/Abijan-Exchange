@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{URL::asset('assets/css/btn.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/party.css')}}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.7.95/css/materialdesignicons.css" rel="stylesheet"/>
     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
     <div class="elfsight-app-c6270b09-80d5-400b-9c3a-55622bfadb28"></div>
     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
@@ -531,6 +532,11 @@
 					});
 				}
 			});
+            $('.toggle-password').click(function(){
+                $(this).children().toggleClass('mdi-eye-outline mdi-eye-off-outline');
+                let input = $(this).prev();
+                input.attr('type', input.attr('type') === 'password' ? 'text' : 'password');
+            });
 		});
 	</script>
 	<script>
