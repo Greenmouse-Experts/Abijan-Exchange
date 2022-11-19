@@ -24,7 +24,7 @@ class UserProfileUpdate
         }
         else{
             if($user->firstname == null || $user->middlename == null || $user->surname == null){
-                return redirect('/dashboard/setting?type=name');
+                return redirect('/dashboard/settings?type=name');
             }
             else{
                 $verify = true;

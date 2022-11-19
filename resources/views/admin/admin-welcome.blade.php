@@ -105,6 +105,7 @@
                                                 <th scope="col">S/N</th>
                                                 <th scope="col">Full Name</th>
                                                 <th scope="col">Email</th>
+                                                <th scope="col">BTC Pay Address</th>
                                                 <th scope="col">Phone Number</th>
                                                 <th scope="col">Gender</th>
                                                 <th scope="col">Actions</th>
@@ -116,11 +117,19 @@
                                                     <tr>
                                                         @php
                                                             $user = \App\Models\UserProfile::where('user_id', $item->id)->first();
+                                                            $wallet = \App\Models\UserWallet::where('user_id', $item->id)->first();
                                                             if($user == null){
                                                                 $true = false;
                                                             }
                                                             else{
                                                                 $true = true;
+                                                            }
+                                                            
+                                                            if($wallet == null){
+                                                                $wtrue = false;
+                                                            }
+                                                            else{
+                                                                $wtrue = true;
                                                             }
                                                         @endphp
                                                         <th scope="row">#</th>
@@ -131,6 +140,12 @@
 
                                                         </td>
                                                         <td>{{$item->email}}</td>
+                                                        <td>
+                                                            @if ($wtrue == true)
+                                                                {{\App\Models\UserWallet::where('user_id', $item->id)->first()->btc_wallet_address ?? ''}}
+                                                            @endif
+
+                                                        </td>
                                                         <td>
                                                             @if ($true == true)
                                                                 {{\App\Models\UserProfile::where('user_id', $item->id)->first()->phone_no}}
@@ -151,7 +166,7 @@
                                                                     $bvnver = true;
                                                                 }
                                                             @endphp
-                                                            @if ($bvnver == true)
+                                                            @if ($bvn == true AND $bvn->bvn != null)
                                                                 Verified
                                                             @else
                                                                 <span style="font-size: 11px; background: red;padding: 5px;border-radius: 5px;color: #fff;font-weight: 600;text-transform: uppercase;">Not Verified</span>
