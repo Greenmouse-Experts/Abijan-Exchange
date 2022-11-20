@@ -35,6 +35,12 @@ class AppServiceProvider extends ServiceProvider
             )->withToken(config('services.quidax.secret'));
         });
 
+        Http::macro('basqet', function () {
+            return Http::baseUrl(
+                sprintf('https://api.basqet.com/v1/')
+            )->withToken(config('services.basqet.public'));
+        });
+
         Schema::defaultStringLength(191);
     }
 }

@@ -34,6 +34,11 @@ return [
     'quidax' => [
         'public' => env('QUI_PUB_KEY'),
         'secret' => env('QUI_SEC_KEY'),
+    ],
+
+    'basqet' => [
+        'public' => env('BAQ_PUB_KEY'),
+        'secret' => env('BAQ_SEC_KEY'),
     ]
 
 ];

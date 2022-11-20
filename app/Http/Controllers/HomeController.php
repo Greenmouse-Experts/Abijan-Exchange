@@ -578,6 +578,17 @@ class HomeController extends Controller
 
     public function receive_eth()
     {
+        /* $address = Http::basqet()->post('transaction', [
+            'currency' => 'USD',
+            'amount' => '1000'
+        ]);
+
+        sleep(3);
+        $address = Http::basqet()->get('transaction/' . $address->json('data.id'));
+        //dd($address->json());
+
+        $address = $address->json('data.address'); */
+
         return view('dashboard.receive-eth');
     }
 
