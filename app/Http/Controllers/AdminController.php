@@ -33,10 +33,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_admin', 0)->orderBy('id', 'desc')->paginate(10);
+        $users = User::where('is_admin', 0)->orderBy('id', 'desc')->paginate(10, ['*'], 'user');
         $naira = UserWallet::where('naira', '>' ,'0.00')->orderBy('id', 'desc')->get();
         $btc = UserWallet::where('btc', '>' ,'0')->orderBy('id', 'desc')->get();
-        $inv = Invoice::orderBy('id', 'desc')->paginate(8);
+        $inv = Invoice::orderBy('id', 'desc')->paginate(8, ['*'], 'invoice');
         return view('admin.admin-welcome', compact('users','btc', 'naira', 'inv'));
     }
 
@@ -130,9 +130,9 @@ class AdminController extends Controller
 
     public function  buy_sell()
     {
-        $buy = Order::where('type', 'Buy')->paginate(5);
-        $sell = Order::where('type', 'sell')->paginate(5);
-        $inv = Invoice::orderBy('id', 'desc')->paginate(5);
+        $buy = Order::where('type', 'Buy')->paginate(5, ['*'], 'buy');
+        $sell = Order::where('type', 'sell')->paginate(5, ['*'], 'sell');
+        $inv = Invoice::orderBy('id', 'desc')->paginate(5, ['*'], 'invoice');
         return view('admin.buy-sell', compact('buy', 'sell', 'inv'));
     }
 

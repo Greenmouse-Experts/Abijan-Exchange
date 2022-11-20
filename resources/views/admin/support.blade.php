@@ -53,7 +53,7 @@
                                             @if ($msg->count() > 0)
                                                 @foreach ($msg as $item)
                                                     <tr>
-                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{ !is_null(request()->query('page')) ? ((int) request()->query('page') * 10) + $loop->iteration - 10 : $loop->iteration}}</td>
                                                         <td>
                                                             {{$item->name}}
                                                         </td>
