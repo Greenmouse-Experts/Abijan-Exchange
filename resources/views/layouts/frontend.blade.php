@@ -19,8 +19,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.7.95/css/materialdesignicons.css" rel="stylesheet"/>
     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
     <div class="elfsight-app-c6270b09-80d5-400b-9c3a-55622bfadb28"></div>
-    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-    <div class="elfsight-app-260cbd82-25a5-4d3b-8275-b9b68a08171c"></div>
+    {{-- <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+    <div class="elfsight-app-260cbd82-25a5-4d3b-8275-b9b68a08171c"></div> --}}
     {!! NoCaptcha::renderJs() !!}
     <title> {{config('app.name')}} </title>
     <style type="text/css">
@@ -369,7 +369,7 @@
     <!-- Footer -->
         @yield('footer')
     <!-- Footer Ends -->
-
+    <script src="//code.tidio.co/eednoanley2wcaryuedslp2qhhydjvgb.js" async></script>
     <!-- MODAL -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -470,7 +470,6 @@
         </div>
     </div>
     <!-- END MODAL -->
-    <script src="//code.tidio.co/f6xeuwwuzfupgmmdthyenwaj4ys1zray.js" async></script>
 
     <script src="{{URL::asset('assets/js/platform.js')}}"></script>
     <script src="{{URL::asset('assets/js/tick.js')}}"></script>
@@ -485,14 +484,12 @@
     <script src="{{URL::asset('assets/js/boot.js')}}"></script>
     <script src="{{URL::asset('assets/js/tick.js')}}"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
-    <script src="//code.tidio.co/f6xeuwwuzfupgmmdthyenwaj4ys1zray.js" async></script>
     <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <!--End mc_embed_signup-->
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <iframe id="tidio-chat-code" title="Tidio Chat code" style="display: none;"></iframe>
-    <div id="tidio-chat"><iframe title="Tidio Chat" id="tidio-chat-iframe" style="display: block; border: none; position: fixed; inset: auto 9px 35px auto; width: 94px; height: 94px; opacity: 1; background: none transparent !important; margin: 0px; max-height: 100vh; max-width: 100vw; transform: translateY(0px); transition: none 0s ease 0s !important; visibility: visible; z-index: 999999999 !important; border-radius: 47px 30px 47px 47px;"></iframe>
+
     <!-- TICKERNEWS FUNCTiON -->
 	<script type="text/javascript">
 		jQuery(function () {
