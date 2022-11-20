@@ -104,7 +104,7 @@
                                                     @if ($buy->count() > 0)
                                                         @foreach ($buy as $item)
                                                             <tr>
-                                                                <th scope="row">#</th>
+                                                                <th scope="row">{{ !is_null(request()->query('buy')) ? ((int) request()->query('buy') * 5) + $loop->iteration - 5 : $loop->iteration}}</th>
                                                                 <td>{{ \App\Models\User::where('id', $item->user_id)->first()->email }}
                                                                 </td>
                                                                 <td>
@@ -288,7 +288,7 @@
                                                     @if ($sell->count() > 0)
                                                         @foreach ($sell as $item)
                                                             <tr>
-                                                                <th scope="row">#</th>
+                                                                <th scope="row">{{ !is_null(request()->query('sell')) ? ((int) request()->query('sell') * 5) + $loop->iteration - 5 : $loop->iteration}}</th>
                                                                 <td>{{ \App\Models\User::where('id', $item->user_id)->first()->email }}
                                                                 </td>
                                                                 <td>
@@ -342,7 +342,7 @@
 
                                             </table>
                                         </div>
-                                        {{ $buy->links() }}
+                                        {{ $sell->links() }}
                                     </div>
                                 </div>
                             </div>

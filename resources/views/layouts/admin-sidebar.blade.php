@@ -142,7 +142,7 @@
             </a>
             <ul>
                 <li><a href="{{route('settings')}}">Settings</a></li>
-                <li><a href="#">Support</a></li>
+                <li><a href="{{route('support')}}">Support</a></li>
                 <li><a href="{{route('view_referral')}}">Referrals</a></li>
                 <li><a href="{{route('adminprofile')}}">Profile</a></li>
             </ul>

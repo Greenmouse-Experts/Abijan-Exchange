@@ -743,13 +743,13 @@
 		})
 	</script>
     </div>
-    <script>
+    {{-- <script>
         $(function() {
             $("form").submit(function() {
                 $('#loader').show();
             });
         });
-    </script>
+    </script> --}}
 </body>
 
 </html>

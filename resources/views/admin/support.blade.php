@@ -21,7 +21,7 @@
                         <!-- begin page title -->
                         <div class="d-block d-sm-flex flex-nowrap align-items-center">
                             <div class="page-title mb-sm-0">
-                                <h4>Send USDT TRC20 Request</h4>
+                                <h4>Send Bitcoin Request</h4>
                             </div>
                         </div>
                         <!-- end page title -->
@@ -40,57 +40,33 @@
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>S/N</th>
-                                                <th>Withdrawer Name</th>
+                                                <th>Name</th>
                                                 <th>Email</th>
-                                                <th>Amount</th>
-                                                <th>To Wallet</th>
-                                                <th>Charges</th>
+                                                <th>Phone</th>
+                                                <th>Subject</th>
+                                                <th>Message</th>
                                                 <th>Date</th>
-                                                <th>Actions</th>
+                                                <th>Reply</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if ($btc->count() > 0)
-                                                @foreach ($btc as $item)
+                                            @if ($msg->count() > 0)
+                                                @foreach ($msg as $item)
                                                     <tr>
-                                                        @php
-                                                            $userP = \App\Models\UserProfile::where('user_id', $item->user_id)->first();
-                                                            $user = \App\Models\User::where('id', $item->user_id)->first();
-                                                            $userW = \App\Models\UserWallet::where('user_id', $item->user_id)->first();
-                                                            $userB = \App\Models\UserBank::where('user_id', $item->user_id)->first();
-                                                            if($userP == null){
-                                                                $true = false;
-                                                            }
-                                                            else{
-                                                                $true = true;
-                                                            }
-                                                        @endphp
                                                         <td>{{ !is_null(request()->query('page')) ? ((int) request()->query('page') * 10) + $loop->iteration - 10 : $loop->iteration}}</td>
                                                         <td>
-                                                            @if ($true == true)
-                                                                {{\App\Models\UserProfile::where('user_id', $item->user_id)->first()->firstname}} {{\App\Models\UserProfile::where('user_id', $item->user_id)->first()->surname}}
-                                                            @endif
+                                                            {{$item->name}}
                                                         </td>
-                                                        <td>{{$user->email}}</td>
+                                                        <td>{{$item->email}}</td>
                                                         <td>
-                                                            {{$item->btc_amount}}
+                                                            {{$item->phone}}
                                                         </td>
                                                         <td>
-                                                            {{$item->trf_wallet}}
+                                                            {{$item->subject}}
                                                         </td>
-                                                        <td>{{$item->transfer_fee}}</td>
+                                                        <td>{{$item->message}}</td>
                                                         <td>{{\Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</td>
-                                                        <td>
-                                                            @if ($item->status == 0)
-                                                                <form action="{{route('usdt.update')}}" method="POST">
-                                                                    @csrf
-                                                                    <input type="hidden" name="id" value="{{$item->id}}">
-                                                                    <button type="submit" class="btn btn-success">Approve</button>
-                                                                </form>
-                                                            @else
-                                                                Approved
-                                                            @endif
-                                                        </td>
+                                                        <td><a href="mailto:{{$item->email}}">Reply</a></td>
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -105,7 +81,7 @@
 
                                     </table>
                                 </div>
-                                {{ $btc->links() }}
+                                {{ $msg->links() }}
                             </div>
                         </div>
                     </div>

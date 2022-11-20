@@ -124,7 +124,7 @@
                                                             else{
                                                                 $true = true;
                                                             }
-                                                            
+
                                                             if($wallet == null){
                                                                 $wtrue = false;
                                                             }
@@ -132,7 +132,7 @@
                                                                 $wtrue = true;
                                                             }
                                                         @endphp
-                                                        <th scope="row">#</th>
+                                                        <th scope="row">{{ !is_null(request()->query('user')) ? ((int) request()->query('user') * 10) + $loop->iteration - 10 : $loop->iteration}}</th>
                                                         <td>
                                                             @if ($true == true)
                                                                 {{\App\Models\UserProfile::where('user_id', $item->id)->first()->firstname}} {{\App\Models\UserProfile::where('user_id', $item->id)->first()->surname}}

@@ -39,7 +39,7 @@
                                     </a>
                                 </li>
 
-                                {{-- <li>
+                                <li>
                                     <a href="{{route('sent_mails')}}">
                                         <i class="ti-announcement"></i> <span> <span>Sent Mails</span></span>
                                     </a>
@@ -55,7 +55,7 @@
                                     <a href="{{route('mailbox_archive')}}">
                                         <i class="ti-briefcase"></i> <span> <span>Archive</span> </span>
                                     </a>
-                                </li> --}}
+                                </li>
                             </ul>
                         </div>
                     </div>

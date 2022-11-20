@@ -35,9 +35,9 @@
                         </div>
                         <div class="col-md-3">
                             <div class="email-sidebar white_box">
-                                <button data-toggle="modal" data-target="#messageModalCenter"
+                                {{-- <button data-toggle="modal" data-target="#messageModalCenter"
                                     class="btn_1 w-100 mb-2 btn-lg email-gradient gradient-9-hover email__btn waves-effect"><i
-                                        class="ti-plus"></i>COMPOSE</button>
+                                        class="ti-plus"></i>COMPOSE</button> --}}
                                 <ul class="text-left mt-2">
                                     <li>
                                         <a href="{{ route('message_center') }}">
@@ -86,11 +86,11 @@
 
                                 <div class="QA_table">
                                     <!-- table-responsive -->
-                                    <a href="javascript: void(0)" class="deletTop inbox" title="Delete message">
+                                    {{-- <a href="javascript: void(0)" class="deletTop inbox" title="Delete message">
                                         <p class=""> <i class="ti-trash"></i> Delete</p>
                                     </a><a href="javascript: void(0)" class="restoreTop archive" title="Send back to inbox">
                                         <p class=""> <i class="fas fa-mail-bulk"></i> Restore to Inbox</p>
-                                    </a>
+                                    </a> --}}
                                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                                         <div id="DataTables_Table_0_filter" class="dataTables_filter"><label><i
                                                     class="ti-search"></i>

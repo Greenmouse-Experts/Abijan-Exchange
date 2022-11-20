@@ -50,7 +50,7 @@
                                                                 $true = true;
                                                             }
                                                         @endphp
-                                                        <th scope="row">#</th>
+                                                        <th scope="row">{{ !is_null(request()->query('page')) ? ((int) request()->query('page') * 10) + $loop->iteration - 10 : $loop->iteration}}</th>
                                                         <td>
                                                             @if ($true == true)
                                                                 {{\App\Models\UserProfile::where('user_id', $item->id)->first()->firstname}} {{\App\Models\UserProfile::where('user_id', $item->id)->first()->surname}}
