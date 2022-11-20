@@ -104,7 +104,7 @@
                                                     @if ($buy->count() > 0)
                                                         @foreach ($buy as $item)
                                                             <tr>
-                                                                <th scope="row">#</th>
+                                                                <th scope="row">{{$loop->iteration}}</th>
                                                                 <td>{{ \App\Models\User::where('id', $item->user_id)->first()->email }}
                                                                 </td>
                                                                 <td>

@@ -9,7 +9,7 @@
 @endsection
 
 @section('page-content')
-<!-- Start Breadcrumb 
+<!-- Start Breadcrumb
     ============================================= -->
 <div class="breadcrumb-area dark bg-cover text-center text-light" style="background: url(assets/images/3.jpg);">
     <div class="container">
@@ -91,7 +91,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <input class="form-control" id="name" name="name" placeholder="Name" type="text">
-                                        
+
                                         @if ($errors->has('name'))
                                             <span class="alert alert-error">
                                                 {{ $errors->first('name') }}
@@ -126,7 +126,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <input class="form-control" id="subject" name="subject" placeholder="Subject" type="text">
-                                        
+
                                         @if ($errors->has('subject'))
                                             <span class="alert alert-error">
                                                 {{ $errors->first('subject') }}
@@ -149,8 +149,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <input type="submit" value="Send Message" class="btn btn-primary text-light">
-                                        
+                                    <button type="submit" class="btn btn-primary text-light">
+                                        Send Message
+                                    </button>
                                 </div>
                             </div>
                             <!-- Alert Message -->

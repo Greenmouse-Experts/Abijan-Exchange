@@ -110,7 +110,7 @@
                                                     @foreach ($users as $item)
                                                     <tr>
                                                         <td scope="" tabindex="0">
-                                                            <p>#</p>
+                                                            <p>{{$loop->iteration}}</p>
                                                         </td>
                                                         <td>
                                                             <p class=""

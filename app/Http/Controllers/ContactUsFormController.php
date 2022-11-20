@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Mail;
+use App\Models\ContactUs;
 
 class ContactUsFormController extends Controller
 {
@@ -15,7 +16,15 @@ class ContactUsFormController extends Controller
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
             'subject'=>'required',
             'message' => 'required'
-         ]);
+        ]);
+
+        $c = new ContactUs();
+        $c->name = $request->name;
+        $c->email = $request->email;
+        $c->phone = $request->phone;
+        $c->subject = $request->subject;
+        $c->message = $request->message;
+        $c->save();
         //  Send mail to admin
         \Mail::send('mail', array(
             'name' => $request->get('name'),

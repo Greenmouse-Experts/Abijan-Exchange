@@ -50,7 +50,7 @@
                                                                 $true = true;
                                                             }
                                                         @endphp
-                                                        <th scope="row">#</th>
+                                                        <th scope="row">{{$loop->iteration}}</th>
                                                         <td>
                                                             @if ($true == true)
                                                                 {{\App\Models\UserProfile::where('user_id', $item->id)->first()->firstname}} {{\App\Models\UserProfile::where('user_id', $item->id)->first()->surname}}

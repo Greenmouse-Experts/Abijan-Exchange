@@ -8,6 +8,7 @@ use App\Models\UserProfile;
 use App\Models\NairaTransaction;
 use App\Models\Setting;
 use App\Models\BtcTrans;
+use App\Models\ContactUs;
 use App\Models\USDTTrans;
 use App\Models\EthTrans;
 use App\Models\Rate;
@@ -57,6 +58,11 @@ class AdminController extends Controller
     public function send_usdt(){
         $btc = USDTTrans::where('fee_method', 'flat_rate')->paginate(10);
         return view('admin.send-usdt', compact('btc'));
+    }
+
+    public function support(){
+        $msg = ContactUs::orderBy('id', 'desc')->paginate(10);
+        return view('admin.support', compact('msg'));
     }
 
     public function send_eth(){

@@ -65,7 +65,7 @@
                                                                 $true = true;
                                                             }
                                                         @endphp
-                                                        <td>#</td>
+                                                        <td>{{$loop->iteration}}</td>
                                                         <td>
                                                             @if ($true == true)
                                                                 {{\App\Models\UserProfile::where('user_id', $item->user_id)->first()->firstname}} {{\App\Models\UserProfile::where('user_id', $item->user_id)->first()->surname}}

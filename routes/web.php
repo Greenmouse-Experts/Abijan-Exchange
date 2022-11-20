@@ -134,6 +134,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/swap_request', [App\Http\Controllers\AdminController::class, 'swap_request'])->name('swap_request');
     Route::get('/message-center', [App\Http\Controllers\AdminController::class, 'message_center'])->name('message_center');
     Route::get('/sent-mails', [App\Http\Controllers\AdminController::class, 'sent_mails'])->name('sent_mails');
+    Route::get('/support', [App\Http\Controllers\AdminController::class, 'support'])->name('support');
     Route::get('/mailbox_trash', [App\Http\Controllers\AdminController::class, 'mailbox_trash'])->name('mailbox_trash');
     Route::get('/mailbox_archive', [App\Http\Controllers\AdminController::class, 'mailbox_archive'])->name('mailbox_archive');
     Route::get('/profile', [App\Http\Controllers\AdminController::class, 'adminprofile'])->name('adminprofile');
