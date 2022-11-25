@@ -47,7 +47,7 @@
                                             <div class="exchange_widget">
                                                 <form id="myBuyform" class="currency_validate">
                                                     <div class="form-group buyprice">Buy 1 BTC @
-                                                        ₦{{ number_format(settings()->btc_buy_rate) }}.00</div>
+                                                        ₦{{ number_format(getCurrentBtcDollar() * rates()[0]['buy_rate'], 2) }}</div>
                                                     <div class="form-group">
                                                         <label>Currency</label>
                                                         <div class="input-group ">
@@ -75,7 +75,7 @@
                                         <div class="white_card_body tab-pane fade" id="quickselldiv">
                                             <div class="exchange_widget">
                                                 <div class="form-group buyprice">Sell 1 BTC @
-                                                    ₦{{ number_format(settings()->btc_sell_rate) }}.00</div>
+                                                    ₦{{ number_format(getCurrentBtcDollar() * rates()[0]['sell_rate'], 2) }}</div>
                                                 <div class="form-group">
                                                     <label>Currency</label>
                                                     <div class="input-group ">
@@ -254,7 +254,6 @@
                                                             <option data-display="Automatic" value="Automatic"
                                                                 selected="selected">Automatic</option>
                                                         </select>
-
                                                     </div>
                                                     <div class="input-group" style="display: none;" id="sellfrom_crypto">
                                                         <select name="sell_from_crypto" id="sell_from_crypto"

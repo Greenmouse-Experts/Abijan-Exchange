@@ -18,11 +18,14 @@ use App\Models\Order;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Auth;
+
+use function PHPUnit\Framework\isNull;
 
 class AdminController extends Controller
 {
@@ -110,12 +113,24 @@ class AdminController extends Controller
         $set->btc_wallet = $request->btc_wallet;
         $set->eth_wallet = $request->eth_wallet;
         $set->receive_btc_wallet = $request->receive_btc_wallet;
+        $set->receive_usdt_wallet = $request->receive_usdt_wallet;
+        $set->receive_eth_wallet = $request->receive_eth_wallet;
         $set->bch_wallet = $request->bch_wallet;
         $set->usdt_wallet = $request->usdt_wallet;
         $set->pm_name = $request->pm_name;
         $set->pm_number = $request->pm_number;
-        $response = cloudinary()->upload($request->file('btc_r_qr_code')->getRealPath())->getSecurePath();
-        $set->btc_r_qr_code = $response;
+        if ($request->hasFile('btc_r_qr_code')) {
+            $response = cloudinary()->upload($request->file('btc_r_qr_code')->getRealPath())->getSecurePath();
+            $set->btc_r_qr_code = $response;
+        }
+        if ($request->hasFile('eth_qr_code')) {
+            $response = cloudinary()->upload($request->file('eth_qr_code')->getRealPath())->getSecurePath();
+            $set->eth_qr_code = $response;
+        }
+        if ($request->hasFile('usdt_qr_code')) {
+            $response = cloudinary()->upload($request->file('usdt_qr_code')->getRealPath())->getSecurePath();
+            $set->usdt_qr_code = $response;
+        }
         $set->update();
 
         Alert::success('Success', 'Settings Updated Successfully!');
@@ -188,7 +203,8 @@ class AdminController extends Controller
 
     public function createUser(){
         $users = User::where('is_admin', 1)->orderBy('id', 'desc')->get();
-        return view('admin.create_user', compact('users'));
+        $roles = Role::all();
+        return view('admin.create_user', compact('users', 'roles'));
     }
 
     public function setRate(){
@@ -211,6 +227,7 @@ class AdminController extends Controller
         $user->affiliate_id = Str::random(10);
         $user->email_verified_at = \Carbon\Carbon::now();
         $user->password = Hash::make($request->password);
+        $user->assignRole($request->input('role'));
         if($user->save()){
             $profile->user_id = $user->id;
             $profile->firstname = $request->firstname;
@@ -229,14 +246,18 @@ class AdminController extends Controller
 
     public function AddRate(Request $request)
     {
-        Rate::create([
-            'e_currency' => $request->currency,
-            'port_short' => $request->port_short,
-            'port_type' => 'crypto',
-            'buy_rate' => $request->buy_rate,
-            'sell_rate' => $request->sell_rate,
-            'fee' => $request->charges,
-        ]);
+        $rate = new Rate();
+        $rate->e_currency = $request->currency;
+        $rate->buy_rate = $request->buy_rate;
+        $rate->sell_rate = $request->sell_rate;
+        $rate->port_short = $request->port_short;
+        $rate->port_type = 'crypto';
+        $rate->fee = $request->charges;
+        if ($request->hasFile('curr_img')) {
+            $response = cloudinary()->upload($request->file('curr_img')->getRealPath())->getSecurePath();
+            $rate->currency_img = $response;
+        }
+        $rate->save();
         Alert::success('Success', 'Rate Added Successfully!');
         return back();
     }
@@ -249,6 +270,10 @@ class AdminController extends Controller
         $rate->sell_rate = $request->sell_rate;
         $rate->port_short = $request->port_short;
         $rate->fee = $request->charges;
+        if ($request->hasFile('curr_img')) {
+            $response = cloudinary()->upload($request->file('curr_img')->getRealPath())->getSecurePath();
+            $rate->currency_img = $response;
+        }
         $rate->save();
         Alert::success('Success', 'Rate Updated Successfully!');
         return back();

@@ -24,9 +24,9 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{route('usdt')}}">Send USDT</a>
                                         </li>
-                                        {{-- <li class="nav-item">
-                                            <a class="nav-link" href="{{route('wallet_receive')}}"> Receive BTC</a>
-                                        </li> --}}
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{route('receive_usdt')}}"> Receive USDT</a>
+                                        </li>
                                         <li class="nav-item">
                                             <a class="nav-link active" href="#" data-toggle="tab"> Transactions</a>
                                         </li>

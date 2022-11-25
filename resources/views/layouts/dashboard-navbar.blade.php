@@ -11,11 +11,11 @@
                         </div>
                         <div class="header_right d-flex justify-content-between align-items-center">
                             <div class="header_notification_warp d-flex align-items-center">
-                                <!--<li>
+                                <li>
                                     <a class="CHATBOX_open nav-link-notify1" href="javascript: void(0)">
                                         <img src="{{URL::asset('dash/libraries/msg.svg')}}" title="You have no unread messages">
                                     </a>
-                                </li>-->
+                                </li>
                                 <li>
                                     <a class="bell_notification_clicker nav-link-notify1" href="javascript: void(0)">
                                         <img src="{{URL::asset('dash/libraries/bell.svg')}}" class="clickimage"
@@ -106,7 +106,7 @@
                                             <h5>{{$fullname}}</h5>
                                         </div>
                                         <div class="profile_info_details">
-                                            <a href="/dashboard/settings?type=verify_me">Verify Me</a> 
+                                            <a href="/dashboard/settings?type=verify_me">Verify Me</a>
                                             <a href="/dashboard/profile">My Profile</a>
                                             <a onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();" href="#">Log Out </a>

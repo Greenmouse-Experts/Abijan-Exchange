@@ -473,7 +473,17 @@ $(function() {
 
         if ($(this).hasClass('showbal')) {
             //Show the balance
-            $.ajax({
+            $('.hidebal').show();
+            $('.showbal').hide();
+            $('.totalbal').html(txn_total_show);
+            $('.btcbal').html(txn_btc + " BTC");
+            $('.btcbal_upto').html(txn_btc_upto + " BTC");
+            $('.ngnbal_upto').html("₦ " + txn_ngn_upto);
+            $('.ngnbal').html(txn_ngn_show);
+            $('.usdbal').html(txn_usd_show);
+            var url = window.location.href.split('#')[0];
+            history.replaceState('', document.title, url);
+            /* $.ajax({
                 type: "POST",
                 url: "readnotice",
                 data: {
@@ -494,10 +504,15 @@ $(function() {
                     }
 
                 }
-            });
+            }); */
         } else {
             //Hide the balance
-            $.ajax({
+            $('.showbal').show();
+            $('.hidebal').hide();
+            $('.balspan').html('***');
+            var url = window.location.href.split('#')[0];
+            history.replaceState('', document.title, url);
+            /* $.ajax({
                 type: "POST",
                 url: "readnotice",
                 data: {
@@ -505,15 +520,11 @@ $(function() {
                 },
                 success: function(result) {
                     if (result) {
-                        $('.showbal').show();
-                        $('.hidebal').hide();
-                        $('.balspan').html('***');
-                        var url = window.location.href.split('#')[0];
-                        history.replaceState('', document.title, url);
+
                     }
 
                 }
-            });
+            }); */
         }
     });
 
@@ -2035,8 +2046,10 @@ $(function() {
                         } else if (mystat === "pm-auto") {
                             /* var pst = result.acctnamesell.trim();
                             var divs = result.div.trim(); */
-                            $("#currency_sell").before(divs);
-                            $(pst).submit();
+                            $("#PAYMENT_AMOUNT").val(result.amount)
+                            //console.log($("#PAYMENT_AMOUNT").val());
+                            //$("#currency_sell").before(divs);
+                            $('#pm_form').submit();
                         } else if (mystat == "error") {
 
                             /* var rez = result.acctnamesell.trim();
@@ -2197,7 +2210,7 @@ $(function() {
                     if (great && buy_from != "Naira Wallet") {
 
                         var wrapper = document.createElement("span");
-                        wrapper.innerHTML = '<h4><strong>WARNING! WARNING!!</strong><i>DO NOT INCLUDE BITCOIN OR BTC ,NO THIRD PARTY AND COMPANY PAYMENT</i></h4><p><i><strong>NOTE-</strong>PAYMENT MUST COME FROM YOUR PERSONAL NAME USED&nbsp;</i></p><p>==================================================</p><p><i><strong>NOTE</strong>-<strong>HOW CBN TRACK BITCOIN TRANSACTION &nbsp;track bitcoin transaction</strong> when you include bitcoin or btc or dollar or perfect money or USDT or any form of crypto-currency in &nbsp;ur online bank pay remark or memo or when you are paying cash or any means of &nbsp;payment.</i><br>===================================================</p><p><i><strong>&nbsp;What do i need put in my memo/remark when transferring money to us ? You can put the Trans ID OR UR user I.D on nairadirect or your name, generated for you after making the order for Naira deposit.An invoice will be generated for every order you make and you can make use of that when you are transferring</strong> money into our bank&nbsp;</i><br>====================================================</p><p><i><strong>NOTE</strong>- What if include bitcoin in my payment remark? we would NOT return your money because, we believe CBN would have noticed such a payment that carries or comes with the bitcoin as a remark and CBN is responsible for withholding the such payment</i></p>';
+                        wrapper.innerHTML = '<h4><strong>WARNING! WARNING!!</strong><i>DO NOT INCLUDE BITCOIN OR BTC ,NO THIRD PARTY AND COMPANY PAYMENT</i></h4><p><i><strong>NOTE-</strong>PAYMENT MUST COME FROM YOUR PERSONAL NAME USED&nbsp;</i></p><p>==================================================</p><p><i><strong>NOTE</strong>-<strong>HOW CBN TRACK BITCOIN TRANSACTION &nbsp;track bitcoin transaction</strong> when you include bitcoin or btc or dollar or perfect money or USDT or any form of crypto-currency in &nbsp;ur online bank pay remark or memo or when you are paying cash or any means of &nbsp;payment.</i><br>===================================================</p><p><i><strong>&nbsp;What do i need put in my memo/remark when transferring money to us ? You can put the Trans ID OR UR user I.D on abijanexchange or your name, generated for you after making the order for Naira deposit.An invoice will be generated for every order you make and you can make use of that when you are transferring</strong> money into our bank&nbsp;</i><br>====================================================</p><p><i><strong>NOTE</strong>- What if include bitcoin in my payment remark? we would NOT return your money because, we believe CBN would have noticed such a payment that carries or comes with the bitcoin as a remark and CBN is responsible for withholding the such payment</i></p>';
 
                         swal({
                             title: 'Warning Notice!',
@@ -3109,7 +3122,7 @@ $(function() {
                     if (great) {
 
                         var wrapper = document.createElement("span");
-                        wrapper.innerHTML = '<h4><strong>WARNING! WARNING!!</strong><i>DO NOT INCLUDE BITCOIN OR BTC ,NO THIRD PARTY AND COMPANY PAYMENT</i></h4><p><i><strong>NOTE-</strong>PAYMENT MUST COME FROM YOUR PERSONAL NAME USED&nbsp;</i></p><p>==================================================</p><p><i><strong>NOTE</strong>-<strong>HOW CBN TRACK BITCOIN TRANSACTION &nbsp;track bitcoin transaction</strong> when you include bitcoin or btc or dollar or perfect money or USDT or any form of crypto-currency in &nbsp;ur online bank pay remark or memo or when you are paying cash or any means of &nbsp;payment.</i><br>===================================================</p><p><i><strong>&nbsp;What do i need put in my memo/remark when transferring money to us ? You can put the Trans ID OR UR user I.D on nairadirect or your name, generated for you after making the order for Naira deposit.An invoice will be generated for every order you make and you can make use of that when you are transferring</strong> money into our bank&nbsp;</i><br>====================================================</p><p><i><strong>NOTE</strong>- What if include bitcoin in my payment remark? we would NOT return your money because, we believe CBN would have noticed such a payment that carries or comes with the bitcoin as a remark and CBN is responsible for withholding the such payment</i></p>';
+                        wrapper.innerHTML = '<h4><strong>WARNING! WARNING!!</strong><i>DO NOT INCLUDE BITCOIN OR BTC ,NO THIRD PARTY AND COMPANY PAYMENT</i></h4><p><i><strong>NOTE-</strong>PAYMENT MUST COME FROM YOUR PERSONAL NAME USED&nbsp;</i></p><p>==================================================</p><p><i><strong>NOTE</strong>-<strong>HOW CBN TRACK BITCOIN TRANSACTION &nbsp;track bitcoin transaction</strong> when you include bitcoin or btc or dollar or perfect money or USDT or any form of crypto-currency in &nbsp;ur online bank pay remark or memo or when you are paying cash or any means of &nbsp;payment.</i><br>===================================================</p><p><i><strong>&nbsp;What do i need put in my memo/remark when transferring money to us ? You can put the Trans ID OR UR user I.D on abijanexchange or your name, generated for you after making the order for Naira deposit.An invoice will be generated for every order you make and you can make use of that when you are transferring</strong> money into our bank&nbsp;</i><br>====================================================</p><p><i><strong>NOTE</strong>- What if include bitcoin in my payment remark? we would NOT return your money because, we believe CBN would have noticed such a payment that carries or comes with the bitcoin as a remark and CBN is responsible for withholding the such payment</i></p>';
 
                         $('#dep_submit').removeAttr('disabled');
                         $("#loadingText_dep").hide();

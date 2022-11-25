@@ -24,9 +24,9 @@
                                             <li class="nav-item">
                                                 <a class="nav-link active" href="#bitdiv" data-toggle="tab">Send Eth</a>
                                             </li>
-                                            {{-- <li class="nav-item">
+                                            <li class="nav-item">
                                                 <a class="nav-link" href="{{route('receive_eth')}}"> Receive Eth</a>
-                                            </li> --}}
+                                            </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="{{route('eth_trans')}}"> Transactions</a>
                                             </li>

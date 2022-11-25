@@ -185,6 +185,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+        charlesassets\LaravelPerfectMoney\LaravelPerfectMoneyServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -215,6 +216,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'PerfectMoney' => charlesassets\LaravelPerfectMoney\PerfectMoney::class,
     ])->toArray(),
 
 ];

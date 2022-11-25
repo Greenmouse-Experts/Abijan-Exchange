@@ -147,7 +147,7 @@
                                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                                             data-parent="#accordion_ex">
                                             <div class="card-body">
-                                                <p>Your email address on Naira Direct can be changed anytime, but you need
+                                                <p>Your email address on Abijan Exchange can be changed anytime, but you need
                                                     to verify the email anytime you make the change.</p>
                                             </div>
                                         </div>
@@ -158,7 +158,7 @@
                                                 <a href="#" class="btn collapsed" type="button"
                                                     data-toggle="collapse" data-target="#collapseTwo"
                                                     aria-expanded="false" aria-controls="collapseTwo">
-                                                    Can I use someone else's details on my Naira Direct account?
+                                                    Can I use someone else's details on my Abijan Exchange account?
                                                 </a>
                                             </h2>
                                         </div>
@@ -166,7 +166,7 @@
                                             data-parent="#accordion_ex">
                                             <div class="card-body">
                                                 <p>No, you can't link personal information that isn't yours to your own
-                                                    Naira Direct account.</p>
+                                                    Abijan Exchange account.</p>
                                             </div>
                                         </div>
                                     </div>

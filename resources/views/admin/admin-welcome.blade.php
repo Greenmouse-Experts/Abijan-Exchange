@@ -90,6 +90,7 @@
                             </div>
                         </div>
                     </div>
+                    @can('create-admin')
                     <div class="col-12 col-lg-12">
                         <div class="card card-statistics">
                             <div class="card-header">
@@ -188,6 +189,9 @@
 
                         </div>
                     </div>
+                    @endcan
+
+                    @can('update-wallet-request')
                     <div class="row">
                         <div class="col-xxl-12 mb-30">
                             <div class="card card-statistics h-100 mb-0">
@@ -295,6 +299,7 @@
                             </div>
                         </div>
                     </div>
+                    @endcan
                 </div>
             </div>
         </div>

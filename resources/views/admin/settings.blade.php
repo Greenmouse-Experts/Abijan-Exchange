@@ -36,29 +36,35 @@
                         <div class="col-md-3">
                             <div class="email-sidebar white_box">
                                 <ul class="text-left mt-2">
-                                    <li class="active">
-                                        <a href="{{ 'settings' }}">
-                                            <i class="ti-settings"></i> <span> <span>Settings</span> </span>
-                                        </a>
-                                    </li>
+                                    @can('update-settings')
+                                        <li class="active">
+                                            <a href="{{ route('settings') }}">
+                                                <i class="ti-settings"></i> <span> <span>Settings</span> </span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('set-rate')
+                                        <li>
+                                            <a href="{{ route('set_rate') }}">
+                                                <i class="ti-credit-card"></i> <span> <span>Rates</span></span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('create-admin')
+                                        <li>
+                                            <a href="{{ route('create_admin') }}">
+                                                <i class="ti-user"></i> <span> <span>Admin User</span> </span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('role-create')
+                                        <li>
+                                            <a href="{{ route('roles.index') }}">
+                                                <i class="ti-briefcase"></i> <span> <span>Roles</span> </span>
+                                            </a>
+                                        </li>
+                                    @endcan
 
-                                    <li>
-                                        <a href="{{ 'set_rate' }}">
-                                            <i class="ti-credit-card"></i> <span> <span>Rates</span></span>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="{{ 'create_admin' }}">
-                                            <i class="ti-user"></i> <span> <span>Admin User</span> </span>
-                                        </a>
-                                    </li>
-
-                                    {{-- <li>
-                                        <a href="{{ 'mailbox_archive' }}">
-                                            <i class="ti-briefcase"></i> <span> <span>Archive</span> </span>
-                                        </a>
-                                    </li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -185,6 +191,38 @@
                                                     <div class="common_input mb_20">
                                                         <label>Receive BTC Wallet QrCode</label>
                                                         <input name="btc_r_qr_code" id="btc_r_qr_code" type="file" accept="image/*" value=""
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="common_input mb_20">
+                                                        <label>Receive Ethereum Wallet</label>
+                                                        <input name="receive_eth_wallet" id="receive_eth_wallet" type="text" value="{{settings()->receive_eth_wallet}}" maxlength="100"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="common_input mb_20">
+                                                        <label>Receive Ethereum Wallet QrCode</label>
+                                                        <input name="eth_qr_code" id="eth_qr_code" type="file" accept="image/*" value=""
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="common_input mb_20">
+                                                        <label>Receive USDT Wallet</label>
+                                                        <input name="receive_usdt_wallet" id="receive_usdt_wallet" type="text" value="{{settings()->receive_usdt_wallet}}" maxlength="100"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="common_input mb_20">
+                                                        <label>Receive USDT Wallet QrCode</label>
+                                                        <input name="usdt_qr_code" id="usdt_qr_code" type="file" accept="image/*" value=""
                                                             class="form-control">
                                                     </div>
                                                 </div>

@@ -86,35 +86,34 @@
                 </a>
             </li> --}}
             <li>
-                <a href="#" aria-expanded="false" class="cbuynsell">
+                <a href="{{route('coming.soon')}}" aria-expanded="false" class="cbuynsell">
                     <div class="nav_icon_small">
                         <img src="{{URL::asset('dash/libraries/swap.png')}}" alt="">
                     </div>
                     <div class="nav_title">
                         <span>Swap</span>
-                        <small style="font-size: 10px;color: #ff3000;">coming soon!</small>
+                        {{-- <small style="font-size: 10px;color: #ff3000;">coming soon!</small> --}}
                     </div>
                 </a>
             </li>
             <li>
-                <a href="#" aria-expanded="false" class="cbuynsell">
+                <a href="{{route('coming.soon')}}" aria-expanded="false" class="cbuynsell">
                     <div class="nav_icon_small">
                         <img src="{{URL::asset('dash/libraries/peer-to-peer.png')}}" alt="">
                     </div>
                     <div class="nav_title">
                         <span>P2P</span>
-                        <small style="font-size: 10px;color: #ff3000;">coming soon!</small>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="#" aria-expanded="false" class="cbuynsell">
+                <a href="{{route('coming.soon')}}" aria-expanded="false" class="cbuynsell">
                     <div class="nav_icon_small">
                         <img src="{{URL::asset('dash/libraries/bill (1).png')}}" alt="">
                     </div>
                     <div class="nav_title">
                         <span>Utility Bill</span>
-                        <small style="font-size: 10px;color: #ff3000;">coming soon!</small>
+                        {{-- <small style="font-size: 10px;color: #ff3000;">coming soon!</small> --}}
                     </div>
                 </a>
             </li>
