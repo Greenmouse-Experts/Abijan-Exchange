@@ -39,14 +39,17 @@
                                     </div>
                                 </div>
                                 <div class="tab-content">
-                                    
+
                                     @if (Auth::user()->bank->bvn == null)
                                         <div class="white_card_body tab-pane fade active show" id="nairadiv">
                                             <div class="exchange_widget">
                                                 <div class="form-group" id="bankacctdiv">
-                                                   <label>Bank Account</label> <small style="float:right;"><a
+                                                   <label>Bank Account</label>
+                                                    <small style="float:right;">
+                                                        <a
                                                             href="/dashboard/settings?type=verify_me"><i class="fas fa-edit"></i> Add/Edit
-                                                            Bank</a></small>
+                                                            Bank</a>
+                                                    </small>
                                                     <div class="input-group ">
                                                         <select name="bank_name" id="bank_name"
                                                             class="form-control nice_Select" style="display: none;">
@@ -129,7 +132,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    
+
                                     @endif
                                 </div>
                             </div>

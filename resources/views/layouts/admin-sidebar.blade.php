@@ -19,48 +19,57 @@
                 </div>
             </a>
         </li>
-        <li>
-            <a aria-expanded="false" class="has-arrow cngnwallet">
-                <div class="nav_icon_small">
-                    <img src="{{URL::asset('admin/libraries/2_002.svg')}}" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Wallet Requests</span>
-                </div>
-            </a>
-            <ul>
-                <li><a href="{{route('Wrequest')}}">Withdraw Request</a></li>
-                <li><a href="{{route('Drequest')}}">Deposit Request</a></li>
-                {{-- <li><a href="">Transactions</a></li> --}}
-            </ul>
-        </li>
-        <li>
-            <a href="{{route('buy_sell')}}" aria-expanded="false" class="cbuynsell">
-                <div class="nav_icon_small">
-                    <img src="{{URL::asset('admin/libraries/3_002.svg')}}" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Buy &amp; Sell</span>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a class="has-arrow cbitwallet" href="#" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="{{URL::asset('admin/libraries/6.svg')}}" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Wallet Request</span>
-                </div>
-            </a>
-            <ul>
-                <li><a href="{{route('send_request')}}">Send BTC</a></li>
-                <li><a href="{{route('send_usdt')}}">Send USDT</a></li>
-                <li><a href="{{route('send_eth')}}">Send ETH</a></li>
-                {{-- <li><a href="{{route('receive_request')}}">Receive BTC</a></li> --}}
-                <!-- <li><a href="wallet_transactions">Transactions</a></li> -->
-            </ul>
-        </li>
+        @can('wallet-request')
+            <li>
+                <a aria-expanded="false" class="has-arrow cngnwallet">
+                    <div class="nav_icon_small">
+                        <img src="{{URL::asset('admin/libraries/2_002.svg')}}" alt="">
+                    </div>
+                    <div class="nav_title">
+                        <span>Wallet Requests</span>
+                    </div>
+                </a>
+                <ul>
+                    <li><a href="{{route('Wrequest')}}">Withdraw Request</a></li>
+                    <li><a href="{{route('Drequest')}}">Deposit Request</a></li>
+                    {{-- <li><a href="">Transactions</a></li> --}}
+                </ul>
+            </li>
+        @endcan
+
+        @can('buy-and-sell')
+            <li>
+                <a href="{{route('buy_sell')}}" aria-expanded="false" class="cbuynsell">
+                    <div class="nav_icon_small">
+                        <img src="{{URL::asset('admin/libraries/3_002.svg')}}" alt="">
+                    </div>
+                    <div class="nav_title">
+                        <span>Buy &amp; Sell</span>
+                    </div>
+                </a>
+            </li>
+        @endcan
+
+        @can('send-request')
+            <li>
+                <a class="has-arrow cbitwallet" href="#" aria-expanded="false">
+                    <div class="nav_icon_small">
+                        <img src="{{URL::asset('admin/libraries/6.svg')}}" alt="">
+                    </div>
+                    <div class="nav_title">
+                        <span>Send Request</span>
+                    </div>
+                </a>
+                <ul>
+                    <li><a href="{{route('send_request')}}">Send BTC</a></li>
+                    <li><a href="{{route('send_usdt')}}">Send USDT</a></li>
+                    <li><a href="{{route('send_eth')}}">Send ETH</a></li>
+                    {{-- <li><a href="{{route('receive_request')}}">Receive BTC</a></li> --}}
+                    <!-- <li><a href="wallet_transactions">Transactions</a></li> -->
+                </ul>
+            </li>
+        @endcan
+
         {{-- <li>
             <a class="has-arrow cbitwallet" href="#" aria-expanded="false">
                 <div class="nav_icon_small">
@@ -115,22 +124,25 @@
                 </div>
             </a>
         </li> --}}
-        <li>
-            <a class="has-arrow cmailbox" href="#" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="{{URL::asset('admin/libraries/Mail_Box.svg')}}" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Message Center </span>
-                </div>
-            </a>
-            <ul>
-                <li><a href="{{route('message_center')}}">Inbox</a></li>
-                <li><a href="{{route('sent_mails')}}">Sent Mails</a></li>
-                <li><a href="{{route('mailbox_trash')}}">Trash</a></li>
-                <li><a href="{{route('mailbox_archive')}}">Archived Mails</a></li>
-            </ul>
-        </li>
+        @can('message-center')
+            <li>
+                <a class="has-arrow cmailbox" href="#" aria-expanded="false">
+                    <div class="nav_icon_small">
+                        <img src="{{URL::asset('admin/libraries/Mail_Box.svg')}}" alt="">
+                    </div>
+                    <div class="nav_title">
+                        <span>Message Center </span>
+                    </div>
+                </a>
+                <ul>
+                    <li><a href="{{route('message_center')}}">Inbox</a></li>
+                    <li><a href="{{route('sent_mails')}}">Sent Mails</a></li>
+                    <li><a href="{{route('mailbox_trash')}}">Trash</a></li>
+                    <li><a href="{{route('mailbox_archive')}}">Archived Mails</a></li>
+                </ul>
+            </li>
+        @endcan
+
         <li>
             <a class="has-arrow cmailbox" href="#" aria-expanded="false">
                 <div class="nav_icon_small">
@@ -141,10 +153,18 @@
                 </div>
             </a>
             <ul>
-                <li><a href="{{route('settings')}}">Settings</a></li>
+                @can('create-admin')
+                <li><a href="{{route('settings')}}">View Settings</a></li>
+                @endcan
+
+                @can('support')
                 <li><a href="{{route('support')}}">Support</a></li>
-                <li><a href="{{route('view_referral')}}">Referrals</a></li>
+                @endcan
+                @can('view-referrals')
+                    <li><a href="{{route('view_referral')}}">Referrals</a></li>
+                @endcan
                 <li><a href="{{route('adminprofile')}}">Profile</a></li>
+
             </ul>
         </li>
         <li>

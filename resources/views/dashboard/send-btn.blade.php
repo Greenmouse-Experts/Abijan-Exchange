@@ -88,7 +88,7 @@
                                                         </div>
                                                         <div class="d-flex justify-content-between mt-3" id="availBal_btc">
                                                             <p class="mb-0">Current Balance</p>
-                                                            <h6 class="mb-0 btcbal_upto balspan" id="balspanOne_btc">0 BTC</h6>
+                                                            <h6 class="mb-0 btcbal_upto balspan" id="balspanOne_btc">{{Auth::user()->wallet->btc}} BTC</h6>
                                                         </div>
                                                         <div class="d-flex justify-content-between mt-3 hidden"
                                                             id="availBalwith_btc">

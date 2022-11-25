@@ -185,8 +185,23 @@
         }
     </script>
     <script>
+        function editRate(id, sell_rate, buy_rate, e_currency, fee, port_short){
+            var id = ($(this).data("id")) || id;
+            var currency = ($(this).data("currency")) || e_currency;
+            var sell_rate = ($(this).data("sell_rate")) || sell_rate;
+            var buy_rate = ($(this).data("buy_rate")) || buy_rate;
+            var port_short = ($(this).data("port_short")) || port_short;
+            var fee = ($(this).data("fee")) || fee;
+            $('#edit_id').val(id);
+            $('#edit_currency').val(currency);
+            $('#edit_sell_rate').val(sell_rate);
+            $('#edit_port_short').val(port_short);
+            $('#edit_buy_rate').val(buy_rate);
+            $('#edit_fee').val(fee);
+            $('#editRateModal').modal('show')
+        }
         $(function(){
-            $('#editRate').click(function(){
+            $('.editRate').click(function(){
                 //console.log('hello');
                 var id = ($(this).data("id"));
                 var currency = ($(this).data("currency"));
@@ -203,7 +218,7 @@
                 $('#editRateModal').modal('show')
 
             })
-            $('#editRateBTC').click(function(){
+            /* $('#editRateBTC').click(function(){
                 //console.log('hello');
                 var id = ($(this).data("id"));
                 var currency = ($(this).data("currency"));
@@ -270,7 +285,7 @@
                 $('#edit_fee').val(fee);
                 $('#editRateModal').modal('show')
 
-            })
+            }) */
             $('#deleteRate').click(function(){
                 var id = ($(this).data("id"));
                 Swal.fire({

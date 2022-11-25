@@ -90,6 +90,10 @@ class HomeController extends Controller
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
             return view('dashboard.type-password', compact('question'));
         }
+        if ($type == 'nin') {
+            $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
+            return view('dashboard.nin', compact('question'));
+        }
         if ($type == 'gender') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
             return view('dashboard.type-gender', compact('question'));
@@ -167,6 +171,10 @@ class HomeController extends Controller
     }
 
     public function updateBirth(Request $request){
+        if (is_null($request->question_id)) {
+            Alert::warning('Warning', 'Please set your security question to continue this operation');
+            return back();
+        }
         $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->where('id', $request->question_id)->first();
         if($question->answer == $request->answer1){
             $user = UserProfile::findOrFail(Auth::user()->profile->id);
@@ -184,6 +192,12 @@ class HomeController extends Controller
 
     public function changePhoto(Request $request)
     {
+        if (is_null($request->question_id)) {
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"Please set your security question to continue this operation"
+            ]);
+        }
         $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->where('id', $request->question_id)->first();
         if($question->answer == $request->answer1){
             $user = UserProfile::findOrFail(Auth::user()->profile->id);
@@ -205,6 +219,10 @@ class HomeController extends Controller
     }
 
     public function updateGender(Request $request){
+        if (is_null($request->question_id)) {
+            Alert::warning('Warning', 'Please set your security question to continue this operation');
+            return back();
+        }
         $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->where('id', $request->question_id)->first();
         if($question->answer == $request->answer1){
             $user = UserProfile::findOrFail(Auth::user()->profile->id);
@@ -221,6 +239,10 @@ class HomeController extends Controller
     }
 
     public function updateUsername(Request $request){
+        if (is_null($request->question_id)) {
+            Alert::warning('Warning', 'Please set your security question to continue this operation');
+            return back();
+        }
         $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->where('id', $request->question_id)->first();
         if (UserProfile::where('username', '=', $request->username)->exists()) {
            Alert::warning('Warning', 'Username already exist!');
@@ -241,6 +263,10 @@ class HomeController extends Controller
     }
 
     public function updatePhone(Request $request){
+        if (is_null($request->question_id)) {
+            Alert::warning('Warning', 'Please set your security question to continue this operation');
+            return back();
+        }
         $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->where('id', $request->question_id)->first();
         if (UserProfile::where('phone_no', '=', $request->phone_ver)->exists()) {
            Alert::warning('Warning', 'Phone Number already exist!');
@@ -263,6 +289,11 @@ class HomeController extends Controller
     public function updatePassword(Request $request)
     {
         # Validation
+
+        if (is_null($request->question_id)) {
+            Alert::warning('Warning', 'Please set your security question to continue this operation');
+            return back();
+        }
         $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->where('id', $request->question_id)->first();
         $request->validate([
             'curr_password_sett' => 'required',
@@ -291,6 +322,11 @@ class HomeController extends Controller
     }
 
     public function updateProfileName(Request $request){
+
+        if (is_null($request->question_id)) {
+            Alert::warning('Warning', 'Please set your security question to continue this operation');
+            return back();
+        }
         $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->where('id', $request->question_id)->first();
         if($question->answer == $request->answer1){
             $user = UserProfile::findOrFail(Auth::user()->profile->id);
@@ -331,27 +367,34 @@ class HomeController extends Controller
            Alert::warning('Warning', 'Phone Number already exist!');
             return back();
         }
-        /*$response = Http::post('https://agsmeis-v2-api.azurewebsites.net/api/EcoAuthentication/verifyBVN', [
-            "firstName" => $firstname,
-            "otherNames" => $surname,
+        $response = Http::withHeaders([
+            'userid' => '1669200396645',
+            'apiKey' => 'gs10u29xM8ENxpqBz6Sa'
+        ])->post('https://api.verified.africa/sfx-verify/v3/id-service', [
+            /* "firstName" => $firstname,
+            "lastName" => $surname,
+            "phone" => $phone,
             "bvn" => $bvn,
-            "role" => "applicant"
-        ]);*/
+            "searchParameter" => "22231411111",
+            "dob" => $dob,
+            "verificationType" => "BVN-BOOLEAN-MATCH" */
+            "firstName"=> "Oluwaseun1",
+            "lastName"=> "Akinmukomi",
+            "phone" => "08167396655",
+            "email" => "doluwasegun@seamfix.com",
+            "searchParameter" => "22231411111",
+            "dob" => "19-Aug-1991",
+            "verificationType" => "BVN-BOOLEAN-MATCH"
+        ]);
         //$result = $bvn->verifyBVN($bvn_number);
-        //$res = $response->object();
-        //dd($res->message);
-        //if($res->message == 'BVN Verified Successfully'){
-
-        $res = "BVN Verified Successfully";
-        if($res == 'BVN Verified Successfully'){
-
+        $res = $response->object()->verificationStatus;
+        if($res == 'VERIFIED'){
             $user->firstname = $firstname;
             $user->middlename = $middlename;
             $user->surname = $surname;
-            $user->dob = $surname;
+            $user->dob = $dob;
             $user->gender = $gender;
             $user->phone_no = $phone;
-
             $bank->bank_name = $bank_name;
             $bank->account_num = $acct_num;
             $bank->user_id = Auth::user()->id;
@@ -366,8 +409,53 @@ class HomeController extends Controller
             }
         }
         else{
-            Alert::error('Error', 'Your Name and Bvn does not correspond, please check your name and bvn correctly');
+            Alert::error('Error', 'Your Personal Details and BVN details does not correspond, please your contact your bank or check bvn correctly');
+            return back();
         }
+    }
+
+    public function ninVerify(Request $request)
+    {
+        if (is_null($request->question_id)) {
+            Alert::warning('Warning', 'Please set your security question to continue this operation');
+            return back();
+        }
+        $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->where('id', $request->question_id)->first();
+        if($question->answer == $request->answer1){
+            if (UserBank::where('nin', '=','*****'.substr($request->nin_num, 10))->exists()) {
+                Alert::success('Verified', 'Your NIN has already been verified');
+                return back();
+            }
+            $response = Http::withHeaders([
+                'userid' => '1669200396645',
+                'apiKey' => 'yHCB0zlH794bSMe3sMVA'
+            ])->post('https://api.verified.africa/sfx-verify/v3/id-service', [
+                "verificationType" => "V-NIN",
+                "countryCode" => "NG",
+                "transactionReference" => "",
+                "searchParameter" => $request->nin_num
+            ]);
+            //$result = $bvn->verifyBVN($bvn_number);
+            $res = $response->object()->verificationStatus;
+            //dd($response->object());
+            if($res == 'VERIFIED'){
+                $user = UserBank::where('user_id', Auth::user()->id)->first();
+                $user->nin = '*****'.substr($request->nin_num, 10);
+                $user->update();
+                Alert::success('Verified', 'you NIN has been successfully verified');
+                return back();
+            }
+            else{
+                Alert::warning('Warning', 'Your input Virtual NIN is incorrect, please check');
+                return back();
+            }
+
+        }
+        else{
+            Alert::error('Error', 'YSecurity question answer does not match your security answer');
+            return back();
+        }
+
     }
 
     public function sendMail(Request $request){
@@ -590,6 +678,26 @@ class HomeController extends Controller
         $address = $address->json('data.address'); */
 
         return view('dashboard.receive-eth');
+    }
+
+    public function receive_usdt()
+    {
+        /* $address = Http::basqet()->post('transaction', [
+            'currency' => 'USD',
+            'amount' => '1000'
+        ]);
+
+        sleep(3);
+        $address = Http::basqet()->get('transaction/' . $address->json('data.id'));
+        //dd($address->json());
+
+        $address = $address->json('data.address'); */
+
+        return view('dashboard.receive_usdt');
+    }
+
+    public function coming_soon(){
+        return view('dashboard.coming-soon');
     }
 
     public function usdt()

@@ -21,7 +21,7 @@
                                     <div class="col-lg-6">
                                         <div class="page_title_left mb_30">
                                             <h3> Support Mailbox</h3>
-                                            <p>Manage communications with Nairadirect Customer Support.</p>
+                                            <p>Manage communications with AbijanExchange Customer Support.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -196,7 +196,7 @@
                         </div>
                         <div class="modal-body">
                             <div>
-                                <p>Use this form to contact Nairadirect Support.</p><br>
+                                <p>Use this form to contact AbijanExchange Support.</p><br>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">

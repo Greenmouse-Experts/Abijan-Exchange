@@ -25,7 +25,7 @@
                                                 <a class="nav-link" href="{{route('ethereum')}}" data-toggle="tab">Send Eth</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link active" href="#bitdiv"> Receive Eth</a>
+                                                <a class="nav-link active" href="#bitdiv"> Receive USDT</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="{{route('eth_trans')}}"> Transactions</a>
@@ -38,13 +38,13 @@
                                 <div class="white_card_body tab-pane fade active show" id="bitdiv">
                                     <div class="exchange_widget">
                                         <div class="form-group" id="walletdiv">
-                                            <span>Give out the Ethereum address below to receive Ethereum.</span>
+                                            <span>Give out the USDT TRC20 address below to receive USDT.</span>
 
-                                            <div class="Ethereum-address-container" data-bc-address="1MbvqXvfvqAnCKXdVeiLPXPDp4AE82eVhz">
+                                            <div class="Ethereum-address-container" data-bc-address="{{settings()->receive_usdt_wallet ?? ''}}">
                                                 <div class="walletaddy">
                                                     <b class="receive-address">
                                                         <span class="Ethereum-address Ethereum-address-controls walletinfo" style="display: none1;" id="walletinfo">
-                                                            {{settings()->receive_eth_wallet ?? ''}}
+                                                            {{settings()->receive_usdt_wallet ?? ''}}
                                                             <button class="btn btn-default mb-3 Ethereum-address-action Ethereum-address-action-copy" type="button" title="Copy Wallet Address" data-info="walletinfo">
                                                                 <i class="far fa-copy"></i>
                                                             </button>
@@ -52,8 +52,8 @@
                                                     </b>
                                                 </div>
                                             </div>
-                                            <span class="mybarcode"><img src="{{settings()->eth_qr_code ?? ''}}" title="Scan Me" alt="{{settings()->receive_eth_wallet ?? ''}}" /></span>
-                                            <input type="hidden" name="addr" id="addr" value="{{settings()->receive_eth_wallet ?? ''}}" />
+                                            <span class="mybarcode"><img src="{{settings()->usdt_qr_code ?? ''}}" title="Scan Me" alt="{{settings()->receive_usdt_wallet ?? ''}}" /></span>
+                                            <input type="hidden" name="addr" id="addr" value="{{settings()->receive_usdt_wallet ?? ''}}" />
                                             <input type="hidden" name="addr_key" id="addr_key" value="2651awfop" />
                                             <br />
 
@@ -85,7 +85,7 @@
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_ex">
                                         <div class="card-body">
                                             <p>
-                                                Receiving Ethereum usually takes 30 minutes to 1 hour, however it can be longer than that depending on the Ethereum network traffic and the miner fee. An incoming transaction needs to receive 3 Ethereum
+                                                Receiving USDT TRC20 usually takes 30 minutes to 1 hour, however it can be longer than that depending on the USDT TRC20 network traffic and the miner fee. An incoming transaction needs to receive 3 USDT
                                                 network confirmations to appear in your wallet.
                                             </p>
                                         </div>
@@ -101,7 +101,7 @@
                                     </div>
                                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion_ex">
                                         <div class="card-body">
-                                            <p>To protect your privacy, we provide a new Ethereum address for each transfer. This prevents someone from tracking all the payments you receive by looking at the blockchain.</p>
+                                            <p>To protect your privacy, we provide a new USDT TRC20 address for each transfer. This prevents someone from tracking all the payments you receive by looking at the blockchain.</p>
                                             <p>Note that addresses are valid only for 2 months.</p>
                                         </div>
                                     </div>
@@ -124,7 +124,7 @@
                                     <div class="card-header" id="headingFour">
                                         <h2 class="mb-0">
                                             <a href="#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                                Ethereum transfer fees
+                                                USDT TRC20 transfer fees
                                             </a>
                                         </h2>
                                     </div>

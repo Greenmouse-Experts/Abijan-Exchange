@@ -24,9 +24,9 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{route('ethereum')}}">Send BTC</a>
                                         </li>
-                                        {{-- <li class="nav-item">
+                                        <li class="nav-item">
                                             <a class="nav-link" href="{{route('receive_eth')}}"> Receive BTC</a>
-                                        </li> --}}
+                                        </li>
                                         <li class="nav-item">
                                             <a class="nav-link active" href="#" data-toggle="tab"> Transactions</a>
                                         </li>

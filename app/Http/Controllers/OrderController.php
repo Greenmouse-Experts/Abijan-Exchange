@@ -11,6 +11,8 @@ use App\Models\Invoice;
 use Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 use Auth;
+use Illuminate\Support\Facades\Http;
+use PerfectMoney;
 
 class OrderController extends Controller
 {
@@ -200,25 +202,25 @@ class OrderController extends Controller
             $new_amount = $user->naira - ($request->amount*rates()[4]['buy_rate']);
             $d->bch_wallet  = $request->acctnameBuy;
         }
-        elseif($request->currency_option == "Perfect Money" AND $request->unit == "USD"){
+        if($request->currency_option == "Perfect Money" AND $request->unit == "USD"){
             $new_amount = $user->naira - ($request->amount*rates()[1]['buy_rate']);
             $d->pm_wallet   = $request->acctnameBuy;
             $d->pm_wallet   = $request->acctnoBuy;
         }
-        elseif($request->currency_option == "USDT TRC20" AND $request->unit == "USD"){
+        else if($request->currency_option == "USDT TRC20" AND $request->unit == "USD"){
             $new_amount = $user->naira - ($request->amount*rates()[3]['buy_rate']);
             $d->usdt_wallet = $request->acctnameBuy;
         }
-        elseif($request->currency_option == "Ethereum" AND $request->unit == "USD"){
+        else if($request->currency_option == "Ethereum" AND $request->unit == "USD"){
             $new_amount = $user->naira - ($request->amount*rates()[2]['buy_rate']);
             $d->eth_wallet  = $request->acctnameBuy;
             //dd($new_amount, ($request->amount*rates()[2]['buy_rate']));
         }
-        elseif($request->currency_option == "Bitcoin" AND $request->unit == "USD"){
+        else if($request->currency_option == "Bitcoin" AND $request->unit == "USD"){
             $new_amount = $user->naira - ($request->amount*rates()[0]['buy_rate']);
             $d->btc_wallet  = $request->acctnameBuy;
         }
-        elseif($request->currency_option == "Bitcoin" AND $request->unit == "BTC"){
+        else if($request->currency_option == "Bitcoin" AND $request->unit == "BTC"){
             $new_amount = $user->naira - ($request->amount*getCurrentBtcDollar());
             $d->btc_wallet  = $request->acctnameBuy;
         }
@@ -318,6 +320,17 @@ class OrderController extends Controller
             ]);
         }
 
+        if($request->currency_option == "Perfect Money" AND $request->unit == "USD" AND $request->sell_from == "Automatic"){
+
+            return response()->json([
+                "status"=>"pm-auto",
+                "msg"=>"pm-auto",
+                "amount" => $request->amount
+            ]);
+        }
+
+
+
         $d              = new Order();
         $d->type        = 'Sell';
         $d->user_id     = Auth::user()->id;
@@ -365,6 +378,14 @@ class OrderController extends Controller
             "msg"=>"You sell e-currency is successfull"
         ]);
         //dd($request);
+    }
+
+    public function sell_pm(Request $request)
+    {
+        $status = $request->query('status');
+        $type = $request->query('type');
+        Alert::error('Oops', 'Your Perfect Money Transaction has been canceled!');
+        return redirect()->route('home');
     }
 
     public function cancel_sell(Request $request){

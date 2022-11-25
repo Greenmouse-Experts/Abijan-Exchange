@@ -66,5 +66,8 @@ class Kernel extends HttpKernel
         'userprofile' => \App\Http\Middleware\UserProfileUpdate::class,
         'isAdmin' => \App\Http\Middleware\isAdmin::class,
         'CheckReferral' => \App\Http\Middleware\CheckReferral::class,
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
     ];
 }

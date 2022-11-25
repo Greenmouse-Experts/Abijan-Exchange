@@ -15,13 +15,11 @@
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/btn.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/party.css')}}">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.7.95/css/materialdesignicons.css" rel="stylesheet"/>
     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-    <div class="elfsight-app-c6270b09-80d5-400b-9c3a-55622bfadb28"></div>
-    {{-- <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-    <div class="elfsight-app-260cbd82-25a5-4d3b-8275-b9b68a08171c"></div> --}}
-    {!! NoCaptcha::renderJs() !!}
     <title> {{config('app.name')}} </title>
     <style type="text/css">
         div.eapps-widget {
@@ -352,7 +350,11 @@
 </head>
 
 <body cz-shortcut-listen="true" style="padding-top: 0px;">
+    <div class="elfsight-app-c6270b09-80d5-400b-9c3a-55622bfadb28"></div>
 
+    {{-- <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+    <div class="elfsight-app-260cbd82-25a5-4d3b-8275-b9b68a08171c"></div> --}}
+    {!! NoCaptcha::renderJs() !!}
     <div id='loader'>
         <div class="loader-inner">
             <div class="loading-content"></div>
@@ -470,11 +472,9 @@
         </div>
     </div>
     <!-- END MODAL -->
-
-    <script src="{{URL::asset('assets/js/platform.js')}}"></script>
-    <script src="{{URL::asset('assets/js/tick.js')}}"></script>
-    <script src="{{URL::asset('assets/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/jquery.js')}}"></script>
+    <script src="{{URL::asset('assets/js/platform.js')}}"></script>
+    <script src="{{URL::asset('assets/js/tickerNews.js')}}"></script>
     <script src="{{URL::asset('assets/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/slick.js')}}"></script>
     <script src="{{URL::asset('assets/js/counter.js')}}"></script>
@@ -482,19 +482,17 @@
     <script src="{{URL::asset('assets/js/select.js')}}"></script>
     <script src="{{URL::asset('assets/js/main.js')}}"></script>
     <script src="{{URL::asset('assets/js/boot.js')}}"></script>
-    <script src="{{URL::asset('assets/js/tick.js')}}"></script>
-    <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
-    <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+    <script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
     <!--End mc_embed_signup-->
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- TICKERNEWS FUNCTiON -->
 	<script type="text/javascript">
-		jQuery(function () {
+		$(function () {
 			var timer = !1;
-			_Ticker = jQuery("#T1").newsTicker();
+			_Ticker = $("#T1").newsTicker();
 			_Ticker.on("mouseenter", function () {
 				var __self = this;
 				timer = setTimeout(function () {
@@ -537,211 +535,442 @@
 		});
 	</script>
 	<script>
-		new Vue({
-			el: "#vue-app",
-			data: {
-				terms: false,
-				current_option: 'buy',
-				btc: null,
-				ngn: null,
-				usd: null,
-				errors: [],
-				selected_coin: { name: 'BTC', buy_in_usd: 34465, buy_in_ngn: 19852047, icon: 'https://nairadirect.com/images/coin-icon/bitcoin.png' },
-				active_coin_selected: 'BTC',
-				btc_to_usd: 34465,
-				btc_to_ngn: 19852047,
-				coins: [
-					{ name: 'BTC', buy_in_usd: '', buy_in_ngn: '', icon: 'https://nairadirect.com/images/coin-icon/bitcoin.png' },
-				]
-			},
-			mounted() {
-				axios.get('ajaxprice', {
-					params: {
-					request: 'coins'
-					}
-				})
-				.then(response => {
-					this.coins = response.data;
-				}),
-				this.$el.classList.remove("d-none")
-			},
-			watch: {
-				active_coin_selected(value) {
-					if (this.usd) { this.handle_usd_convert() }
-					this.selected_coin = this.coins.find(e => e.name == value),
-					axios.get('ajaxprice', {
-						params: {
-						request: 'coins'
-						}
-					})
-					.then(response => {
-						this.coins = response.data;
-					});
-					this.errors = [];
-					if(this.current_option=="buy"){
-						var unit = this.coins.find(e => e.name == this.active_coin_selected).buy_in_ngn;
-					}else{
-						var unit = this.coins.find(e => e.name == this.active_coin_selected).sell_in_ngn;
-					}
-					if(unit=='' || unit=='0.00'){
-						this.btc = '';
-						this.usd= '';
-						this.errors.push('The '+ this.current_option +' price for '+ this.active_coin_selected +' is currently not available');
-					}
-				}
-			},
-			methods: {
-				handle_btc_convert() {
-					if(this.current_option=="buy"){
-						this.usd = (Number(this.btc) * this.coins.find(e => e.name == this.active_coin_selected).buy_in_usd).toFixed(2);
-						this.ngn = (Number(this.btc) * this.coins.find(e => e.name == this.active_coin_selected).buy_in_ngn).toFixed(2);
-					}else{
-						this.usd = (Number(this.btc) * this.coins.find(e => e.name == this.active_coin_selected).buy_in_usd).toFixed(2);
-						this.ngn = (Number(this.btc) * this.coins.find(e => e.name == this.active_coin_selected).sell_in_ngn).toFixed(2);
-					}
-					this.errors = [];
-					if(this.current_option=="buy"){
-						var unit = this.coins.find(e => e.name == this.active_coin_selected).buy_in_ngn;
-					}else{
-						var unit = this.coins.find(e => e.name == this.active_coin_selected).sell_in_ngn;
-					}
-					if(this.usd=="NaN"){
+        new Vue({
+          el: "#vue-app",
+          data: {
+            terms: false,
+            current_option: "sell",
+            btc: null,
+            ngn: null,
+            usd: null,
+            errors: [],
+            selectedcreateElementoin: {
+              name: "BTC",
+              buy_in_usd: 34465,
+              buy_in_ngn: 19852047,
+              icon: "https://nairadirect.com/images/coin-icon/bitcoin.png",
+            },
+            activecreateElementoin_selected: "BTC",
+            btc_to_usd: 34465,
+            btc_to_ngn: 19852047,
+            coins: [
+              {
+                name: "BTC",
+                buy_in_usd: "",
+                buy_in_ngn: "",
+                icon: "https://nairadirect.com/images/coin-icon/bitcoin.png",
+              },
+            ],
+          },
+          mounted() {
+            this.coins = [
+            {
+                name: "BTC",
+                buy_in_usd: "16390.76",
+                sell_in_ngn: "12456977.60",
+                buy_in_ngn: "13112608.00",
+                icon: "https://nairadirect.com/images/1.svg",
+                buy_one: "800",
+                sell_one: "760",
+                current_option: null,
+              },
+              {
+                name: "PM",
+                buy_in_usd: "1",
+                sell_in_ngn: "710.00",
+                buy_in_ngn: "770.00",
+                icon: "https://nairadirect.com/images/pm.png",
+                buy_one: "770",
+                sell_one: "710",
+                current_option: null,
+              },
+              {
+                name: "ETH",
+                buy_in_usd: "0.00",
+                sell_in_ngn: "0.00",
+                buy_in_ngn: "0.00",
+                icon: "https://nairadirect.com/images/eth.png",
+                buy_one: "920",
+                sell_one: "650",
+                current_option: null,
+              },
+              {
+                name: "TRC20",
+                buy_in_usd: "1",
+                sell_in_ngn: "760.00",
+                buy_in_ngn: "800.00",
+                icon: "https://nairadirect.com/images/usdt_trc_2068.png",
+                buy_one: "800",
+                sell_one: "760",
+                current_option: null,
+              },
+              {
+                name: "BCH",
+                buy_in_usd: "1",
+                sell_in_ngn: "650.00",
+                buy_in_ngn: "920.00",
+                icon: "https://nairadirect.com/images/bitcoin_cash69.jpg",
+                buy_one: "920",
+                sell_one: "650",
+                current_option: null,
+              },
+            ];
+          },
+          watch: {
+            activecreateElementoin_selected(value) {
+              if (this.usd) {
+                this.handle_usdcreateElementonvert();
+              }
+              (this.selectedcreateElementoin = this.coins.find(
+                (e) => e.name == value
+              )),
+                /* axios
+                  .get("https://nairadirect.com/ajaxprice", {
+                    params: {
+                      request: "coins",
+                    },
+                  })
+                  .then((response) => {
+                    this.coins = response.data;
+                  }); */
+              this.errors = [];
+              if (this.current_option == "buy") {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).buy_in_ngn;
+              } else {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).sell_in_ngn;
+              }
+              if (unit == "" || unit == "0.00") {
+                this.btc = "";
+                this.usd = "";
+                this.errors.push(
+                  "The " +
+                    this.current_option +
+                    " price for " +
+                    this.activecreateElementoin_selected +
+                    " is currently not available"
+                );
+              }
+            },
+          },
+          methods: {
+            setNewValue(v){
+              this.current_option = v
+              console.log(v)
+            },
+            change_active(value){
+              this.activecreateElementoin_selected = value
+            },
+            handle_btccreateElementonvert() {
+              if (this.current_option == "buy") {
+                this.usd = (
+                  Number(this.btc) *
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).buy_in_usd
+                ).toFixed(2);
+                this.ngn = (
+                  Number(this.btc) *
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).buy_in_ngn
+                ).toFixed(2);
+              } else {
+                this.usd = (
+                  Number(this.btc) *
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).buy_in_usd
+                ).toFixed(2);
+                this.ngn = (
+                  Number(this.btc) *
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).sell_in_ngn
+                ).toFixed(2);
+              }
+              this.errors = [];
+              if (this.current_option == "buy") {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).buy_in_ngn;
+              } else {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).sell_in_ngn;
+              }
+              if (this.usd == "NaN") {
+              }
+              if (unit == "" || unit == "0.00") {
+                this.btc = "";
+                this.usd = "";
+                this.errors.push(
+                  "The " +
+                    this.current_option +
+                    " price for " +
+                    this.activecreateElementoin_selected +
+                    " is currently not available"
+                );
+              }
+            },
+            handle_ngncreateElementonvert() {
+              if (this.current_option == "buy") {
+                this.usd = (
+                  Number(this.ngn) /
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).buy_one
+                ).toFixed(2);
 
-					}
-					if(unit=='' || unit=='0.00'){
-						this.btc = '';
-						this.usd= '';
-						this.errors.push('The '+ this.current_option +' price for '+ this.active_coin_selected +' is currently not available');
-					}
-				},
-				handle_ngn_convert() {
-					if(this.current_option=="buy"){
-						this.usd = (Number(this.ngn) / this.coins.find(e => e.name == this.active_coin_selected).buy_one).toFixed(2);
+                if (
+                  this.activecreateElementoin_selected == "BTC" ||
+                  this.activecreateElementoin_selected == "ETH"
+                ) {
+                  this.btc = (
+                    Number(this.ngn) /
+                    this.coins.find(
+                      (e) => e.name == this.activecreateElementoin_selected
+                    ).buy_in_ngn
+                  ).toFixed(8);
+                } else {
+                  this.btc = (
+                    Number(this.ngn) /
+                    this.coins.find(
+                      (e) => e.name == this.activecreateElementoin_selected
+                    ).buy_in_ngn
+                  ).toFixed(2);
+                }
+              } else {
+                this.usd = (
+                  Number(this.ngn) /
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).sell_one
+                ).toFixed(2);
 
-						if(this.active_coin_selected=="BTC" || this.active_coin_selected=="ETH"){
-							this.btc = (Number(this.ngn) / this.coins.find(e => e.name == this.active_coin_selected).buy_in_ngn).toFixed(8);
-						}else{
-							this.btc = (Number(this.ngn) / this.coins.find(e => e.name == this.active_coin_selected).buy_in_ngn).toFixed(2);
-						}
-					}else{
-						this.usd = (Number(this.ngn) / this.coins.find(e => e.name == this.active_coin_selected).sell_one).toFixed(2);
+                if (
+                  this.activecreateElementoin_selected == "BTC" ||
+                  this.activecreateElementoin_selected == "ETH"
+                ) {
+                  this.btc = (
+                    Number(this.ngn) /
+                    this.coins.find(
+                      (e) => e.name == this.activecreateElementoin_selected
+                    ).sell_in_ngn
+                  ).toFixed(8);
+                } else {
+                  this.btc = (
+                    Number(this.ngn) /
+                    this.coins.find(
+                      (e) => e.name == this.activecreateElementoin_selected
+                    ).sell_in_ngn
+                  ).toFixed(2);
+                }
+              }
+              if (this.btc == "1.00000000") {
+                this.btc = "1";
+              }
+              this.errors = [];
+              if (this.current_option == "buy") {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).buy_in_ngn;
+              } else {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).sell_in_ngn;
+              }
+              if (unit == "" || unit == "0.00") {
+                this.btc = "";
+                this.usd = "";
+                this.errors.push(
+                  "The " +
+                    this.current_option +
+                    " price for " +
+                    this.activecreateElementoin_selected +
+                    " is currently not available"
+                );
+              }
+            },
+            handle_usdcreateElementonvert() {
+              if (this.current_option == "buy") {
+                this.ngn = (
+                  Number(this.usd) *
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).buy_one
+                ).toFixed(2);
+                if (
+                  this.activecreateElementoin_selected == "BTC" ||
+                  this.activecreateElementoin_selected == "ETH"
+                ) {
+                  this.btc = (
+                    Number(this.usd) /
+                    this.coins.find(
+                      (e) => e.name == this.activecreateElementoin_selected
+                    ).buy_in_usd
+                  ).toFixed(8);
+                } else {
+                  this.btc = (
+                    Number(this.usd) /
+                    this.coins.find(
+                      (e) => e.name == this.activecreateElementoin_selected
+                    ).buy_in_usd
+                  ).toFixed(2);
+                }
+              } else {
+                this.ngn = (
+                  Number(this.usd) *
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).sell_one
+                ).toFixed(2);
 
-						if(this.active_coin_selected=="BTC" || this.active_coin_selected=="ETH"){
-							this.btc = (Number(this.ngn) / this.coins.find(e => e.name == this.active_coin_selected).sell_in_ngn).toFixed(8);
-						}else{
-							this.btc = (Number(this.ngn) / this.coins.find(e => e.name == this.active_coin_selected).sell_in_ngn).toFixed(2);
-						}
-					}
-					if(this.btc=="1.00000000"){
-						this.btc = "1";
-					}
-					this.errors = [];
-					if(this.current_option=="buy"){
-						var unit = this.coins.find(e => e.name == this.active_coin_selected).buy_in_ngn;
-					}else{
-						var unit = this.coins.find(e => e.name == this.active_coin_selected).sell_in_ngn;
-					}
-					if(unit=='' || unit=='0.00'){
-						this.btc = '';
-						this.usd= '';
-						this.errors.push('The '+ this.current_option +' price for '+ this.active_coin_selected +' is currently not available');
-					}
-				},
-				handle_usd_convert() {
-					if(this.current_option=="buy"){
-						this.ngn = (Number(this.usd) * this.coins.find(e => e.name == this.active_coin_selected).buy_one).toFixed(2);
-						if(this.active_coin_selected=="BTC" || this.active_coin_selected=="ETH"){
-							this.btc = (Number(this.usd) / this.coins.find(e => e.name == this.active_coin_selected).buy_in_usd).toFixed(8);
-						}else{
-							this.btc = (Number(this.usd) / this.coins.find(e => e.name == this.active_coin_selected).buy_in_usd).toFixed(2);
-						}
-					}else{
-						this.ngn = (Number(this.usd) * this.coins.find(e => e.name == this.active_coin_selected).sell_one).toFixed(2);
+                if (
+                  this.activecreateElementoin_selected == "BTC" ||
+                  this.activecreateElementoin_selected == "ETH"
+                ) {
+                  this.btc = (
+                    Number(this.usd) /
+                    this.coins.find(
+                      (e) => e.name == this.activecreateElementoin_selected
+                    ).buy_in_usd
+                  ).toFixed(8);
+                } else {
+                  this.btc = (
+                    Number(this.usd) /
+                    this.coins.find(
+                      (e) => e.name == this.activecreateElementoin_selected
+                    ).buy_in_usd
+                  ).toFixed(2);
+                }
+              }
+              if (this.btc == "1.00000000") {
+                this.btc = "1";
+              }
+              this.errors = [];
+              if (this.current_option == "buy") {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).buy_in_ngn;
+              } else {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).sell_in_ngn;
+              }
+              if (unit == "" || unit == "0.00") {
+                this.btc = "";
+                this.usd = "";
+                this.errors.push(
+                  "The " +
+                    this.current_option +
+                    " price for " +
+                    this.activecreateElementoin_selected +
+                    " is currently not available"
+                );
+              }
+            },
+            checkForm: function (e) {
+              if (this.btc && this.ngn && this.usd) {
+                axios
+                  .post("homeorder", {
+                    btc: this.btc,
+                    ngn: this.ngn,
+                    usd: this.usd,
+                    option: this.current_option,
+                  })
+                  .then((response) => {
+                    window.open(response.data, "_self");
+                  });
+                //return true;
+              }
+              this.errors = [];
+              if (!this.btc) {
+                this.errors.push(
+                  "The " +
+                    this.activecreateElementoin_selected +
+                    " Amount is required"
+                );
+              }
+              if (!this.ngn) {
+                this.errors.push("The amount in NGN is required");
+              }
+              if (!this.usd) {
+                this.errors.push("The USD Equivalent is required");
+              }
+              e.preventDefault();
+            },
+            notify(message, event) {
+              this.current_option = message;
 
-						if(this.active_coin_selected=="BTC" || this.active_coin_selected=="ETH"){
-							this.btc = (Number(this.usd) / this.coins.find(e => e.name == this.active_coin_selected).buy_in_usd).toFixed(8);
-						}else{
-							this.btc = (Number(this.usd) / this.coins.find(e => e.name == this.active_coin_selected).buy_in_usd).toFixed(2);
-						}
-					}
-					if(this.btc=="1.00000000"){
-						this.btc = "1";
-					}
-					this.errors = [];
-					if(this.current_option=="buy"){
-						var unit = this.coins.find(e => e.name == this.active_coin_selected).buy_in_ngn;
-					}else{
-						var unit = this.coins.find(e => e.name == this.active_coin_selected).sell_in_ngn;
-					}
-					if(unit=='' || unit=='0.00'){
-						this.btc = '';
-						this.usd= '';
-						this.errors.push('The '+ this.current_option +' price for '+ this.active_coin_selected +' is currently not available');
-					}
-
-				},
-				checkForm: function (e){
-					if(this.btc && this.ngn && this.usd){
-						axios.post('homeorder', {
-								btc: this.btc,
-								ngn: this.ngn,
-								usd: this.usd,
-								option: this.current_option
-						})
-						.then(response => {
-							window.open(
-							response.data,
-                            '_self'
-                            );
-						});
-						//return true;
-					}
-					this.errors = [];
-					if(!this.btc){
-						this.errors.push('The '+ this.active_coin_selected +' Amount is required');
-					}
-					if(!this.ngn){
-						this.errors.push('The amount in NGN is required');
-					}
-					if(!this.usd){
-						this.errors.push('The USD Equivalent is required');
-					}
-					e.preventDefault();
-				},
-				notify(message, event){
-					this.current_option = message;
-
-					if(this.current_option=="buy"){
-						this.ngn = (Number(this.usd) * this.coins.find(e => e.name == this.active_coin_selected).buy_one).toFixed(2);
-						this.btc = (Number(this.usd) / this.coins.find(e => e.name == this.active_coin_selected).buy_in_usd).toFixed(8);
-					}else{
-						this.ngn = (Number(this.usd) * this.coins.find(e => e.name == this.active_coin_selected).sell_one).toFixed(2);
-						this.btc = (Number(this.usd) / this.coins.find(e => e.name == this.active_coin_selected).buy_in_usd).toFixed(8);
-					}
-					if(this.btc=="1.00000000"){
-						this.btc = "1";
-					}
-					if(this.ngn=='NaN'){
-						this.btc = '';
-						this.usd= '';
-						this.ngn= '';
-					}
-					this.errors = [];
-					if(this.current_option=="buy"){
-						var unit = this.coins.find(e => e.name == this.active_coin_selected).buy_in_ngn;
-					}else{
-						var unit = this.coins.find(e => e.name == this.active_coin_selected).sell_in_ngn;
-					}
-					if(unit=='' || unit=='0.00'){
-						this.btc = '';
-						this.usd= '';
-						this.errors.push('The '+ this.current_option +' price for '+ this.active_coin_selected +' is currently not available');
-					}
-				}
-			},
-
-		})
-	</script>
+              if (this.current_option == "buy") {
+                this.ngn = (
+                  Number(this.usd) *
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).buy_one
+                ).toFixed(2);
+                this.btc = (
+                  Number(this.usd) /
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).buy_in_usd
+                ).toFixed(8);
+              } else {
+                this.ngn = (
+                  Number(this.usd) *
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).sell_one
+                ).toFixed(2);
+                this.btc = (
+                  Number(this.usd) /
+                  this.coins.find(
+                    (e) => e.name == this.activecreateElementoin_selected
+                  ).buy_in_usd
+                ).toFixed(8);
+              }
+              if (this.btc == "1.00000000") {
+                this.btc = "1";
+              }
+              if (this.ngn == "NaN") {
+                this.btc = "";
+                this.usd = "";
+                this.ngn = "";
+              }
+              this.errors = [];
+              if (this.current_option == "buy") {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).buy_in_ngn;
+              } else {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).sell_in_ngn;
+              }
+              if (unit == "" || unit == "0.00") {
+                this.btc = "";
+                this.usd = "";
+                this.errors.push(
+                  "The " +
+                    this.current_option +
+                    " price for " +
+                    this.activecreateElementoin_selected +
+                    " is currently not available"
+                );
+              }
+            },
+          },
+        });
+    </script>
+    <script>
+        $( document ).ready(function() {
+            $(".sideprice").show();
+        });
+    </script>
     </div>
     {{-- <script>
         $(function() {

@@ -59,7 +59,7 @@
                                                 <div class="form-group">
                                                     <label>Our PM Account Name:</label>
                                                     <div class="input-group mb-3">
-                                                        nairadirect.com </div>
+                                                        AbijanExchange.com </div>
                                                 </div>
 
                                             </form>
