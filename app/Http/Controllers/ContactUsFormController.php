@@ -33,7 +33,7 @@ class ContactUsFormController extends Controller
             'subject' => $request->get('subject'),
             'user_query' => $request->get('message'),
         ), function($message) use ($request){
-            $message->from("support@abijanexchange.com");
+            $message->from('admin@greenmousepropeties.com');
             $message->to('morshudlhgmo@gmail.com', 'Admin')->subject($request->get('subject'));
         });
         return back()->with('success', 'We have received your message and would like to thank you for writing to us.');
