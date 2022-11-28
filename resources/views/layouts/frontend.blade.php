@@ -371,10 +371,10 @@
     <!-- Footer -->
         @yield('footer')
     <!-- Footer Ends -->
-    <script src="//code.tidio.co/eednoanley2wcaryuedslp2qhhydjvgb.js" async></script>
+    <script src="//code.tidio.co/paxvr5wtlkqbupvtskobap2kwagdeid0.js" async></script>
     <!-- MODAL -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog margin-mobile">
 
             <div class="modal-content">
                 <div class="modal-header">
@@ -406,7 +406,7 @@
                         <div class="col-6">
                             <d class="flex align-items-center">
                                 <img width="30" src="assets/images/btc_icon.svg" alt="">
-                                <span class="ps-2 fs-sm "> Bitcoin </span>
+                                <span class="ps-2 fs-sm "> Bitcoin (BTC)</span>
                             </d>
                         </div>
 
@@ -457,7 +457,7 @@
 
                         <div class="col-6">
                             <d class="flex align-items-center">
-                                <img width="30" src="https://nairadirect.com/images/bitcoin_cash69.jpg" alt="">
+                                <img width="30" src="{{rates()[4]['currency_img']}}" alt="">
                                 <span class="ps-2 fs-sm ">bitcoin Cash (BCH)  </span>
                             </d>
                         </div>
@@ -466,11 +466,39 @@
                         <div class="col-3 fw-bold fs-sm">₦{{rates()[4]['sell_rate']}}/$</div>
 
                     </div>
+                    <div class="row mt-4">
+
+                        <div class="col-6">
+                            <d class="flex align-items-center">
+                                <img width="30" src="{{rates()[5]['currency_img']}}" alt="">
+                                <span class="ps-2 fs-sm ">Tron (TRN)  </span>
+                            </d>
+                        </div>
+
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[5]['buy_rate']}}/$</div>
+                        <div class="col-3 fw-bold fs-sm">₦{{rates()[5]['sell_rate']}}/$</div>
+
+                    </div>
                 </div>
 
             </div>
         </div>
     </div>
+    
+    <style>
+        .dropdown-menu {
+            --bs-dropdown-min-width: 6rem !important;
+        }
+        .dropdown-toggle-split::after {
+            margin-left: 25% !important;
+        }
+        
+        @media(max-width: 990px){
+            .margin-mobile{
+                margin-top: 20% !important;
+            }
+        }
+    </style>
     <!-- END MODAL -->
     <script src="{{URL::asset('assets/js/jquery.js')}}"></script>
     <script src="{{URL::asset('assets/js/platform.js')}}"></script>
@@ -569,49 +597,59 @@
                 buy_in_usd: "16390.76",
                 sell_in_ngn: "12456977.60",
                 buy_in_ngn: "13112608.00",
-                icon: "https://nairadirect.com/images/1.svg",
-                buy_one: "800",
-                sell_one: "760",
+                icon: "{{rates()[0]['currency_img']}}",
+                buy_one: "{{rates()[0]['buy_rate']}}",
+                sell_one: "{{rates()[0]['sell_rate']}}",
                 current_option: null,
               },
               {
                 name: "PM",
                 buy_in_usd: "1",
-                sell_in_ngn: "710.00",
-                buy_in_ngn: "770.00",
-                icon: "https://nairadirect.com/images/pm.png",
-                buy_one: "770",
-                sell_one: "710",
+                sell_in_ngn: "{{rates()[1]['sell_rate']}}",
+                buy_in_ngn: "{{rates()[1]['buy_rate']}}",
+                icon: "{{rates()[1]['currency_img']}}",
+                buy_one: "{{rates()[1]['buy_rate']}}",
+                sell_one: "{{rates()[1]['sell_rate']}}",
                 current_option: null,
               },
               {
                 name: "ETH",
                 buy_in_usd: "0.00",
-                sell_in_ngn: "0.00",
-                buy_in_ngn: "0.00",
-                icon: "https://nairadirect.com/images/eth.png",
-                buy_one: "920",
-                sell_one: "650",
+                sell_in_ngn: "{{rates()[2]['sell_rate']}}",
+                buy_in_ngn: "{{rates()[2]['buy_rate']}}",
+                icon: "{{rates()[2]['currency_img']}}",
+                buy_one: "{{rates()[2]['buy_rate']}}",
+                sell_one: "{{rates()[2]['sell_rate']}}",
                 current_option: null,
               },
               {
                 name: "TRC20",
                 buy_in_usd: "1",
-                sell_in_ngn: "760.00",
-                buy_in_ngn: "800.00",
-                icon: "https://nairadirect.com/images/usdt_trc_2068.png",
-                buy_one: "800",
-                sell_one: "760",
+                sell_in_ngn: "{{rates()[3]['sell_rate']}}",
+                buy_in_ngn: "{{rates()[3]['buy_rate']}}",
+                icon: "{{rates()[3]['currency_img']}}",
+                buy_one: "{{rates()[3]['buy_rate']}}",
+                sell_one: "{{rates()[3]['sell_rate']}}",
                 current_option: null,
               },
               {
                 name: "BCH",
                 buy_in_usd: "1",
-                sell_in_ngn: "650.00",
-                buy_in_ngn: "920.00",
-                icon: "https://nairadirect.com/images/bitcoin_cash69.jpg",
-                buy_one: "920",
-                sell_one: "650",
+                sell_in_ngn: "{{rates()[4]['sell_rate']}}",
+                buy_in_ngn: "{{rates()[4]['buy_rate']}}",
+                icon: "{{rates()[4]['currency_img']}}",
+                buy_one: "{{rates()[4]['buy_rate']}}",
+                sell_one: "{{rates()[4]['sell_rate']}}",
+                current_option: null,
+              },
+              {
+                name: "TRN",
+                buy_in_usd: "1",
+                sell_in_ngn: "{{rates()[5]['sell_rate']}}",
+                buy_in_ngn: "{{rates()[5]['buy_rate']}}",
+                icon: "{{rates()[5]['currency_img']}}",
+                buy_one: "{{rates()[5]['buy_rate']}}",
+                sell_one: "{{rates()[5]['sell_rate']}}",
                 current_option: null,
               },
             ];

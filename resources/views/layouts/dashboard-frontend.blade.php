@@ -65,7 +65,7 @@
     <section class="main_content dashboard_part large_header_bg">
         @yield('page-content')
     </section>
-    <script src="//code.tidio.co/eednoanley2wcaryuedslp2qhhydjvgb.js" async></script>
+    <script src="//code.tidio.co/paxvr5wtlkqbupvtskobap2kwagdeid0.js" async></script>
     <div class="CHAT_MESSAGE_POPUPBOX">
     <div class="CHAT_POPUP_HEADER">
         <div class="MSEESAGE_CHATBOX_CLOSE">

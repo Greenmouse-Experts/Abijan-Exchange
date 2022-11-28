@@ -283,7 +283,7 @@
                                                 <button type="button" name="ver_next" id="ver_next"
                                                     class="btn btn-outline-info rounded-pill mb-0">Next <i
                                                         class="ti-arrow-right f_s_14 mr-2"></i></button>
-                                                <button type="submit" style="float:right;" name="ver_submit"
+                                                <button type="submit" style="float:right;" name=""
                                                     id="ver_submit" class="btn_1 mb-0 w-50 hidden">Submit <span
                                                         class="loadingText fa fa-spinner fa-spin fa-2x"
                                                         style="display:none;float:right;"
@@ -356,7 +356,7 @@
                                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                                         data-parent="#accordion_ex">
                                         <div class="card-body">
-                                            <p>Once your identity has been verified on Naira Direct, your main phone number
+                                            <p>Once your identity has been verified on Abijan Exchange, your main phone number
                                                 can't be removed except the phone number changed on your BVN record.</p>
                                         </div>
                                     </div>

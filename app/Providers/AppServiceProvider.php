@@ -41,6 +41,6 @@ class AppServiceProvider extends ServiceProvider
             )->withToken(config('services.basqet.public'));
         });
 
-        Schema::defaultStringLength(191);
+        Schema::defaultStringLength(255);
     }
 }

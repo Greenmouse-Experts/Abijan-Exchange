@@ -58,7 +58,7 @@ Route::get('/forget', [App\Http\Controllers\HomePageController::class, 'forget']
 Route::post('/password/forget',  [App\Http\Controllers\HomePageController::class, 'forget_password'])->name('user.forget.password');
 Route::get('/reset/password/email', [App\Http\Controllers\HomePageController::class, 'password_reset_email'])->name('user.reset.password');
 Route::post('update/password/reset/', [App\Http\Controllers\HomePageController::class, 'reset_password'])->name('user.update.password');
-
+Route::post('dashboard/sell-pm', [App\Http\Controllers\OrderController::class, 'sell_PM'])->name('sell.pm');
 
 /* Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout'); */
 
@@ -110,7 +110,7 @@ Route::prefix('dashboard')->middleware(['verified', 'auth', 'userprofile'])->gro
     Route::post('/getInstructions', [App\Http\Controllers\HomeController::class, 'getInstructions'])->middleware(['verified', 'auth'])->name('getInstructions');
     Route::post('/quickbuy', [App\Http\Controllers\OrderController::class, 'store'])->middleware(['verified', 'auth'])->name('quickbuy');
     Route::post('/quicksell', [App\Http\Controllers\OrderController::class, 'quicksell'])->middleware(['verified', 'auth'])->name('quicksell');
-    Route::get('/sell-pm', [App\Http\Controllers\OrderController::class, 'sell_PM'])->middleware(['verified', 'auth'])->name('sell.pm');
+    
     Route::post('/cancel_sell', [App\Http\Controllers\OrderController::class, 'cancel_sell'])->middleware(['verified', 'auth'])->name('cancel_sell');
     Route::post('/palertz_sell', [App\Http\Controllers\OrderController::class, 'palertz_sell'])->middleware(['verified', 'auth'])->name('palertz_sell');
     Route::get('/sendnotice', [App\Http\Controllers\OrderController::class, 'sendnotice'])->middleware(['verified', 'auth'])->name('sendnotice');
