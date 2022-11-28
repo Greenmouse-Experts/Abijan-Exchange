@@ -83,7 +83,7 @@
     </div>
 
     <!-- BANNER START -->
-    <section class="hero-area hero-bg">
+    <section class="hero-area hero-bg"style="padding-bottom: 50px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7 align-self-center">
@@ -157,7 +157,7 @@
                                       <img
                                         :src="selectedcreateElementoin.icon"
                                         class="rounded-circle mr-2"
-                                        style="width: 15px;margin-right: 5px;margin-left: -7px;"
+                                        style="width: 20px; height:20px; margin-right: 5px;margin-left: -7px;"
                                       />
                                       <span style="font-size: 11px;font-weight: 600;">@{{selectedcreateElementoin.name}}</span>
                                     </button>
@@ -165,19 +165,19 @@
                                       class="dropdown-menu p-0 m-0"
                                       style="width: 30px !important; padding-right: 0px !important;"
                                     >
-                                      <a style="font-size: 10px;" href="#" @click="change_active(item.name)" v-for="item in coins" :key="item.name" class="dropdown-item"
+                                      <a style="font-size: 12px;" href="#" @click="change_active(item.name)" v-for="item in coins" :key="item.name" class="dropdown-item"
                                         style="width: 100% !important"
                                         ><img
                                           :src="item.icon"
                                           class="rounded-circle mr-2"
-                                          style="width: 10px"
+                                          style="width: 20px; height: 20px"
                                         />
                                         <span>@{{item.name}}</span></a
                                       >
                                     </div>
                                   </div>
                                   <small style="font-size: 10px;"
-                                    class="d-block text-right font-weight-bold text-danger"
+                                    class="d-block text-right mt-2 font-weight-bold text-danger"
                                     >@{{selectedcreateElementoin.buy_in_usd}} USD / @{{activecreateElementoin_selected}}</small
                                   >
                                 </div>
@@ -208,12 +208,12 @@
                                   </div>
                                   <small style="font-size: 10px;"
                                     v-if="current_option == 'buy'"
-                                    class="d-block text-right font-weight-bold text-danger"
+                                    class="d-block text-right mt-2 font-weight-bold text-danger"
                                     >1USD = @{{selectedcreateElementoin.buy_one}}NGN</small
                                   >
                                   <small style="font-size: 10px;"
                                     v-if="current_option == 'sell'"
-                                    class="d-block text-right font-weight-bold text-danger"
+                                    class="d-block text-right mt-2 font-weight-bold text-danger"
                                     >1USD = @{{selectedcreateElementoin.sell_one}}NGN</small
                                   >
                                 </div>
@@ -412,7 +412,7 @@
                             <p class="fs-sm">Abijan Exchange is a leading cryptocurrency exchange and your most reliable
                                 source for
                                 fast e-currency funding, we provide the safest and easy-to-use digital currency trading
-                                platform. Abijan Exchange is a Nigeria biggest E-currency Exchange Company sine 2012.
+                                platform. Abijan Exchange is a Nigeria biggest E-currency Exchange Company since 2012.
                             </p>
                             <p class="fs-sm">We solve the incessant problem of getting into the crypto market at the
                                 right price. We have reduced the unbearable margin between Buying and Selling.</p>
@@ -469,7 +469,7 @@
                     <div class="icon-element mb-4">
                         <i class="fa-regular fa-calendar mt-3"></i>
                     </div>
-                    <h2 class="counter-number counter mb-2">11</h2>
+                    <h2 class="counter-number mb-2">11 +</h2>
                     <p class="counter-title">Years Experience</p>
                 </div><!-- end counter-item-->
             </div><!-- end col-lg-3 -->
@@ -665,7 +665,7 @@
                                 <p class="mb-0 text-dark fs-sm">Cick here to join our community and
                                     get updates on our product </p>
                             </div>
-                            <a class="btn btn-primary" href="https://twitter.com/Abijan_Exchange">Proceed</a>
+                            <a class="btn btn-primary" target="_blank" href=https://t.me/abijan_Exchangee">Proceed</a>
                         </div>
                     </div>
                 </div>

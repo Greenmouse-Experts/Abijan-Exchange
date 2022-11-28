@@ -91,8 +91,15 @@ class HomeController extends Controller
             return view('dashboard.type-password', compact('question'));
         }
         if ($type == 'nin') {
-            $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
-            return view('dashboard.nin', compact('question'));
+            $nin = UserBank::where('user_id', Auth::user()->id)->first();
+            if ($nin->nin != null) {
+                Alert::success('Success', 'Your NIN has already been verified');
+                return redirect()->route('edit_profile');
+            } else {
+                $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
+                return view('dashboard.nin', compact('question'));
+            }
+            
         }
         if ($type == 'gender') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
@@ -105,7 +112,12 @@ class HomeController extends Controller
         if ($type == 'question') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
             $questions = SecurityQuestion::all();
-            return view('dashboard.type-question', compact('questions', 'question'));
+            if ($question != null) {
+                Alert::success('Success', 'You have a security set already');
+                return redirect()->route('edit_profile');
+            } else {
+               return view('dashboard.type-question', compact('questions', 'question'));
+            } 
         }
         if ($type == 'bank') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
@@ -113,11 +125,24 @@ class HomeController extends Controller
         }
         if ($type == 'update_name') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
-            return view('dashboard.update_name', compact('question'));
+            $nin = UserBank::where('user_id', Auth::user()->id)->first();
+            if ($nin->bvn != null) {
+                Alert::warning('Warning', 'You can\'t change your name once your account is verified');
+                return redirect()->route('edit_profile');
+            } else {
+                return view('dashboard.update_name', compact('question'));
+            } 
         }
         if ($type == 'phone') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
-            return view('dashboard.type-phone_no', compact('question'));
+            $nin = UserBank::where('user_id', Auth::user()->id)->first();
+            if ($nin->bvn != null) {
+                Alert::warning('Warning', 'You can\'t change your phone number once your account is verified');
+                return redirect()->route('edit_profile');
+            } else {
+                return view('dashboard.type-phone_no', compact('question'));
+            } 
+            
         }
         if ($type == 'username') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
@@ -348,7 +373,7 @@ class HomeController extends Controller
         $firstname = $request->first_name_ver;
         $middlename = $request->middle_name_ver;
         $surname = $request->surname_ver;
-        $dob = $request->day_ver.'/'.$request->month_ver.'/'.$request->year_ver;
+        $dob = $request->month_ver.'/'.$request->day_ver.'/'.$request->year_ver;
         $bank_name = $request->bank_name_ver;
         $acct_num = $request->acct_no_ver;
         $bvn = $request->bvn_ver;
@@ -359,6 +384,7 @@ class HomeController extends Controller
         $firstname = $request->first_name_ver;
         $bank = UserBank::where('id',  Auth::user()->bank->id)->first();
         $user = UserProfile::where('id', Auth::user()->profile->id)->first();
+        //dd(Carbon::parse($dob)->format('d-M-Y'));
         if (UserBank::where('bvn', '=','*****'.substr($bvn, 8))->exists()) {
            Alert::warning('Warning', 'BVN already exist!');
             return back();
@@ -371,28 +397,27 @@ class HomeController extends Controller
             'userid' => '1669200396645',
             'apiKey' => 'gs10u29xM8ENxpqBz6Sa'
         ])->post('https://api.verified.africa/sfx-verify/v3/id-service', [
-            /* "firstName" => $firstname,
+            "firstName" => $firstname,
             "lastName" => $surname,
             "phone" => $phone,
-            "bvn" => $bvn,
-            "searchParameter" => "22231411111",
-            "dob" => $dob,
-            "verificationType" => "BVN-BOOLEAN-MATCH" */
-            "firstName"=> "Oluwaseun1",
-            "lastName"=> "Akinmukomi",
-            "phone" => "08167396655",
-            "email" => "doluwasegun@seamfix.com",
-            "searchParameter" => "22231411111",
-            "dob" => "19-Aug-1991",
-            "verificationType" => "BVN-BOOLEAN-MATCH"
+            "searchParameter" => $bvn,
+            "dob" => Carbon::parse($dob)->format('d-M-Y'),
+            "verificationType" => "BVN-BOOLEAN-MATCH" 
+            /*"firstName"=> "Moshood",
+            "lastName"=> "Gbadamosi",
+            "phone" => "08134211037",
+            "searchParameter" => "22360134913",
+            "dob" => "01-Nov-1997",
+            "verificationType" => "BVN-BOOLEAN-MATCH"*/
         ]);
         //$result = $bvn->verifyBVN($bvn_number);
+        //dd($response->object());
         $res = $response->object()->verificationStatus;
         if($res == 'VERIFIED'){
             $user->firstname = $firstname;
             $user->middlename = $middlename;
             $user->surname = $surname;
-            $user->dob = $dob;
+            $user->dob = Carbon::parse($dob)->format('d-M-Y');
             $user->gender = $gender;
             $user->phone_no = $phone;
             $bank->bank_name = $bank_name;
@@ -443,7 +468,7 @@ class HomeController extends Controller
                 $user->nin = '*****'.substr($request->nin_num, 10);
                 $user->update();
                 Alert::success('Verified', 'you NIN has been successfully verified');
-                return back();
+               return redirect()->route('edit_profile');
             }
             else{
                 Alert::warning('Warning', 'Your input Virtual NIN is incorrect, please check');

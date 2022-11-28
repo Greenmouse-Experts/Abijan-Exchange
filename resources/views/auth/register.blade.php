@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-                    <div class="card card-plain"><a href="https://abijan-website.netlify.app" target="_blank" rel="noreferrer"><img class="mb-4 text-center m-auto d-block d-lg-none" src="/static/media/logo.89ab20edece446e181e1.png" alt="" width="200"></a>
+                    <div class="card card-plain"><a href="/" rel="noreferrer"><img class="mb-4 text-center m-auto d-block d-lg-none" src="{{URL::asset('assets/images/logoo.png')}}" alt="" width="200"></a>
                         <div class="card-header pb-0 text-start mb-2">
                             <h4 class="fw-bold">Sign Up</h4>
                             <p class="mb-0">Enter your email and password to sign Up</p>
