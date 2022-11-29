@@ -3890,6 +3890,8 @@ $(function() {
     });
 
     $('#ver_submit').click(function() {
+        $('#settPhone_submit').attr('disabled', 'disabled');
+        $("#loadingText_sett").show();
         $('#form_verify').submit();
     });
     $('.resendsms').click(function() {

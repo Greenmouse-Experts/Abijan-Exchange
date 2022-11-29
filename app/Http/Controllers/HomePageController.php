@@ -38,7 +38,7 @@ class HomePageController extends Controller
             $referred_by = $request->referral;
         }
         //dd($referred_by);
-        
+
 
         $user = User::create([
             'user_type' => 'Client',
@@ -53,8 +53,6 @@ class HomePageController extends Controller
         $user->update([
             'code' => $code
         ]);
-
-        Cookie::queue(Cookie::forget('referral'));
 
         // Send email to user
         $user->notify(new SendVerificationCode($user));
@@ -151,9 +149,16 @@ class HomePageController extends Controller
                 return redirect()->route('verify.account', Crypt::encrypt($user->email))->with('success_report', 'Registration Succesful, Please verify your account!');
             }
 
+            if($user->status == 'disabled'){
+                Auth::logout();
+                return back()->with('failure_report', 'You account has been banned. Please contact our support for further instructions.');
+            }
+
             if($user->user_type == 'Client'){
                 return redirect()->route('home');
             }
+
+
 
             Auth::logout();
 

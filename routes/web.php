@@ -110,7 +110,7 @@ Route::prefix('dashboard')->middleware(['verified', 'auth', 'userprofile'])->gro
     Route::post('/getInstructions', [App\Http\Controllers\HomeController::class, 'getInstructions'])->middleware(['verified', 'auth'])->name('getInstructions');
     Route::post('/quickbuy', [App\Http\Controllers\OrderController::class, 'store'])->middleware(['verified', 'auth'])->name('quickbuy');
     Route::post('/quicksell', [App\Http\Controllers\OrderController::class, 'quicksell'])->middleware(['verified', 'auth'])->name('quicksell');
-    
+
     Route::post('/cancel_sell', [App\Http\Controllers\OrderController::class, 'cancel_sell'])->middleware(['verified', 'auth'])->name('cancel_sell');
     Route::post('/palertz_sell', [App\Http\Controllers\OrderController::class, 'palertz_sell'])->middleware(['verified', 'auth'])->name('palertz_sell');
     Route::get('/sendnotice', [App\Http\Controllers\OrderController::class, 'sendnotice'])->middleware(['verified', 'auth'])->name('sendnotice');
@@ -146,9 +146,21 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/buy_sell', [App\Http\Controllers\AdminController::class, 'buy_sell'])->name('buy_sell')->middleware('can:buy-and-sell');
     Route::get('/settings', [App\Http\Controllers\AdminController::class, 'settings'])->name('settings')->middleware('can:view-settings');
     Route::resource('roles', App\Http\Controllers\RoleController::class);
+    Route::resource('users', App\Http\Controllers\UserController::class);
+    Route::post('users/change_type/{id}', [App\Http\Controllers\UserController::class, 'change_type'])->name('users.change_type');
+    Route::post('users/addBtc/{id}', [App\Http\Controllers\UserController::class, 'add_btc'])->name('users.add_btc');
+    Route::post('users/deductBtc/{id}', [App\Http\Controllers\UserController::class, 'deduct_btc'])->name('users.deduct_btc');
+    Route::post('users/addUSDT/{id}', [App\Http\Controllers\UserController::class, 'add_usdt'])->name('users.add_usdt');
+    Route::post('users/deductUSDT/{id}', [App\Http\Controllers\UserController::class, 'deduct_usdt'])->name('users.deduct_usdt');
+    Route::post('users/addEth/{id}', [App\Http\Controllers\UserController::class, 'add_eth'])->name('users.add_eth');
+    Route::post('users/deductEth/{id}', [App\Http\Controllers\UserController::class, 'deduct_eth'])->name('users.deduct_eth');
+    Route::post('users/addNaira/{id}', [App\Http\Controllers\UserController::class, 'add_naira'])->name('users.add_naira');
+    Route::post('users/deductNaira/{id}', [App\Http\Controllers\UserController::class, 'deduct_naira'])->name('users.deduct_naira');
     Route::get('/set_rate', [App\Http\Controllers\AdminController::class, 'setRate'])->name('set_rate')->middleware('can:set-rate');
     Route::get('/create_admin', [App\Http\Controllers\AdminController::class, 'createUser'])->name('create_admin')->middleware('can:create-admin');
     Route::post('/createAdmin', [App\Http\Controllers\AdminController::class, 'createAdminPost'])->name('createAdmin')->middleware('can:create-admin');
+    Route::post('/updateAdmin', [App\Http\Controllers\AdminController::class, 'updateAdminPost'])->name('updateAdmin')->middleware('can:create-admin');
+    Route::post('/delete_admin/{id}', [App\Http\Controllers\AdminController::class, 'delete_admin'])->name('delete_admin');/* ->middleware('can:delete-admin'); */
     Route::post('/updateName', [App\Http\Controllers\AdminController::class, 'UpdateName'])->name('admin.update.name');
     Route::post('/updatePassword', [App\Http\Controllers\AdminController::class, 'UpdatePassword'])->name('admin.update.password');
     Route::post('/SetRate', [App\Http\Controllers\AdminController::class, 'AddRate'])->name('SetRate')->middleware('can:set-rate');

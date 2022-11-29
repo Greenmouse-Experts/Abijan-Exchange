@@ -21,7 +21,7 @@
 
 
 @if (session()->has('failure_report'))
-    <div class="application-alert-danger alert-timeout">
+    <div class="application-alert-danger alert-timeout" style="margin-left: 0.1rem;">
         {{ session()->get('failure_report') }}
     </div>
     <br />
