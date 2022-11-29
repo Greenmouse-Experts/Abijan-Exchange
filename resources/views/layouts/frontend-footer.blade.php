@@ -8,19 +8,19 @@
                 </a>
             </div>
             <div class="media-icons">
-                <a class="btn-social bs-outline bs-facebook bs-light bs-lg me-2 mb-2" href="#">
+                <a class="btn-social bs-outline bs-facebook bs-light bs-lg me-2 mb-2" target="_blank" href="https://web.facebook.com/profile.php?id=100086944711466">
                     <i class="ri-facebook-fill"></i>
                 </a>
-                <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" href="#">
+                <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" target="_blank" href="https://twitter.com/Abijan_Exchange">
                     <i class="ri-twitter-fill"></i>
                 </a>
                 <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" href="#">
                     <i class="ri-instagram-fill"></i>
                 </a>
-                <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" href="#">
+                <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" target="_blank" href="https://t.me/abijan_Exchange">
                     <i class="ri-telegram-fill"></i>
                 </a>
-                <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" href="#">
+                <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" target="_blank" href="https://www.linkedin.com/in/abijan-exchange/">
                     <i class="ri-linkedin-fill"></i>
                 </a>
 

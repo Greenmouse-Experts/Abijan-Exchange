@@ -28,18 +28,34 @@ class HomePageController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            //'g-recaptcha-response' => 'required|captcha',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
+<<<<<<< HEAD
         $referred_by = $request->query('ref') || $request->referral;
+=======
+        if(is_null($request->referral)){
+            $referred_by = Cookie::get('referral');
+        }
+        else{
+            $referred_by = $request->referral;
+        }
+        //dd($referred_by);
+        
+>>>>>>> c381a88b2d762707b4a0f469d03c1ac0dd33810f
 
         $user = User::create([
             'user_type' => 'Client',
             'email' => $request->email,
             'username' => $request->username,
             'password' => Hash::make($request->password),
+<<<<<<< HEAD
             'affiliate_id' => Str::random(5),
             'referred_by'   => $referred_by || $request->referral
+=======
+            'affiliate_id' => Str::random(10),
+            'referred_by'   => $referred_by,
+>>>>>>> c381a88b2d762707b4a0f469d03c1ac0dd33810f
         ]);
 
         $code = mt_rand(100000, 999999);

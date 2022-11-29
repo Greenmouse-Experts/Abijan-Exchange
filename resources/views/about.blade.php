@@ -43,7 +43,7 @@
                 <div class="info">
                     <h3 class="fw-bold mb-4">Welcome to {{config('app.name')}}</h3>
                     <p class="fs-sm mb-3">
-                        {{config('app.name')}} is a leading cryptocurrency exchange and your most reliable source for fast e-currency funding, we provide the safest and easy-to-use digital currency trading platform. {{config('app.name')}} is a Nigeria biggest E-currency Exchange Company sine 2012. <br> <br> {{config('app.name')}} is a registered company with CAC No. 1820723 and its operated as Abijan Integrated Services.
+                        {{config('app.name')}} is a leading cryptocurrency exchange and your most reliable source for fast e-currency funding, we provide the safest and easy-to-use digital currency trading platform. {{config('app.name')}} is a Nigeria biggest E-currency Exchange Company since 2012. <br> <br> {{config('app.name')}} is a registered company with CAC No. 1520723 and its operated as Abijan Integrated Services.
                     </p>
                     <p class="fs-sm">We solve the incessant problem of getting into the crypto market at the right price. We have reduced the unbearable margin between Buying and Selling.</p>
                     <ul class="mt-5">

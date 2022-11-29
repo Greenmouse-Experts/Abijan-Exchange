@@ -295,8 +295,11 @@
                                                             National Identification Number (NIN):
                                                         </td>
                                                         <td>
-                                                            <!-- <p>xxxxx-47 <span class="badge badge-success">verified</span></p> -->
-                                                            <p>-</p>
+                                                            @if (Auth::user()->bank->nin != null)
+                                                                <p>{{Auth::user()->bank->nin}} <span class="badge badge-success"> verified </span></p>
+                                                            @else
+                                                                <p>-</p>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             <a class="action_btn" href="/dashboard/settings?type=nin"><i class="far fa-edit"></i></a>

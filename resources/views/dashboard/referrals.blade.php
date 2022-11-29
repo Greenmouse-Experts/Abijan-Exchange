@@ -202,7 +202,7 @@
                                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                                             data-parent="#accordion_ex">
                                             <div class="card-body">
-                                                <p>The money you earned would be automatically sent to your Naira Direct
+                                                <p>The money you earned would be automatically sent to your Abijan Exchange
                                                     wallet.</p>
                                                 <p>You can withdraw it to your linked bank account anytime.</p>
                                             </div>
