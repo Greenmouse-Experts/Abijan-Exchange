@@ -112,12 +112,7 @@ class HomeController extends Controller
         if ($type == 'question') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
             $questions = SecurityQuestion::all();
-            if ($question != null) {
-                Alert::success('Success', 'You have a security set already');
-                return redirect()->route('edit_profile');
-            } else {
-               return view('dashboard.type-question', compact('questions', 'question'));
-            } 
+            return view('dashboard.type-question', compact('questions', 'question'));
         }
         if ($type == 'bank') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
@@ -176,23 +171,42 @@ class HomeController extends Controller
     }
 
     public function updateQuesstion(Request $request){
-        UserSecurityQuestion::create([
-            'user_id'=>Auth::user()->id,
-            'question'=> $request->question1_sett,
-            'answer'=>$request->answer_1_sett
-        ]);
-        UserSecurityQuestion::create([
-            'user_id'=>Auth::user()->id,
-            'question'=> $request->question2_sett,
-            'answer'=>$request->answer_2_sett
-        ]);
-        UserSecurityQuestion::create([
-            'user_id'=>Auth::user()->id,
-            'question'=> $request->question3_sett,
-            'answer'=>$request->answer_3_sett
-        ]);
+        $question =  UserSecurityQuestion::where('user_id', Auth::user()->id)->first();
+        if($question != null){
+            //dd($request);
+            UserSecurityQuestion::where('user_id', Auth::user()->id)->where('question', $request->question1_sett)->update([
+                'question'=> $request->question1_sett,
+                'answer'=>$request->answer_1_sett    
+            ]);
+            UserSecurityQuestion::where('user_id', Auth::user()->id)->where('question', $request->question2_sett)->update([
+                'question'=> $request->question2_sett,
+                'answer'=>$request->answer_2_sett    
+            ]);
+            UserSecurityQuestion::where('user_id', Auth::user()->id)->where('question', $request->question3_sett)->update([
+                'question'=> $request->question3_sett,
+                'answer'=>$request->answer_3_sett    
+            ]);
+        }
+        else{
+            UserSecurityQuestion::create([
+                'user_id'=>Auth::user()->id,
+                'question'=> $request->question1_sett,
+                'answer'=>$request->answer_1_sett
+            ]);
+            UserSecurityQuestion::create([
+                'user_id'=>Auth::user()->id,
+                'question'=> $request->question2_sett,
+                'answer'=>$request->answer_2_sett
+            ]);
+            UserSecurityQuestion::create([
+                'user_id'=>Auth::user()->id,
+                'question'=> $request->question3_sett,
+                'answer'=>$request->answer_3_sett
+            ]);
+        }
         Alert::success('Success', 'Security Question Updated Successfully');
             return redirect()->route('edit_profile');
+            
     }
 
     public function updateBirth(Request $request){
@@ -462,8 +476,8 @@ class HomeController extends Controller
             ]);
             //$result = $bvn->verifyBVN($bvn_number);
             $res = $response->object()->verificationStatus;
-            //dd($response->object());
-            if($res == 'VERIFIED'){
+            //dd($res);
+            if($response->object()->verificationStatus == 'VERIFIED'){
                 $user = UserBank::where('user_id', Auth::user()->id)->first();
                 $user->nin = '*****'.substr($request->nin_num, 10);
                 $user->update();

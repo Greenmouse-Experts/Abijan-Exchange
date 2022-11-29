@@ -648,7 +648,7 @@
             <div class="modal fade" id="pricelist" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-body p-0 table-responsive" style="background:#FFFFFF">
-                        <p class="col text-center m-3 white">Price List for today 06/Nov/2022</p>
+                        <p class="col text-center m-3 white">Price List for today {{ date('d/M/Y') }}</p>
                         <table class="table mb-0">
                             <tbody>
                                 <tr>
@@ -663,7 +663,7 @@
                                         <tr>
                                             <td>
                                                 <div class="media">
-                                                    <img class="align-self-start mr-2" src="" alt=""
+                                                    <img class="align-self-start mr-2" src="{{ $item->currency_img }}" alt=""
                                                         width="30px">
                                                     <div class="media-body">
                                                         <p class="mb-0">{{$item->e_currency}} ({{$item->port_short}}) </p>

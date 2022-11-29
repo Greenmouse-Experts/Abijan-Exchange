@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.7.95/css/materialdesignicons.css" rel="stylesheet"/>
-    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+    <!--<script src="https://apps.elfsight.com/p/platform.js" defer></script>-->
     <title> {{config('app.name')}} </title>
     <style type="text/css">
         div.eapps-widget {
@@ -350,7 +350,7 @@
 </head>
 
 <body cz-shortcut-listen="true" style="padding-top: 0px;">
-    <div class="elfsight-app-c6270b09-80d5-400b-9c3a-55622bfadb28"></div>
+    <!--<div class="elfsight-app-c6270b09-80d5-400b-9c3a-55622bfadb28"></div>-->
 
     {{-- <script src="https://apps.elfsight.com/p/platform.js" defer></script>
     <div class="elfsight-app-260cbd82-25a5-4d3b-8275-b9b68a08171c"></div> --}}
@@ -697,7 +697,43 @@
           methods: {
             setNewValue(v){
               this.current_option = v
-              console.log(v)
+              if (this.usd) {
+                this.handle_usdcreateElementonvert();
+              }
+              (this.selectedcreateElementoin = this.coins.find(
+                (e) => e.name == value
+              )),
+                /* axios
+                  .get("https://nairadirect.com/ajaxprice", {
+                    params: {
+                      request: "coins",
+                    },
+                  })
+                  .then((response) => {
+                    this.coins = response.data;
+                  }); */
+              this.errors = [];
+              if (this.current_option == "buy") {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).buy_in_ngn;
+              } else {
+                var unit = this.coins.find(
+                  (e) => e.name == this.activecreateElementoin_selected
+                ).sell_in_ngn;
+              }
+              if (unit == "" || unit == "0.00") {
+                this.btc = "";
+                this.usd = "";
+                this.errors.push(
+                  "The " +
+                    this.current_option +
+                    " price for " +
+                    this.activecreateElementoin_selected +
+                    " is currently not available"
+                );
+              }
+              
             },
             change_active(value){
               this.activecreateElementoin_selected = value
