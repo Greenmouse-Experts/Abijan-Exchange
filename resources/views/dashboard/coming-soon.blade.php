@@ -16,7 +16,7 @@
                 <div class="container-fluid p-0 ">
                     <!-- page title  -->
                     <div class="text-center">
-                        <h3 style="font-size: 60px;margin-top: 17%;font-weight: 500;text-transform: uppercase;">Coming Soon!!!</h3>
+                        <h3 style="font-size: 48px;margin-top: 17%;font-weight: lighter;text-transform: uppercase;">Coming Soon!!!</h3>
                     </div>
                 </div>
             </div>

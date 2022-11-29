@@ -295,7 +295,7 @@
                                                             National Identification Number (NIN):
                                                         </td>
                                                         <td>
-                                                            @if (Auth::user()->bank->bvn != null)
+                                                            @if (Auth::user()->bank->nin != null)
                                                                 <p>{{Auth::user()->bank->nin}} <span class="badge badge-success"> verified </span></p>
                                                             @else
                                                                 <p>-</p>
