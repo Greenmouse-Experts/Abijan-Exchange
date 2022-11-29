@@ -16,7 +16,7 @@
                                 <p class="mb-0">Enter your email and password to sign In</p>
                             </div>
                             <div class="card-body">
-                                <form autocomplete="off" method="POST" action="{{ route('login') }}">
+                                <form autocomplete="off" method="POST" action="{{ route('user.login') }}">
                                     @csrf
                                     <div class="mb-4">
                                         @includeIf('layouts.error_template')

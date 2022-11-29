@@ -218,6 +218,22 @@
                 $('#editRateModal').modal('show')
 
             })
+            $('.editAdmin').click(function(){
+                //console.log('hello');
+                var id = ($(this).data("id"));
+                var firstname = ($(this).data("firstname"));
+                var middlename = ($(this).data("middlename"));
+                var surname = ($(this).data("surname"));
+                var email = ($(this).data("email"));
+                var password = ($(this).data("password"));
+                $('#userId').val(id);
+                $('#ufirstname').val(firstname);
+                $('#umiddlename').val(middlename);
+                $('#usurname').val(surname);
+                $('#email').val(email);
+                $('#editAdmin').modal('show')
+
+            })
             /* $('#editRateBTC').click(function(){
                 //console.log('hello');
                 var id = ($(this).data("id"));

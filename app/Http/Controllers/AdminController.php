@@ -224,7 +224,7 @@ class AdminController extends Controller
         $user->email = $request->email;
         $user->is_admin = 1;
         $user->user_type = $role;
-        $user->affiliate_id = Str::random(10);
+        $user->affiliate_id = Str::random(5);
         $user->email_verified_at = \Carbon\Carbon::now();
         $user->password = Hash::make($request->password);
         $user->assignRole($request->input('role'));
@@ -241,6 +241,38 @@ class AdminController extends Controller
         }
 
         Alert::success('Success', 'Admin account created successfully!');
+        return back();
+    }
+
+    public function updateAdminPost(Request $request)
+    {
+
+        $role = $request->role;
+        $user = User::where('id', $request->user_id)->first();
+        $profile = UserProfile::where('user_id', $request->user_id)->first();
+        $user->email = $request->email;
+        $user->is_admin = 1;
+        $user->user_type = $role;
+        $user->affiliate_id = Str::random(5);
+        $user->email_verified_at = \Carbon\Carbon::now();
+        $user->password = Hash::make($request->password);
+        $user->assignRole($request->input('role'));
+        if($user->update()){
+            $profile->firstname = $request->firstname;
+            $profile->middlename = $request->middlename;
+            $profile->surname = $request->surname;
+            $profile->update();
+        }
+
+        Alert::success('Success', 'Admin account updated successfully!');
+        return back();
+    }
+
+    public function delete_admin($id){
+        $profile = UserProfile::where('user_id', $id)->delete();
+        $wallet = UserWallet::where('user_id', $id)->delete();
+        $user = User::where('id', $id)->delete();
+        Alert::success('Success', 'Admin deleted successfully!');
         return back();
     }
 

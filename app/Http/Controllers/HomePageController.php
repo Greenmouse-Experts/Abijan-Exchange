@@ -31,9 +31,6 @@ class HomePageController extends Controller
             'g-recaptcha-response' => 'required|captcha',
         ]);
 
-<<<<<<< HEAD
-        $referred_by = $request->query('ref') || $request->referral;
-=======
         if(is_null($request->referral)){
             $referred_by = Cookie::get('referral');
         }
@@ -41,21 +38,15 @@ class HomePageController extends Controller
             $referred_by = $request->referral;
         }
         //dd($referred_by);
-        
->>>>>>> c381a88b2d762707b4a0f469d03c1ac0dd33810f
+
 
         $user = User::create([
             'user_type' => 'Client',
             'email' => $request->email,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-<<<<<<< HEAD
-            'affiliate_id' => Str::random(5),
-            'referred_by'   => $referred_by || $request->referral
-=======
             'affiliate_id' => Str::random(10),
             'referred_by'   => $referred_by,
->>>>>>> c381a88b2d762707b4a0f469d03c1ac0dd33810f
         ]);
 
         $code = mt_rand(100000, 999999);
@@ -158,9 +149,16 @@ class HomePageController extends Controller
                 return redirect()->route('verify.account', Crypt::encrypt($user->email))->with('success_report', 'Registration Succesful, Please verify your account!');
             }
 
+            if($user->status == 'disabled'){
+                Auth::logout();
+                return back()->with('failure_report', 'You account has been banned. Please contact our support for further instructions.');
+            }
+
             if($user->user_type == 'Client'){
                 return redirect()->route('home');
             }
+
+
 
             Auth::logout();
 

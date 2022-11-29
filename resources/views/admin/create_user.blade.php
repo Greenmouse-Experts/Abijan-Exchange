@@ -106,8 +106,8 @@
                                                         colspan="1" style="width: 177px;">Email</th>
                                                     <th scope="col" class="sorting_disabled" rowspan="1"
                                                         colspan="1" style="width: 111px;">Role</th>
-                                                    {{-- <th scope="col" class="sorting_disabled" rowspan="1"
-                                                        colspan="1" style="width: 138px;">Action</th> --}}
+                                                    <th scope="col" class="sorting_disabled" rowspan="1"
+                                                        colspan="1" style="width: 138px;">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -121,9 +121,9 @@
                                                             <p class=""
                                                                 style="cursor: pointer;"
                                                                 >
-                                                               {{\App\Models\UserProfile::where('user_id', $item->id)->first()->firstname}}
-                                                               {{\App\Models\UserProfile::where('user_id', $item->id)->first()->middlename}}
-                                                               {{\App\Models\UserProfile::where('user_id', $item->id)->first()->surname}}
+                                                               {{\App\Models\UserProfile::where('user_id', $item->id)->first()->firstname ?? ''}}
+                                                               {{\App\Models\UserProfile::where('user_id', $item->id)->first()->middlename ?? ''}}
+                                                               {{\App\Models\UserProfile::where('user_id', $item->id)->first()->surname ?? ''}}
                                                             </p>
                                                         </td>
                                                         <td>
@@ -139,12 +139,34 @@
                                                                 {{ $item->user_type }}
                                                             </p>
                                                         </td>
-                                                        {{-- <td>
+                                                        <td>
                                                             <p class=""
                                                                 style="cursor: pointer;"
                                                                 >
-                                                               aa </p>
-                                                        </td> --}}
+                                                                <form action="{{route('delete_admin', $item->id)}}" method="post">
+                                                                    @csrf
+                                                                <button data-toggle="tooltip"
+                                                                        data-id="{{ $item->id }}"
+                                                                        data-firstname="{{ \App\Models\UserProfile::where('user_id', $item->id)->first()->firstname ?? '' }}"
+                                                                        data-middlename="{{ \App\Models\UserProfile::where('user_id', $item->id)->first()->middlename ?? '' }}"
+                                                                        data-surname="{{ \App\Models\UserProfile::where('user_id', $item->id)->first()->surname ?? '' }}"
+                                                                        data-email="{{ $item->email }}"
+                                                                        data-password="{{ $item->password }}"
+                                                                        data-placement="top" title="Edit Admin"
+                                                                        class="editAdmin"
+                                                                        type="button"
+                                                                        style="border: 0;background: transparent;color: #373063;"><i
+                                                                            class=" ti-pencil-alt "></i></button>
+
+                                                                        <button type="submit" data-toggle="tooltip" data-placement="top" title="Delete Admin"
+                                                                        style="border: 0;background: transparent;color: #373063;"
+                                                                        >
+                                                                            <i
+                                                                            class="ti-trash"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </p>
+                                                        </td>
                                                     </tr>
                                                     @endforeach
                                                 @else
@@ -244,6 +266,92 @@
                                         click the "Forgot Password" link on the login page.</p>
                                 </div>
                             </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editAdmin" tabindex="-1" role="dialog"
+            aria-labelledby="messageModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="main-title">
+                            <h3 class="m-0">Edit Admin</h3>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <p>Use this form to update an admin account.</p><br>
+                        </div>
+                    <form method="POST" action="{{route('updateAdmin')}}">
+                        @csrf
+                        <input type="hidden" name="user_id" value="" id="userId">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>Role</label>
+                                <div class="common_input mb_20">
+                                    <select class="form-control" id="role" name="role">
+                                        <option value="">Choose a role</option>
+                                        @foreach ($roles as $i)
+                                            <option value="{{$i->name}}">{{$i->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="common_input mb_20">
+                                    <label>Email</label>
+                                    <input name="email" id="email" type="email" value="" maxlength="100"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="common_input mb_20">
+                                    <label>Firstname</label>
+                                    <input name="firstname" id="ufirstname" type="text" value="" maxlength="100"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="common_input mb_20">
+                                    <label>Middlename</label>
+                                    <input name="middlename" id="umiddlename" type="text" value="" maxlength="100"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="common_input mb_20">
+                                    <label>Surname</label>
+                                    <input name="surname" id="usurname" type="text" value="" maxlength="100"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="common_input mb_20">
+                                    <label>Password</label>
+                                    <input name="password" id="upassword" type="password" value="" maxlength="100"
+                                        class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 forgotpasswordhide">
+                                <div class="common_input mb_20">
+                                    <button type="submit" class="btn_1 w-100 col-md-5" id="ContinueCompose">Update Admin
+                                        <span class="spincompose fa fa-spinner fa-spin fa-2x"
+                                            style="display: none;"></span></button>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-12 forgotpasswordshow" style="display:none;">
+                                <div class="common_input mb_20">
+                                    <p>Please click <b><a href="forgotpassword">HERE</a></b> to reset your password or
+                                        click the "Forgot Password" link on the login page.</p>
+                                </div>
+                            </div> --}}
                         </div>
                     </form>
                     </div>
