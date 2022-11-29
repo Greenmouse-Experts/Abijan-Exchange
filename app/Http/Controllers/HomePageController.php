@@ -31,14 +31,14 @@ class HomePageController extends Controller
             //'g-recaptcha-response' => 'required|captcha',
         ]);
 
-        $referred_by = Cookie::get('referral');
+        $referred_by = $request->query('ref') || $request->referral;
 
         $user = User::create([
             'user_type' => 'Client',
             'email' => $request->email,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'affiliate_id' => Str::random(10),
+            'affiliate_id' => Str::random(5),
             'referred_by'   => $referred_by || $request->referral
         ]);
 
@@ -46,8 +46,6 @@ class HomePageController extends Controller
         $user->update([
             'code' => $code
         ]);
-
-        Cookie::queue(Cookie::forget('referral'));
 
         // Send email to user
         $user->notify(new SendVerificationCode($user));
