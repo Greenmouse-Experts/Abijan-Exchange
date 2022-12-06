@@ -40,7 +40,7 @@ class ExchangeBTC extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Exchange BTC',
+            subject: 'Your exchange request confirmation'
         );
     }
 

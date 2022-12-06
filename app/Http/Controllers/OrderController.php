@@ -242,7 +242,7 @@ class OrderController extends Controller
     public function quicksell(Request $request)
     {
         //
-        if($request->currency_option == "Bitcoin" AND $request->unit == "USD" AND $request->amount < 5){
+        if($request->currency_option == "Bitcoin" AND $request->unit == "USD" AND $request->amount < (5/rates()[0]['sell_rate'])){
             return response()->json([
                 "status"=>"error",
                 "msg"=>"The bitcoin you want to buy must be up to $5"
@@ -254,11 +254,41 @@ class OrderController extends Controller
                 "msg"=>"The bitcoin you want to buy must be up to $5"
             ]);
         }
-        if($request->currency_option == "Bitcoin" AND $request->unit == "BTC" AND $request->amount < (5*rates()[0]['sell_rate'])){
+        if($request->currency_option == "Bitcoin" AND $request->unit == "BTC" AND $request->amount < (5/getCurrentBtcDollar())){
             return response()->json([
                 "status"=>"error",
                 "msg"=>"The bitcoin you want to buy must be up to $5"
             ]);
+        }
+        if($request->currency_option == "Bitcoin" AND $request->unit == "USD" AND $request->amount > (5/rates()[0]['sell_rate'])){
+            $user = UserWallet::where('id', Auth::user()->id)->first();
+            $curr = $user->btc;
+                if($curr < $request->amount/getCurrentBtcDollar()){
+                    return response()->json([
+                    "status"=>"error",
+                    "msg"=>"You have insufficient BTC balance to complete this transaction"
+                ]);
+            }
+        }
+        if($request->currency_option == "Bitcoin" AND $request->unit == "NGN" AND $request->amount > (5*rates()[0]['sell_rate'])){
+            $user = UserWallet::where('id', Auth::user()->id)->first();
+            $curr = $user->btc;
+                if($curr < ($request->amount*rates()[0]['sell_rate'])*getCurrentBtcDollar()){
+                    return response()->json([
+                    "status"=>"error",
+                    "msg"=>"You have insufficient BTC balance to complete this transaction"
+                ]);
+            }
+        }
+        if($request->currency_option == "Bitcoin" AND $request->unit == "BTC" AND $request->amount > (5/rates()[0]['sell_rate'])){
+            $user = UserWallet::where('id', Auth::user()->id)->first();
+            $curr = $user->btc;
+                if($curr < $request->amount){
+                    return response()->json([
+                    "status"=>"error",
+                    "msg"=>"You have insufficient BTC balance to complete this transaction"
+                ]);
+            }
         }
         if($request->currency_option == "Bitcoin" AND $request->unit == "BTC" AND $request->sell_from == "Bitcoin Balance" AND $request->amount < Auth::user()->wallet->btc){
             return response()->json([
@@ -273,7 +303,7 @@ class OrderController extends Controller
                 "msg"=>"You have insufficient bitcoin balance to sell Bitcoin"
             ]);
         }
-        if($request->currency_option == "Bitcoin" AND $request->unit == "USD" AND $request->sell_from == "Bitcoin Balance" AND (($request->amount/rates()[0]['sell_rate'])*getCurrentBtcDollar()) < Auth::user()->wallet->btc){
+        if($request->currency_option == "Bitcoin" AND $request->unit == "NGN" AND $request->sell_from == "Bitcoin Balance" AND (($request->amount/rates()[0]['sell_rate'])*getCurrentBtcDollar()) < Auth::user()->wallet->btc){
             return response()->json([
                 "status"=>"error",
                 "msg"=>"You have insufficient bitcoin balance to sell Bitcoin"
@@ -370,12 +400,14 @@ class OrderController extends Controller
             $i->currency = $request->currency_option;
             $i->unit = $request->unit;
             $i->save();
+            Mail::to(Auth::user()->email)->send(new \App\Mail\ExchangeBTC($i));
         }
-
+        
+        
 
         return response()->json([
             "status"=>"success",
-            "msg"=>"You sell e-currency is successfull"
+            "msg"=>"Your transaction has been placed. Check your email for the wallet address to send to."
         ]);
         //dd($request);
     }

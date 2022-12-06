@@ -165,7 +165,7 @@
 
                                                 <div class="col-lg-6">
                                                     <div class="common_input mb_20">
-                                                        <label>BTC Wallet</label>
+                                                        <label>Send BTC Wallet</label>
                                                         <input name="btc_wallet" id="btc_wallet" type="text" value="{{settings()->btc_wallet}}" maxlength="100"
                                                             class="form-control">
                                                     </div>
@@ -173,7 +173,7 @@
 
                                                 <div class="col-lg-6">
                                                     <div class="common_input mb_20">
-                                                        <label>Ethereum Wallet</label>
+                                                        <label>Send Ethereum Wallet</label>
                                                         <input name="eth_wallet" id="eth_wallet" type="text" value="{{settings()->eth_wallet}}" maxlength="100"
                                                             class="form-control">
                                                     </div>
@@ -229,7 +229,7 @@
 
                                                 <div class="col-lg-6">
                                                     <div class="common_input mb_20">
-                                                        <label>Bicoin Cash Wallet</label>
+                                                        <label>Send Bicoin Cash Wallet</label>
                                                         <input name="bch_wallet" id="bch_wallet" type="text" value="{{settings()->bch_wallet}}" maxlength="100"
                                                             class="form-control">
                                                     </div>
@@ -237,7 +237,7 @@
 
                                                 <div class="col-lg-6">
                                                     <div class="common_input mb_20">
-                                                        <label>USDT TRC20 Wallet</label>
+                                                        <label>Send USDT TRC20 Wallet</label>
                                                         <input name="usdt_wallet" id="usdt_wallet" type="text" value="{{settings()->usdt_wallet}}" maxlength="100"
                                                             class="form-control">
                                                     </div>

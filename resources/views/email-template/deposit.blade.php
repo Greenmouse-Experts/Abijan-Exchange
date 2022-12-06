@@ -7,7 +7,7 @@
 
 <body>
     <p>Dear {{ Auth::user()->profile->firstname }},</p>
-    <p>To complete the initiated deposit of {{ number_format($naira->_trf_amount, 2) }} Naira, use the below details to make
+    <p>To complete the initiated deposit of {{ number_format($naira->trf_amount, 2) }} Naira, use the below details to make
         your transfer. </p>
     <p style="margin-bottom: 20px">PAYMENT INSTRUCTIONS:</p>
     <p> Payment should be made to {{ settings()->bank_name }}: </p>
@@ -32,7 +32,7 @@
             online bank pay remark or memo or when you are paying cash or any means of
             &nbsp;payment.</i><br>===================================================</p>
     <p><i><strong>&nbsp;What do i need put in my memo/remark when transferring money to us ? You can put the Trans ID OR
-                UR user I.D on nairadirect or your name, generated for you after making the order for Naira deposit.An
+                UR user I.D on abijanexchange or your name, generated for you after making the order for Naira deposit.An
                 invoice will be generated for every order you make and you can make use of that when you are
                 transferring</strong> money into our
             bank&nbsp;</i><br>====================================================</p>

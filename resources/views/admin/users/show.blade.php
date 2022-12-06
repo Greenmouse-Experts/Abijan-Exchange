@@ -65,6 +65,11 @@
                                         </a>
                                     </li>
                                     <li class="nav-item" style="width: 100%">
+                                        <a  class="nav-link" href="#naira" data-toggle="tab">
+                                            <i class="ti-credit-card"></i> <span> <span>Naira Wallet</span></span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" style="width: 100%">
                                         <a  class="nav-link" href="#btc" data-toggle="tab">
                                             <i class="ti-credit-card"></i> <span> <span>BTC Wallet</span></span>
                                         </a>
@@ -169,6 +174,80 @@
                                             </div>
                                         </div>
                                         <input type="hidden" id="countmsg" value="">
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="naira">
+                                    <div class="white_box QA_section mb_30">
+                                        <div class="white_box_tittle list_header">
+                                            <h4>Naira Wallet</h4>
+                                            <div class="box_right d-flex lms_block">
+                                                <div class="serach_field_2">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="QA_table">
+                                            <!-- table-responsive -->
+                                            <!-- table-responsive -->
+                                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                                <div id="DataTables_Table_0_filter" class="dataTables_filter"><label><i
+                                                            class="ti-search"></i>
+                                                        <input type="search" class="" placeholder="Quick Search"
+                                                            aria-controls="DataTables_Table_0">
+                                                    </label></div>
+                                                <legend>
+                                                    <h3>User Naira (NGN) Wallet Info</h3>
+                                                </legend>
+                                                <div class="form-group">
+                                                    <label for="btc">Corrent Balance</label>
+                                                    <h4>₦{{$wallet->naira ?? '0.00'}}</h4>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <ul class="nav nav-pills custom_bootstrap_nav">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" href="#addNaira" data-toggle="tab">
+                                                                Add Naira</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="#deductNaira" data-toggle="tab">
+                                                                Deduct Naira</a>
+                                                        </li>
+                                                    </ul>
+
+
+                                                    <div class="tab-content">
+                                                        <div class="white_card_body tab-pane fade active show" id="addNaira">
+                                                            <div class="form-group col-md-12 mt-3">
+                                                                <form action="{{route('users.add_naira', $user->id)}}" method="post">
+                                                                    @csrf
+                                                                    <input type="tel" name="addNaira" placeholder="100" class="form-control col-md-8" id="">
+                                                                    <button type="submit" class="btn btn-dark col-md-8 mt-1">
+                                                                        ADD NAIRA
+                                                                    </button>
+                                                                </form>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="white_card_body tab-pane fade" id="deductNaira">
+                                                            <div class="form-group col-md-12 mt-3">
+                                                                <form action="{{route('users.deduct_naira', $user->id)}}" method="post">
+                                                                    @csrf
+                                                                    <input type="tel" name="deductNaira" placeholder="100" class="form-control col-md-8" id="">
+                                                                    <button type="submit" class="btn btn-dark col-md-8 mt-1">
+                                                                        DEDUCT NAIRA
+                                                                    </button>
+                                                                </form>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="btc">

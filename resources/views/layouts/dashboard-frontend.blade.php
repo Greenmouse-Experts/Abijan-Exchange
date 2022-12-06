@@ -936,7 +936,7 @@
             proceed(mydata);
         }
 
-        function proceed(top) {
+        /*function proceed(top) {
             $('#sellNowbtn').attr('disabled', 'disabled');
             $(".loadingText").show();
             $.ajaxSetup({
@@ -1003,7 +1003,7 @@
                     }
                 }
             });
-        }
+        }*/
     });
 
     $('#buyNowbtn').click(function() {

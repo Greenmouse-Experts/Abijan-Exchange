@@ -144,6 +144,30 @@ class UserController extends Controller
         Alert::success('Success', 'Ethereum Deducted successfully');
         return back();
     }
+    
+    public function add_naira(Request $request, $id)
+    {
+        $wallet = UserWallet::where('user_id', $id)->first();
+        $curr = $wallet->naira;
+        $wallet->naira = $curr + $request->addNaira;
+        $wallet->update();
+        Alert::success('Success', 'Naira Added successfully');
+        return back();
+    }
+
+    public function deduct_naira(Request $request, $id)
+    {
+        $wallet = UserWallet::where('user_id', $id)->first();
+        $curr = $wallet->naira;
+        if ($curr < $request->deductNaira) {
+            Alert::error('Oops!', 'Deduct amount can\'t be greater than current balance');
+            return back();
+        }
+        $wallet->naira = $curr - $request->deductNaira;
+        $wallet->update();
+        Alert::success('Success', 'Naira Deducted successfully');
+        return back();
+    }
 
     /**
      * Update the specified resource in storage.
