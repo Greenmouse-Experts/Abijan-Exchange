@@ -99,7 +99,7 @@ class HomeController extends Controller
                 $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
                 return view('dashboard.nin', compact('question'));
             }
-            
+
         }
         if ($type == 'gender') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
@@ -126,7 +126,7 @@ class HomeController extends Controller
                 return redirect()->route('edit_profile');
             } else {
                 return view('dashboard.update_name', compact('question'));
-            } 
+            }
         }
         if ($type == 'phone') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
@@ -136,8 +136,8 @@ class HomeController extends Controller
                 return redirect()->route('edit_profile');
             } else {
                 return view('dashboard.type-phone_no', compact('question'));
-            } 
-            
+            }
+
         }
         if ($type == 'username') {
             $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->inRandomOrder()->first();
@@ -176,15 +176,15 @@ class HomeController extends Controller
             //dd($request);
             UserSecurityQuestion::where('user_id', Auth::user()->id)->where('question', $request->question1_sett)->update([
                 'question'=> $request->question1_sett,
-                'answer'=>$request->answer_1_sett    
+                'answer'=>$request->answer_1_sett
             ]);
             UserSecurityQuestion::where('user_id', Auth::user()->id)->where('question', $request->question2_sett)->update([
                 'question'=> $request->question2_sett,
-                'answer'=>$request->answer_2_sett    
+                'answer'=>$request->answer_2_sett
             ]);
             UserSecurityQuestion::where('user_id', Auth::user()->id)->where('question', $request->question3_sett)->update([
                 'question'=> $request->question3_sett,
-                'answer'=>$request->answer_3_sett    
+                'answer'=>$request->answer_3_sett
             ]);
         }
         else{
@@ -206,7 +206,7 @@ class HomeController extends Controller
         }
         Alert::success('Success', 'Security Question Updated Successfully');
             return redirect()->route('edit_profile');
-            
+
     }
 
     public function updateBirth(Request $request){
@@ -416,7 +416,7 @@ class HomeController extends Controller
             "phone" => $phone,
             "searchParameter" => $bvn,
             "dob" => Carbon::parse($dob)->format('d-M-Y'),
-            "verificationType" => "BVN-BOOLEAN-MATCH" 
+            "verificationType" => "BVN-BOOLEAN-MATCH"
             /*"firstName"=> "Moshood",
             "lastName"=> "Gbadamosi",
             "phone" => "08134211037",
@@ -595,6 +595,27 @@ class HomeController extends Controller
         if($request->type == $type){
             return response()->json($type);
         }
+    }
+
+    public function pm_query(Request $request){
+        //dd($request->acctno);
+        //$res = Http::get('https://perfectmoney.com/acct/acc_name.asp?AccountID=1326603&PassPhrase=Gooday@23lhgmo&Account=U17489579', 'rb');
+
+        $f=fopen('https://perfectmoney.com/acct/acc_name.asp?AccountID=1326603&PassPhrase=Gooday@23lhgmo&Account='.$request->acctno, 'rb');
+
+        if($f===false){
+            echo 'error openning url';
+        }
+
+        // getting data
+        $out="";
+        while(!feof($f)) $out.=fgets($f);
+
+        fclose($f);
+        return response()->json([
+            $out
+        ]);
+        //dd($out);
     }
 
     public function deposit()

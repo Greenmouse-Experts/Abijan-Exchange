@@ -99,7 +99,7 @@
                                                                         </p>
                                                                     </td>
                                                                     <td>
-                                                                        <p>  {{$item->trf_amount}}</p>
+                                                                        <p>  {{number_format($item->trf_amount, 2)}} NGN</p>
                                                                     </td>
                                                                     <td>
                                                                         <p>

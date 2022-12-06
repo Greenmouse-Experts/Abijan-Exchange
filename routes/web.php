@@ -59,6 +59,7 @@ Route::post('/password/forget',  [App\Http\Controllers\HomePageController::class
 Route::get('/reset/password/email', [App\Http\Controllers\HomePageController::class, 'password_reset_email'])->name('user.reset.password');
 Route::post('update/password/reset/', [App\Http\Controllers\HomePageController::class, 'reset_password'])->name('user.update.password');
 Route::post('dashboard/sell-pm', [App\Http\Controllers\OrderController::class, 'sell_PM'])->name('sell.pm');
+Route::post('dashboard/pm_query', [App\Http\Controllers\HomeController::class, 'pm_query'])->name('pm.query');
 
 /* Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout'); */
 

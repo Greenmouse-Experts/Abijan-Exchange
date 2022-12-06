@@ -77,7 +77,13 @@
                                                     @if ($trans->count() > 0)
                                                         @foreach ($trans as $item)
                                                                 <tr class="odd">
-                                                                    <td>#</td>
+                                                                    <td>
+                                                                        <div class="trade d-flex align-items-center">
+                                                                            <span class="idtbale"></span>
+                                                                            <span class="sold-thumb"><i class="ti-arrow-up"></i></span>
+                                                                            <span class="ml-3 badge badge-danger">Sent</span>
+                                                                        </div>
+                                                                    </td>
                                                                     <td>
                                                                         <p class="" style="cursor: pointer;"">{{\Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</p>
                                                                     </td>
@@ -102,7 +108,7 @@
                                                                         </p>
                                                                     </td>
                                                                     <td>
-                                                                        <p>  {{$item->btc_amount}}</p>
+                                                                        <p>  {{$item->btc_amount}} BTC</p>
                                                                     </td>
                                                                 </tr>
                                                         @endforeach
