@@ -210,8 +210,8 @@
                                                             class="form-control nice_Select" style="display: none;">
                                                             <option data-display="Bitcoin" selected="selected"
                                                                 data-value="BTC" value="Bitcoin">Bitcoin</option>
-                                                            {{-- <option data-value="PM" value="Perfect Money">Perfect Money
-                                                            </option> --}}
+                                                            <option data-value="PM" value="Perfect Money">Perfect Money
+                                                            </option>
                                                             <option data-value="ETH" value="Ethereum">Ethereum</option>
                                                             <option data-value="TRC20" value="USDT TRC20">USDT TRC20
                                                             </option>
@@ -685,6 +685,32 @@
                     </div>
                 </div>
             </div>
+            
+             <form action="https://perfectmoney.is/api/step1.asp" method="POST" id="pm_form">
+                    <input type="hidden" name="PAYEE_ACCOUNT" value="U4289111">
+                    <input type="hidden" name="PAYEE_NAME" value="Abijan Exchange">
+                    <input type="hidden" name="PAYMENT_ID" value="Sell PM">
+                    <input type="hidden" name="PAYMENT_AMOUNT" id="PAYMENT_AMOUNT" value="20">
+                    <input type="hidden" name="PAYMENT_UNITS" value="USD">
+                    <input type="hidden" name="STATUS_URL"
+                        id="STATUS_URL"
+                        value="mailto:morshudlhgmo@gmail.com">
+                    <input type="hidden" name="PAYMENT_URL"
+                        id="PAYMENT_URL"
+                        value="http://abijanexchange.greenmouseproperties.com/dashboard/pmresponse">
+                    <input type="hidden" name="PAYMENT_URL_METHOD"
+                        id="PAYMENT_URL_METHOD" value="POST">
+                    <input type="hidden" name="NOPAYMENT_URL"
+                        id="NOPAYMENT_URL"
+                        value="http://abijanexchange.greenmouseproperties.com/dashboard/sell-pm?status=error&amp;type=nopayment">
+                    <input type="hidden" name="BAGGAGE_FIELDS"
+                        id="BAGGAGE_FIELDS" value="Email CUST_NUM">
+                    <input type="hidden" name="SUGGESTED_MEMO"
+                        id="SUGGESTED_MEMO" value="Invoice no 11247483">
+                    <input type="hidden" name="Email" value="{{Auth::user()->email}}">
+                    <input type="hidden" name="PAYMENT_METHOD"
+                        id="PAYMENT_METHOD" value="PerfectMoney account">
+            </form>
             <!-- [ content ] End -->
 
             <!-- [ Layout footer ] Start -->

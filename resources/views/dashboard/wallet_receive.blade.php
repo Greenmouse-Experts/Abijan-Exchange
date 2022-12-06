@@ -46,7 +46,7 @@
 
                                                 <span>Give out the bitcoin address below to receive bitcoins.</span>
 
-                                                {{-- <div class="bitcoin-address-container"
+                                                <div class="bitcoin-address-container"
                                                     data-bc-address="{{ settings()->receive_btc_wallet }}">
 
                                                     <div class="walletaddy">
@@ -68,13 +68,13 @@
                                                         alt="{{ settings()->receive_btc_wallet }}"></span>
                                                 <input type="hidden" name="addr" id="addr"
                                                     value="{{ settings()->receive_btc_wallet }}">
-                                                <input type="hidden" name="addr_key" id="addr_key" value="address_key">
+                                                <input type="hidden" name="addr_key" id="addr_key" value="{{ settings()->receive_btc_wallet }}">
                                                 <br>
 
                                                 <span> This address will change after use. A new one will be automatically
-                                                    generated.</span> --}}
+                                                    generated.</span> 
 
-                                                    <div class="bitcoin-address-container"
+                                                    {{--<div class="bitcoin-address-container"
                                                     data-bc-address="{{ $user_wallet->btc_wallet_address }}">
 
                                                     <div class="walletaddy">
@@ -100,7 +100,7 @@
                                                 <br>
 
                                                 <span> This address will change after use. A new one will be automatically
-                                                    generated.</span>
+                                                    generated.</span>--}}
                                             </div>
 
                                         </div>

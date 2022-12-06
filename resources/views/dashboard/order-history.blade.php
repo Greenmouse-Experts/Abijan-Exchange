@@ -158,10 +158,10 @@
                                                                         @if ($i->unit == 'USD')
                                                                             {{ number_format($i->amount, 2) }}
                                                                         @endif
-                                                                        @if ($item->unit == "NGN")
+                                                                        @if ($i->unit == "NGN")
                                                                             {{$i->amount}} NGN
                                                                         @endif
-                                                                        @if ($item->unit == "BTC")
+                                                                        @if ($i->unit == "BTC")
                                                                             {{number_format($i->amount, 7)}} BTC
                                                                         @endif
                                                                     </td>

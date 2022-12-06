@@ -153,7 +153,7 @@
                 </div>
             </a>
             <ul>
-                @can('create-admin')
+                @can('view-settings')
                 <li><a href="{{route('settings')}}">View Settings</a></li>
                 @endcan
 
