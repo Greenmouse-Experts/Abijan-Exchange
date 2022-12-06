@@ -1837,9 +1837,14 @@ $(function() {
 
         if (acctno.length >= "8") {
             $("#acctname" + name).attr("placeholder", "Please wait...");
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $.ajax({
                 type: "POST",
-                url: "pm_query",
+                url: "/dashboard/pm_query",
                 data: {
                     acctno: acctno,
                     ecurrency: ecurrency

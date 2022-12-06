@@ -49,7 +49,7 @@ class RoleController extends Controller
 
     {
 
-        $roles = Role::orderBy('id','DESC')->paginate(5);
+        $roles = Role::orderBy('id','DESC')->where('name', "!=", "Super Admin")->paginate(5);
         $permission = Permission::get();
         return view('admin.roles.index',compact('roles', 'permission'))
 
