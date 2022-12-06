@@ -203,7 +203,7 @@ class AdminController extends Controller
 
     public function createUser(){
         $users = User::where('is_admin', 1)->orderBy('id', 'desc')->get();
-        $roles = Role::all();
+        $roles = Role::where('name', '!=', 'Super Admin')->get();
         return view('admin.create_user', compact('users', 'roles'));
     }
 
