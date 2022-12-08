@@ -167,6 +167,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('/SetRate', [App\Http\Controllers\AdminController::class, 'AddRate'])->name('SetRate')->middleware('can:set-rate');
     Route::post('/update_rate', [App\Http\Controllers\AdminController::class, 'updateRate'])->name('updateRate')->middleware('can:set-rate');
     Route::post('/delete_rate', [App\Http\Controllers\AdminController::class, 'deleteRate'])->name('delete.rate');
+    Route::post('/replyMsg', [App\Http\Controllers\AdminController::class, 'admin_reply_msg'])->name('admin.reply_msg');
     Route::post('/updateSetting', [App\Http\Controllers\AdminController::class, 'UpdateSetting'])->name('settings.update')->middleware('can:update-settings');
     Route::post('/updateNairaDeposit', [App\Http\Controllers\NairaTransactionController::class, 'updateDepositNaira'])->middleware(['verified', 'auth'])->name('naira.updateDeposit')->middleware('can:update-wallet-request');
     Route::post('/updateNairaWithdraw', [App\Http\Controllers\NairaTransactionController::class, 'updateWithdrawNaira'])->name('naira.updateWithdraw')->middleware('can:update-wallet-request');

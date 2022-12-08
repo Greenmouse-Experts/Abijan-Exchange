@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xxl-6 mb-30">
+                            <div class="col-12 mb-30">
                                 <div class="card card-statistics h-100 mb-0">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-heading">
@@ -123,11 +123,15 @@
                                                                     @if ($item->currency == 'bitcoin Cash')
                                                                         {{ $item->bth_wallet }}
                                                                     @endif
+                                                                    @if ($item->currency == 'Tron')
+                                                                        {{ $item->trn_wallet }}
+                                                                    @endif
                                                                 </td>
                                                                 <td>{{ $item->pay_with }}</td>
                                                                 <td>{{ $item->amount }} {{ $item->unit }}</td>
                                                                 <td>{{ $item->currency }}</td>
-                                                                <td>{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
+                                                                <td>
+                                                                    {{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}
                                                                 </td>
                                                                 <td>
                                                                     @if ($item->status == 0)
@@ -249,7 +253,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-6 mb-30">
+                            <div class="col-md-12 mb-30">
                                 <div class="card card-statistics h-100 mb-0">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="card-heading">
@@ -297,7 +301,8 @@
                                                                 <td>{{ $item->pay_with }}</td>
                                                                 <td>{{ $item->amount }} {{ $item->unit }}</td>
                                                                 <td>{{ $item->currency }}</td>
-                                                                <td>{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
+                                                                <td>
+                                                                    {{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}
                                                                 </td>
                                                                 <td>
                                                                     @if ($item->status == 0)

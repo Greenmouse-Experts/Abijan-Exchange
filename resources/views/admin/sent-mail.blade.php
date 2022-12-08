@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="email-sidebar white_box">
-                                {{-- <button data-toggle="modal" data-target="#messageModalCenter" class="btn_1 w-100 mb-2 btn-lg email-gradient gradient-9-hover email__btn waves-effect"><i class="ti-plus"></i>COMPOSE</button> --}}
+                                <button data-toggle="modal" data-target="#messageModalCenter" class="btn_1 w-100 mb-2 btn-lg email-gradient gradient-9-hover email__btn waves-effect"><i class="ti-plus"></i>COMPOSE</button>
                                 <ul class="text-left mt-2">
                                     <li>
                                         <a href="{{ route('message_center') }}">
@@ -113,7 +113,7 @@
                                                     <th scope="col" class="sorting_disabled" rowspan="1"
                                                         colspan="1" style="width: 171px;">Message</th>
                                                     <th scope="col" class="sorting_disabled" rowspan="1"
-                                                        colspan="1" style="width: 177px;">Category</th>
+                                                        colspan="1" style="width: 177px;">Subject</th>
                                                     <th scope="col" class="sorting_disabled" rowspan="1"
                                                         colspan="1" style="width: 111px;">Date</th>
                                                     <th scope="col" class="sorting_disabled" rowspan="1"
@@ -121,23 +121,59 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-
-                                                <tr class="odd">
-                                                    <td valign="top" colspan="5" class="dataTables_empty">Your
-                                                        messages will appear here.</td>
-                                                </tr>
+                                                    @if ($msg->count() > 0)
+                                                        @foreach ($msg as $item)
+                                                            <tr role="row" class="odd">
+                                                                <<tr role="row" class="odd">
+                                                                <td scope="row" tabindex="0">
+                                                                    <label class="primary_checkbox d-flex mr-12 ">
+                                                                        <input type="checkbox" class="checkboxmsg"
+                                                                            id="{{ $item->id }}">
+                                                                        <span class="checkmark"></span>
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <p class=""
+                                                                        style="cursor: pointer;">
+                                                                        {{ $item->message }} </p>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="media align-items-center">
+                                                                        <div class="media-body">
+                                                                            <p class=""
+                                                                                style="cursor: pointer;"
+                                                                                >
+                                                                                {{ $item->subject }}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <p class=""
+                                                                        style="cursor: pointer;">
+                                                                        {{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}
+                                                                    </p>
+                                                                </td>
+                                                                <td>
+                                                                    <p class=""
+                                                                        style="cursor: pointer;">
+                                                                        @if ($item->status == 0)
+                                                                            Unread
+                                                                        @else
+                                                                            Read
+                                                                        @endif
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr class="odd">
+                                                            <td colspan="5" class="dataTables_empty" valign="top">
+                                                                Your
+                                                                messages will appear here.</td>
+                                                        </tr>
+                                                    @endif
                                             </tbody>
                                         </table>
-                                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
-                                            aria-live="polite">Showing 0 to 0 of 0 messages</div>
-                                        <div class="dataTables_paginate paging_simple_numbers"
-                                            id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled"
-                                                aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0"
-                                                id="DataTables_Table_0_previous"><i
-                                                    class="ti-arrow-left"></i></a><span></span><a
-                                                class="paginate_button next disabled" aria-controls="DataTables_Table_0"
-                                                data-dt-idx="1" tabindex="0" id="DataTables_Table_0_next"><i
-                                                    class="ti-arrow-right"></i></a></div>
                                     </div>
                                     <input type="hidden" id="countmsg" value="">
                                 </div>
@@ -147,6 +183,66 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="messageModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="messageModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="main-title">
+                                <h3 class="m-0">Compose a message</h3>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <p>Use this form to reply user.</p><br>
+                            </div>
+                            <div class="row">
+                                @php
+                                    $user_m = \App\Models\User::where('is_admin', 0)->orderBy('id', 'desc')->get();
+                                @endphp
+                                <div class="col-lg-12">
+                                    <div class="common_input mb_20">
+                                        <label>Subject</label>
+                                        <input name="subject" id="subject" type="text" maxlength="100"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Message To</label>
+                                    <div class="common_input mb_20">
+                                        <select class="form-control" id="user" name="user">
+                                            <option value="">Select User</option>
+                                            @foreach($user_m as $item)
+                                                <option value="{{$item->id}}">{{$item->email}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 forgotpasswordhide">
+                                    <div class="common_input mb_20">
+                                        <label>Message</label>
+                                        <textarea name="message" id="memo" rows="5" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 forgotpasswordhide">
+                                    <div class="common_input mb_20">
+                                        {{-- <input type="hidden" id="idread">
+                                    <input type="hidden" id="msgtyperead" value="compose"> --}}
+                                        <button type="submit" class="btn_1 w-100 col-md-5" id="ContinueCompose">Continue
+                                            <span class="spincompose fa fa-spinner fa-spin fa-2x"
+                                                style="display: none;"></span></button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 forgotpasswordshow" style="display:none;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         <!-- [ content ] End -->
 
         <!-- [ Layout footer ] Start -->

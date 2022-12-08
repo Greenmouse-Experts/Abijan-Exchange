@@ -234,6 +234,14 @@
                                                             class="form-control">
                                                     </div>
                                                 </div>
+                                                
+                                                <div class="col-lg-6">
+                                                    <div class="common_input mb_20">
+                                                        <label>Send Tron Wallet</label>
+                                                        <input name="trn_wallet" id="trn_wallet" type="text" value="{{settings()->trn_wallet}}" maxlength="100"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
 
                                                 <div class="col-lg-6">
                                                     <div class="common_input mb_20">

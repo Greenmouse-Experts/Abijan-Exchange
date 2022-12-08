@@ -22,10 +22,10 @@
                                 <div class="white_box_tittle list_header mb-0">
                                     <ul class="nav nav-pills custom_bootstrap_nav">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{route('ethereum')}}">Send BTC</a>
+                                            <a class="nav-link" href="{{route('ethereum')}}">Send Ethereum</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{route('receive_eth')}}"> Receive BTC</a>
+                                            <a class="nav-link" href="{{route('receive_eth')}}"> Receive Ethereum</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link active" href="#" data-toggle="tab"> Transactions</a>
@@ -67,19 +67,27 @@
                                                 <thead>
                                                     <tr role="row">
                                                         <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 67px;"></th>
-                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 173px;">Time</th>
+                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Time</th>
                                                         <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 308px;">Address</th>
                                                         <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 200px;">Status</th>
-                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Amount</th>
+                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 173px;">Amount</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @if ($trans->count() > 0)
                                                         @foreach ($trans as $item)
                                                                 <tr class="odd">
-                                                                    <td>#</td>
                                                                     <td>
-                                                                        <p class="" style="cursor: pointer;"">{{\Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</p>
+                                                                        <div class="trade d-flex align-items-center">
+                                                                            <span class="idtbale"></span>
+                                                                            <span class="sold-thumb"><i class="ti-arrow-up"></i></span>
+                                                                            <span class="ml-3 badge badge-danger">Sent</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p class="" style="cursor: pointer;">
+                                                                            {{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}
+                                                                        </p>
                                                                     </td>
                                                                     <td>
                                                                         <div class="media align-items-center">
@@ -89,7 +97,7 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <p class="" style="cursor: pointer;"">
+                                                                        <p class="" style="cursor: pointer;">
                                                                             @if ($item->status == 0)
                                                                                 <span>pending</span>
                                                                             @endif

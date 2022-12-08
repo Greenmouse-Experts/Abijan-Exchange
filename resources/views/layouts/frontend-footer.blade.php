@@ -14,10 +14,10 @@
                 <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" target="_blank" href="https://twitter.com/Abijan_Exchange">
                     <i class="ri-twitter-fill"></i>
                 </a>
-                <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" href="#">
+                <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" target="_blank" href="https://www.instagram.com/abijanexchange1">
                     <i class="ri-instagram-fill"></i>
                 </a>
-                <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" target="_blank" href="https://t.me/abijan_Exchange">
+                <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" target="_blank" href="https://t.me/abijanExchange">
                     <i class="ri-telegram-fill"></i>
                 </a>
                 <a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" target="_blank" href="https://www.linkedin.com/in/abijan-exchange/">

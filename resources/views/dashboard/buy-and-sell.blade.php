@@ -62,6 +62,8 @@
                                                                 </option>
                                                                 <option data-value="BCH" value="bitcoin Cash">bitcoin Cash
                                                                 </option>
+                                                                <option data-value="TRN" value="Tron">Tron
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -90,6 +92,8 @@
                                                             </option>
                                                             <option data-value="BCH" value="bitcoin Cash">bitcoin Cash
                                                             </option>
+                                                            <option data-value="TRN" value="Tron">Tron
+                                                                </option>
                                                         </select>
 
                                                     </div>
@@ -119,6 +123,8 @@
                                                                 <option data-value="TRC20" value="USDT TRC20">USDT TRC20
                                                                 </option>
                                                                 <option data-value="BCH" value="bitcoin Cash">bitcoin Cash
+                                                                </option>
+                                                                <option data-value="TRN" value="Tron">Tron
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -217,6 +223,8 @@
                                                             </option>
                                                             <option data-value="BCH" value="bitcoin Cash">bitcoin Cash
                                                             </option>
+                                                            <option data-value="TRN" value="Tron">Tron
+                                                                </option>
                                                         </select>
 
                                                     </div>
@@ -230,6 +238,24 @@
                                                             class="form-control nice_Select" style="display: none;">
                                                             <option data-display="Bitcoin Balance" value="Bitcoin Balance"
                                                                 selected="selected">Bitcoin Balance</option>
+                                                            <option value="External Wallet">External Wallet</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="input-group" id="sellfrom_eth">
+                                                        <select name="sell_from" id="sell_from"
+                                                            class="form-control nice_Select" style="display: none;">
+                                                            <option data-display="Ethereum Balance" value="Ethereum Balance"
+                                                                selected="selected">Ethereum Balance</option>
+                                                            <option value="External Wallet">External Wallet</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="input-group" id="sellfrom_usdt">
+                                                        <select name="sell_from" id="sell_from"
+                                                            class="form-control nice_Select" style="display: none;">
+                                                            <option data-display="USDT Balance" value="USDT Balance"
+                                                                selected="selected">USDT Balance</option>
                                                             <option value="External Wallet">External Wallet</option>
                                                         </select>
 
@@ -306,7 +332,23 @@
                                                 <div class="form-group availsale">
                                                     <div class="d-flex justify-content-between mt-3 ">
                                                         <p class="mb-0 availsale"><b>Bitcoin Balance</b></p>
-                                                        <p class="mb-0 availsale btcbal balspan">0 BTC</p>
+                                                        <p class="mb-0 availsale btcbal balspan">{{number_format(Auth::user()->wallet->btc, 8)}} BTC</p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group usdtavailsale" style="">
+                                                    <div class="d-flex justify-content-between mt-3 ">
+                                                        <p class="mb-0 usdtavailsale" style=""><b>USDT
+                                                                Balance</b></p>
+                                                        <p class="mb-0 usdtavailsale usdtbal balspan" style="">{{Auth::user()->wallet->usdt}} USDT
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ethavailsale" style="">
+                                                    <div class="d-flex justify-content-between mt-3 ">
+                                                        <p class="mb-0 ethavailsale" style=""><b>Ethereum
+                                                                Balance</b></p>
+                                                        <p class="mb-0 ethavailsale ethbal balspan" style="">{{number_format(Auth::user()->wallet->eth, 8)}} ETH
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <button type="button" name="sellNowbtn" class="btn_1 w-100 sellNowbtn"

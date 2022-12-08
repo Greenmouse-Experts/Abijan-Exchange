@@ -477,6 +477,11 @@ $(function() {
             $('.showbal').hide();
             $('.totalbal').html(txn_total_show);
             $('.btcbal').html(txn_btc + " BTC");
+            $('.ethbal').html(txn_eth + " ETH");
+            $('.ethusdbal').html("$"+txn_ethusd);
+            $('.usdtusdbal').html("$"+txn_usdtusd);
+            
+            $('.usdtbal').html(txn_usdt + "USDT");
             $('.btcbal_upto').html(txn_btc_upto + " BTC");
             $('.ngnbal_upto').html("₦ " + txn_ngn_upto);
             $('.ngnbal').html(txn_ngn_show);
@@ -1552,8 +1557,12 @@ $(function() {
         }
         if (ps == "Bitcoin") {
             $("#sellfrom_btc").show();
+            $("#sellfrom_eth").hide();
+            $("#sellfrom_usdt").hide();
             $("#sellfrom_account").hide();
             $("#sellfrom_crypto").hide();
+            $(".usdtavailsale").hide();
+            $(".ethavailsale").hide();
             $('#currencySell')
                 .find('option')
                 .remove()
@@ -1565,7 +1574,68 @@ $(function() {
             if (sell == "Bitcoin Balance") {
                 $(".availsale").show();
             } else {
+                $(".ethavailsale").hide();
+                $(".usdtavailsale").hide();
+            }
+            $(".acctInfodiv").hide();
+            $("#header_acct").html('');
+            $("#header_acctname").html('');
+            $("#sellfromlabel").html('Sell From');
+            $("#sellfrom_pm").hide();
+            $("#acctnoSell").val('');
+            $("#acctnameSell").val('');
+        }
+        else if (ps == "USDT TRC20") {
+            $("#sellfrom_usdt").show();
+            $("#sellfrom_btc").hide();
+            $("#sellfrom_eth").hide();
+            $("#sellfrom_account").hide();
+            $(".availsale").hide();
+            $(".ethavailsale").hide();
+            $("#sellfrom_crypto").hide();
+            $('#currencySell')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="USD" data-display="USD" selected="selected">USD</option><option value="NGN">NGN</option>')
+                .val('USD');
+            var sell = $("#sell_from_usdt").val();
+
+            if (sell == "USDT Balance") {
+                $(".usdtavailsale").show();
+            } else {
                 $(".availsale").hide();
+                $(".ethavailsale").hide();
+            }
+            $(".acctInfodiv").hide();
+            $("#header_acct").html('');
+            $("#header_acctname").html('');
+            $("#sellfromlabel").html('Sell From');
+            $("#sellfrom_pm").hide();
+            $("#acctnoSell").val('');
+            $("#acctnameSell").val('');
+        }
+        else if (ps == "Ethereum") {
+            $("#sellfrom_eth").show();
+            $("#sellfrom_account").hide();
+            $("#sellfrom_btc").hide();
+            $("#sellfrom_usdt").hide();
+            $("#sellfrom_crypto").hide();
+            $(".usdtavailsale").hide();
+            $(".availsale").hide();
+            $('#currencySell')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="USD" data-display="USD" selected="selected">USD</option><option value="NGN">NGN</option>')
+                .val('USD');
+            var sell = $("#sell_from_eth").val();
+
+            if (sell == "Ethereum Balance") {
+                $(".ethavailsale").show();
+            } else {
+                $(".availsale").hide();
+                $(".usdtavailsale").hide();
             }
             $(".acctInfodiv").hide();
             $("#header_acct").html('');
@@ -1580,6 +1650,8 @@ $(function() {
             if (typecurr == "crypto") {
                 //var msg = "Selected option is a crypto";
                 $("#sellfrom_btc").hide();
+                $("#sellfrom_eth").hide();
+                $("#sellfrom_usdt").hide();
                 $("#sellfrom_account").hide();
                 $("#sellfrom_crypto").show();
                 $(".acctInfodiv").hide();
@@ -1592,6 +1664,8 @@ $(function() {
             } else if (typecurr == "ecurrency") {
                 //var msg = "Selected option is an ecurrency";
                 $("#sellfrom_btc").hide();
+                $("#sellfrom_eth").hide();
+                $("#sellfrom_usdt").hide();
                 $("#sellfrom_type").hide();
                 $("#sellfrom_account").show();
                 $("#sellfrom_crypto").hide();
@@ -1630,6 +1704,8 @@ $(function() {
                 .append('<option value="USD" data-display="USD" selected="selected">USD</option><option value="NGN">NGN</option>')
                 .val('USD');
             $(".availsale").hide();
+            $(".usdtavailsale").hide();
+            $(".ethavailsale").hide();
         }
     }
 
@@ -1839,7 +1915,7 @@ $(function() {
             $("#acctname" + name).attr("placeholder", "Please wait...");
             $.ajaxSetup({
                 headers: {
-                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
@@ -1922,7 +1998,34 @@ $(function() {
             $(".availsale").show();
             $("#sellfrom_type").hide();
         } else {
+            $(".usdtavailsale").hide();
+            $(".ethavailsale").hide();
+            if (sell == "External Wallet") {
+                $("#sellfrom_type").show();
+            }
+        }
+    });
+    $('#sell_from_eth').on('change', function() {
+        var sell = $(this).val();
+        if (sell == "Ethereum Balance") {
+            $(".ethavailsale").show();
+            $("#sellfrom_type").hide();
+        } else {
             $(".availsale").hide();
+            $(".usdtavailsale").hide();
+            if (sell == "External Wallet") {
+                $("#sellfrom_type").show();
+            }
+        }
+    });
+    $('#sell_from_usdt').on('change', function() {
+        var sell = $(this).val();
+        if (sell == "USDT Balance") {
+            $(".usdtavailsale").show();
+            $("#sellfrom_type").hide();
+        } else {
+            $(".availsale").hide();
+            $(".ethavailsale").hide();
             if (sell == "External Wallet") {
                 $("#sellfrom_type").show();
             }
@@ -1961,7 +2064,16 @@ $(function() {
         if (currency_sell == "Bitcoin") {
             var sell_from = $('#sell_from').val();
             var mydata = "amount=" + amount + "&unit=" + unit + "&currency_option=" + currency_sell + "&sell_from=" + sell_from + "&csrfbtc=" + csrfbtc;
-        } else {
+        }
+        else if (currency_sell == "Ethereum") {
+            var sell_from = $('#sell_from_eth').val();
+            var mydata = "amount=" + amount + "&unit=" + unit + "&currency_option=" + currency_sell + "&sell_from=" + sell_from + "&csrfbtc=" + csrfbtc;
+        }
+        else if (currency_sell == "USDT TRC20") {
+            var sell_from = $('#sell_from_usdt').val();
+            var mydata = "amount=" + amount + "&unit=" + unit + "&currency_option=" + currency_sell + "&sell_from=" + sell_from + "&csrfbtc=" + csrfbtc;
+        }
+        else {
             if (typecurr == "ecurrency") {
                 var sell_from = $('#sell_from_acct').val();
                 var acctnameSell = $('#acctnameSell').val();

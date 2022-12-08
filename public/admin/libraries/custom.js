@@ -787,7 +787,7 @@ const formatter_usd = new Intl.NumberFormat('en-US', {
             //update notification view_status on the database and redirect to the link
             $.ajax({
                 type: "POST",
-                url: "readnotice",
+                url: "readnotice/rttrt",
                 data: {
                     inv: prett
                 },
@@ -813,7 +813,7 @@ const formatter_usd = new Intl.NumberFormat('en-US', {
         //update notification view_status on the database and redirect to the link
         $.ajax({
             type: "POST",
-            url: "readnotice",
+            url: "readnotice/erere",
             data: {
                 all: 'yes'
             },
@@ -963,7 +963,7 @@ const formatter_usd = new Intl.NumberFormat('en-US', {
 
         $.ajax({
             type: "POST",
-            url: "readnotice",
+            url: "readnotice/rttttr",
             data: {
                 reply: idreadMsg
             },
@@ -1004,19 +1004,26 @@ const formatter_usd = new Intl.NumberFormat('en-US', {
         var idread = $('#idread').val();
         var category = $('#category').val();
         var subject = $('#subject').val();
+        var user = $('#user').val();
         var memo = $('#memo').val();
         var composetype = $('#msgtyperead').val();
 
         if (memo != "") {
 
             $('.spincompose').show();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $.ajax({
                 type: "POST",
-                url: "readnotice",
+                url: "/admin/replyMsg",
                 data: {
                     compose: idread,
                     composeCat: category,
                     subject: subject,
+                    user: user,
                     composeMem: memo,
                     composetype: composetype
                 },
@@ -1030,7 +1037,7 @@ const formatter_usd = new Intl.NumberFormat('en-US', {
                         $('#memo').val('');
                         swal({
                             title: "Message sent",
-                            text: 'Your Message has been sent successfully to Support.',
+                            text: 'Your Message has been sent successfully to User.',
                             type: 'success',
                             icon: "success",
                         });

@@ -107,7 +107,7 @@
                                                         <th scope="col" class="sorting_disabled" rowspan="1"
                                                             colspan="1" style="width: 141px;">Message</th>
                                                         <th scope="col" class="sorting_disabled" rowspan="1"
-                                                            colspan="1" style="width: 147px;">Category</th>
+                                                            colspan="1" style="width: 147px;">Subject</th>
                                                         <th scope="col" class="sorting_disabled" rowspan="1"
                                                             colspan="1" style="width: 90px;">Date</th>
                                                         <th scope="col" class="sorting_disabled" rowspan="1"
@@ -115,8 +115,8 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if ($sent->count() > 0)
-                                                        @foreach ($sent as $item)
+                                                    @if ($inbox->count() > 0)
+                                                        @foreach ($inbox as $item)
                                                             <tr role="row" class="odd">
                                                                 <td scope="row" tabindex="0">
                                                                     <label class="primary_checkbox d-flex mr-12 ">
@@ -145,7 +145,7 @@
                                                                     <p class="readMsgFn  {{ $item->id }}"
                                                                         style="cursor: pointer;"
                                                                         data-value="{{ $item->id }}">
-                                                                        {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
+                                                                        {{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}
                                                                     </p>
                                                                 </td>
                                                                 <td>

@@ -69,8 +69,8 @@
                                                                 colspan="1" style="width: 222px;">Status</th>
                                                             <th scope="col" class="sorting_disabled" rowspan="1"
                                                                 colspan="1" style="width: 88px;">Amount ($)</th>
-                                                            {{-- <th scope="col" class="sorting_disabled" rowspan="1"
-                                                                colspan="1" style="width: 71px;">Info</th> --}}
+                                                            <th scope="col" class="sorting_disabled" rowspan="1"
+                                                                colspan="1" style="width: 71px;">Info</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -121,7 +121,7 @@
                                                                                     $ins = false;
                                                                                 }
                                                                             @endphp
-                                                                            @if ($in == true AND $in->status = 0)
+                                                                            @if ($ins == true AND $i->status == 0 AND $i->type == "Sell" AND $i->pay_with == "External Wallet")
                                                                                 <a href="#"
                                                                                     data-value="{{ $in->invoice_id }}"
                                                                                     class="invoice_me"
@@ -134,7 +134,14 @@
                                                                                     title="Order Canceled">Order
                                                                                     Cancelled</a>
                                                                             @endif
-                                                                            @if ($i->status == 0)
+                                                                             @if ($i->status == 0 AND $i->type == "Buy")
+                                                                                <a href="#"
+                                                                                    class="status_btn cancel_btn cancel_me_sell"
+                                                                                    data-value="{{ $item->id }}"
+                                                                                    title="Click here to cancel this order">Cancel
+                                                                                    Order</a>
+                                                                            @endif
+                                                                            @if ($i->status == 0 AND $i->pay_with == "External Wallet")
                                                                                 <a href="#"
                                                                                     class="status_btn cancel_btn cancel_me_sell"
                                                                                     data-value="{{ $i->id }}"
@@ -147,7 +154,22 @@
                                                                                     title="Order Succeeded">Order
                                                                                     Succeeded</a>
                                                                             @endif
-                                                                            @if ($i->status == 2)
+                                                                            @if ($i->status == 2 AND $i->pay_with != "Bitcoin Balance")
+                                                                                <a href="#"
+                                                                                    class="status_btn success_btn"
+                                                                                    title="Order Succeeded">In-Process</a>
+                                                                            @endif
+                                                                            @if ($i->status == 0 AND $i->currency == "Bitcoin" AND $i->pay_with == "Bitcoin Balance")
+                                                                                <a href="#"
+                                                                                    class="status_btn success_btn"
+                                                                                    title="Order Succeeded">In-Process</a>
+                                                                            @endif
+                                                                            @if ($i->status == 0 AND $i->currency == "Ethereum" AND $i->pay_with == "Ethereum Balance")
+                                                                                <a href="#"
+                                                                                    class="status_btn success_btn"
+                                                                                    title="Order Succeeded">In-Process</a>
+                                                                            @endif
+                                                                            @if ($i->status == 0 AND $i->currency == "USDT TRC20" AND $i->pay_with == "USDT Balance")
                                                                                 <a href="#"
                                                                                     class="status_btn success_btn"
                                                                                     title="Order Succeeded">In-Process</a>
@@ -165,9 +187,12 @@
                                                                             {{number_format($i->amount, 7)}} BTC
                                                                         @endif
                                                                     </td>
-                                                                    {{-- <td><a href="/dashboard/orderinfo?i={{ $i->id }}"><button
+                                                                    <td><a href="/dashboard/orderinfo?i={{ $i->id }}" title="View"><button
                                                                                 class="btn btn-outline-info rounded-pill mb-3"
-                                                                                type="button">View</button></a></td> --}}
+                                                                                type="button">
+                                                                                    <i class="fa fa-eye"></i>
+                                                                                
+                                                                                </button></a></td>
                                                                 </tr>
                                                             @endforeach
                                                         @else

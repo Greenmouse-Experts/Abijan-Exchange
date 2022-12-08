@@ -124,10 +124,57 @@
                                                                     <option value="{{$inv->order_amount}}">₦{{$inv->order_amount}}</option>
                                                                 @endif
                                                             @endif
+                                                            
+                                                            @if ($inv->currency == "Perfect Money")
+                                                                @if ($inv->unit == "USD")
+                                                                    <option data-display="${{number_format($inv->order_amount, 2)}}" value="{{number_format($inv->order_amount, 2)}}"
+                                                                    selected="selected">${{number_format($inv->order_amount, 2)}}</option>
+                                                                    <option value="{{$inv->order_amount/getCurrentBtcDollar()}}">{{$inv->order_amount/getCurrentBtcDollar()}} BTC</option>
+                                                                    <option value="{{number_format(($inv->order_amount*rates()[1]['sell_rate']), 2)}}">₦{{number_format(($inv->order_amount*rates()[1]['sell_rate']), 2)}}</option>
+                                                                @endif
+                                                                @if ($inv->unit == "NGN")
+                                                                    <option data-display="${{$inv->order_amount*rates()[1]['sell_rate']}}" value="{{$inv->order_amount*rates()[1]['sell_rate']}}"
+                                                                    selected="selected">${{number_format($inv->order_amount*rates()[2]['sell_rate'])}}</option>
+                                                                    <option value="{{($inv->order_amount*rates()[1]['sell_rate'])*getCurrentBtcDollar()}}">{{($inv->order_amount*rates()[1]['sell_rate'])*getCurrentBtcDollar()}} BTC</option>
+                                                                    <option value="{{$inv->order_amount}}">₦{{$inv->order_amount}}</option>
+                                                                @endif
+                                                            @endif
+                                                            
+                                                            @if ($inv->currency == "Tron")
+                                                                @if ($inv->unit == "USD")
+                                                                    <option data-display="${{number_format($inv->order_amount, 2)}}" value="{{number_format($inv->order_amount, 2)}}"
+                                                                    selected="selected">${{number_format($inv->order_amount, 2)}}</option>
+                                                                    <option value="{{$inv->order_amount/getCurrentBtcDollar()}}">{{$inv->order_amount/getCurrentBtcDollar()}} BTC</option>
+                                                                    <option value="{{number_format(($inv->order_amount*rates()[5]['sell_rate']), 2)}}">₦{{number_format(($inv->order_amount*rates()[5]['sell_rate']), 2)}}</option>
+                                                                @endif
+                                                                @if ($inv->unit == "NGN")
+                                                                    <option data-display="${{$inv->order_amount*rates()[5]['sell_rate']}}" value="{{$inv->order_amount*rates()[5]['sell_rate']}}"
+                                                                    selected="selected">${{number_format($inv->order_amount*rates()[5]['sell_rate'])}}</option>
+                                                                    <option value="{{($inv->order_amount*rates()[5]['sell_rate'])*getCurrentBtcDollar()}}">{{($inv->order_amount*rates()[5]['sell_rate'])*getCurrentBtcDollar()}} BTC</option>
+                                                                    <option value="{{$inv->order_amount}}">₦{{$inv->order_amount}}</option>
+                                                                @endif
+                                                            @endif
 
                                                         </select>
                                                     </div>
                                                 </div>
+                                                @if($inv->currency == "Perfect Money")
+                                                    <div class="form-group">
+                                                        <label>Enter your Batch Number/ Memo:</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" name="memo" class="form-control" id="memo">
+                                                        </div>
+                                                    </div>
+                                                @elseif($inv->currency == "Bitcoin")
+                                                
+                                                @else
+                                                    <div class="form-group">
+                                                        <label>Enter your Transaction ID / Hash:</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" name="memo" class="form-control" id="memo">
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 <div class="form-group">
                                                     <label>Enter the Amount Sent</label>
                                                     <div class="input-group mb-3">
@@ -163,6 +210,15 @@
                                                             title="Scan Me"
                                                             alt="1HBbatU8pGCg82WJ5YV7RNsu4stokcUQ7Q"></span> --}}
                                                     @endif
+                                                    @if ($inv->currency == "Tron")
+                                                    <label>Our Tron Address for this transaction:</label>
+                                                    <div class="input-group mb-3">
+                                                        {{settings()->trn_wallet}} </div>
+                                                    {{-- <span class="mybarcode" id="mybarcode_mobile"><img
+                                                            src="https://chart.googleapis.com/chart?chs=150x150&amp;cht=qr&amp;chl=1HBbatU8pGCg82WJ5YV7RNsu4stokcUQ7Q"
+                                                            title="Scan Me"
+                                                            alt="1HBbatU8pGCg82WJ5YV7RNsu4stokcUQ7Q"></span> --}}
+                                                    @endif
                                                     @if ($inv->currency == "USDT TRC20")
                                                     <label>Our bitcoin Cash Address for this transaction:</label>
                                                     <div class="input-group mb-3">
@@ -171,6 +227,17 @@
                                                             src="https://chart.googleapis.com/chart?chs=150x150&amp;cht=qr&amp;chl=1HBbatU8pGCg82WJ5YV7RNsu4stokcUQ7Q"
                                                             title="Scan Me"
                                                             alt="1HBbatU8pGCg82WJ5YV7RNsu4stokcUQ7Q"></span> --}}
+                                                    @endif
+                                                    @if ($inv->currency == "Perfect Money")
+                                                        <label>Our PM Account Number:</label>
+                                                        <div class="input-group mb-3">
+                                                            {{settings()->pm_number}}                                          
+                                                        </div>
+                                                        
+                                                        <label> Our PM Account Name:</label>
+                                                        <div class="input-group mb-3">
+                                                            {{settings()->pm_name}}                                          
+                                                        </div>
                                                     @endif
                                                 </div>
 
@@ -216,7 +283,7 @@
                                             data-parent="#accordion_ex">
                                             <div class="card-body">
                                                 <p>By submitting this form you confirm that you've actually sent the
-                                                    bitcoin, so your order will be processed once it has been received and
+                                                    <span style="text-transform: lowercase">{{$inv->currency}}</span>, so your order will be processed once it has been received and
                                                     confirmed.</p>
                                             </div>
                                         </div>
@@ -236,11 +303,12 @@
                                             <div class="card-body">
                                                 <p>After you send funds to the wallet on this page, your naira will be
                                                     available in your (naira wallet) and you can now withdraw the Naira to
-                                                    your Nigeria bank account. <a href="naira">Click here</a> to visit
+                                                    your Nigeria bank account. <a href="{{route('naira')}}">Click here</a> to visit
                                                     the withdrawal page.</p>
                                             </div>
                                         </div>
                                     </div>
+                                    @if($inv->currency == "Bitcoin")
                                     <div class="card">
                                         <div class="card-header" id="headingThree">
                                             <h2 class="mb-0">
@@ -264,6 +332,7 @@
                                                     title="Scan Me" alt="1HBbatU8pGCg82WJ5YV7RNsu4stokcUQ7Q"></span> --}}
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                                 <!-- accordian -->
                             </div>

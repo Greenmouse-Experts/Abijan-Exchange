@@ -665,7 +665,7 @@
                                 <p class="mb-0 text-dark fs-sm">Cick here to join our community and
                                     get updates on our product </p>
                             </div>
-                            <a class="btn btn-primary" target="_blank" href=https://t.me/abijan_Exchangee">Proceed</a>
+                            <a class="btn btn-primary" target="_blank" href="https://t.me/abijanExchange">Proceed</a>
                         </div>
                     </div>
                 </div>

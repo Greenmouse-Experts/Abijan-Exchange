@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="email-sidebar white_box">
-                            {{-- <button data-toggle="modal" data-target="#messageModalCenter" class="btn_1 w-100 mb-2 btn-lg email-gradient gradient-9-hover email__btn waves-effect"><i class="ti-plus"></i>COMPOSE</button> --}}
+                            <button data-toggle="modal" data-target="#messageModalCenter" class="btn_1 w-100 mb-2 btn-lg email-gradient gradient-9-hover email__btn waves-effect"><i class="ti-plus"></i>COMPOSE</button>
                             <ul class="text-left mt-2">
                                 <li  class="active">
                                     <a href="{{route('message_center')}}">
@@ -168,7 +168,7 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="modal fade" id="messageModalCenter" tabindex="-1" role="dialog"
+        <div class="modal fade" id="messageModalCenter" tabindex="-1" role="dialog"
                 aria-labelledby="messageModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -182,22 +182,12 @@
                         </div>
                         <div class="modal-body">
                             <div>
-                                <p>Use this form to contact Nairadirect Support.</p><br>
+                                <p>Use this form to reply user.</p><br>
                             </div>
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <label>Category</label>
-                                    <div class="common_input mb_20">
-                                        <select class="form-control" id="category" name="category">
-                                            <option value="">Choose a category for your question</option>
-                                            <option value="General Questions">General Questions</option>
-                                            <option value="Account Problem">Problem with my Account</option>
-                                            <option value="Forgot Password">Forgot Password</option>
-                                            <option value="Naira Wallet Questions">Naira Wallet Questions</option>
-                                            <option value="Bitcoin Wallet Questions">Bitcoin Wallet Questions</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                @php
+                                    $user_m = \App\Models\User::where('is_admin', 0)->orderBy('id', 'desc')->get();
+                                @endphp
                                 <div class="col-lg-12">
                                     <div class="common_input mb_20">
                                         <label>Subject</label>
@@ -206,10 +196,14 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
+                                    <label>Message To</label>
                                     <div class="common_input mb_20">
-                                        <label>Message To</label>
-                                        <input name="admin_to" id="admin_to" type="email" maxlength="100"
-                                            class="form-control">
+                                        <select class="form-control" id="user" name="user">
+                                            <option value="">Select User</option>
+                                            @foreach($user_m as $item)
+                                                <option value="{{$item->id}}">{{$item->email}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 forgotpasswordhide">
@@ -222,7 +216,7 @@
                                     <div class="common_input mb_20">
                                         {{-- <input type="hidden" id="idread">
                                     <input type="hidden" id="msgtyperead" value="compose"> --}}
-                                        {{-- <button type="submit" class="btn_1 w-100 col-md-5" id="ContinueCompose">Continue
+                                        <button type="submit" class="btn_1 w-100 col-md-5" id="ContinueCompose">Continue
                                             <span class="spincompose fa fa-spinner fa-spin fa-2x"
                                                 style="display: none;"></span></button>
                                     </div>
@@ -233,7 +227,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div> 
 
             <div class="modal fade loadingModalCenter" data-keyboard="true" tabindex="-1">
                 <div class="modal-dialog modal-sm">
