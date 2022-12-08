@@ -67,10 +67,10 @@
                                                 <thead>
                                                     <tr role="row">
                                                         <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 67px;"></th>
-                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 173px;">Time</th>
+                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Time</th>
                                                         <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 308px;">Address</th>
                                                         <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 200px;">Status</th>
-                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Amount</th>
+                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 173px;">Amount</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -85,7 +85,9 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <p class="" style="cursor: pointer;"">{{\Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</p>
+                                                                        <p class="" style="cursor: pointer;">
+                                                                            {{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}
+                                                                        </p>
                                                                     </td>
                                                                     <td>
                                                                         <div class="media align-items-center">
@@ -95,7 +97,7 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <p class="" style="cursor: pointer;"">
+                                                                        <p class="" style="cursor: pointer;">
                                                                             @if ($item->status == 0)
                                                                                 <span>pending</span>
                                                                             @endif

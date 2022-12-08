@@ -22,10 +22,10 @@
                                         <br />
                                         <ul class="nav nav-pills custom_bootstrap_nav">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{route('ethereum')}}" data-toggle="tab">Send Eth</a>
+                                                <a class="nav-link" href="{{route('ethereum')}}" data-toggle="tab">Send Ethereum</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link active" href="#bitdiv"> Receive Eth</a>
+                                                <a class="nav-link active" href="#bitdiv"> Receive Ethereum</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="{{route('eth_trans')}}"> Transactions</a>

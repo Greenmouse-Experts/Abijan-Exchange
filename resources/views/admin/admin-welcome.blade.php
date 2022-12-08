@@ -192,7 +192,7 @@
                     @endcan
 
                     @can('update-wallet-request')
-                        <div class="row">
+                        {{--<div class="row">
                             <div class="col-xxl-12 mb-30">
                                 <div class="card card-statistics h-100 mb-0">
                                     <div class="card-header d-flex justify-content-between">
@@ -298,7 +298,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
                     @endcan
                 </div>
             </div>

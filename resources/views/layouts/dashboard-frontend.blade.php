@@ -748,53 +748,6 @@
     //         }
     //     }
     // });
-
-    function doneTyping1(name) {
-        var lowername = name.toLowerCase();
-        var acctno = $('#acctno' + name).val();
-        var ecurrency = $('#currency_' + lowername).val();
-        var top = $(".acctname" + name + "Error").length;
-        var header = "";
-        if (lowername == "buy") {
-            var header = "_buy";
-        }
-
-        if (acctno.length >= "8") {
-            $("#acctname" + name).attr("placeholder", "Please wait...");
-            $.ajax({
-                type: "POST",
-                url: "pm_query",
-                data: {
-                    acctno: acctno,
-                    ecurrency: ecurrency
-                },
-                success: function(result) {
-                    if (top) {
-                        $(".acctname" + name + "Error").remove();
-                    }
-                    if (result.includes("ERROR:")) {
-                        $("#acctname" + name).val('');
-                        $("#acctname" + name).attr("placeholder", "");
-                        $("#header_acctname" + header).after('<p class="dangerP acctname' + name + 'Error"><b>Error: Invalid PM Account</b></p>');
-                        $("#" + lowername + "Nowbtn").css("opacity", "0.2").attr('disabled', 'disabled');
-                    } else {
-                        $("#acctname" + name).val(result);
-                        $("#" + lowername + "Nowbtn").css("opacity", "").removeAttr('disabled');
-
-                    }
-
-                }
-            });
-        } else if (acctno.length < 8) {
-            $("#acctname" + name).val('');
-
-            if (!top) {
-                $("#header_acctname" + header).after('<p class="dangerP acctname' + name + 'Error"><b>Error: Incomplete PM Account Number Entered</b></p>');
-            }
-        }
-
-
-    }
     $('#buy_from').on('change', function() {
         var buy = $(this).val();
         if (buy == "Naira Wallet") {
@@ -2091,16 +2044,20 @@
         })
     </script>
     <script>
-        var txn_ngn = "0.00";
-        var txn_usd = "0.00";
-        var txn_btc = "0";
-        var txn_total = "0";
+        var txn_ngn = "{{Auth::user()->wallet->naira ?? '0.00'}}";
+        var txn_usd = "{{number_format((Auth::user()->wallet->btc ?? '0.00')* getCurrentBtcDollar(), 2)}}";
+        var txn_ethusd = "{{number_format((Auth::user()->wallet->eth ?? '0.00')* getCurrentEthDollar(), 2)}}";
+        var txn_usdtusd = "{{number_format((Auth::user()->wallet->usdt ?? '0.00')* getCurrentUSDTDollar(), 2)}}";
+        var txn_btc = "{{number_format((Auth::user()->wallet->btc ?? '0.00'), 8)}}";
+        var txn_eth = "{{number_format((Auth::user()->wallet->eth ?? '0.00'), 8)}}";
+        var txn_usdt = "{{number_format((Auth::user()->wallet->usdt ?? '0.00'), 2)}}";
+        var txn_total = "{{Auth::user()->wallet->naira ?? '0.00'}}";
         var txn_btc_upto = "";
         var txn_ngn_upto = "0";
 
         function getrate(unit, buy = null) {
             var btc_in_usd = {{getCurrentBtcDollar()}};
-            var fiat_conversion_table = [{ "port_short": "{{rates()[0]['port_short']}}", "port_type": "crypto", "port_sell": "{{rates()[0]['sell_rate']}}", "port_buy": "{{rates()[0]['buy_rate']}}" }, { "port_short": "{{rates()[1]['port_short']}}", "port_type": "ecurrency", "port_sell": "{{rates()[1]['sell_rate']}}", "port_buy": "{{rates()[1]['buy_rate']}}" }, { "port_short": "{{rates()[2]['port_short']}}", "port_type": "crypto", "port_sell": "{{rates()[2]['sell_rate']}}", "port_buy": "{{rates()[2]['buy_rate']}}" }, { "port_short": "{{rates()[3]['port_short']}}", "port_type": "crypto", "port_sell": "{{rates()[3]['sell_rate']}}", "port_buy": "{{rates()[3]['buy_rate']}}" }, { "port_short": "{{rates()[4]['port_short']}}", "port_type": "crypto", "port_sell": "{{rates()[4]['sell_rate']}}", "port_buy": "{{rates()[4]['buy_rate']}}" }];
+            var fiat_conversion_table = [{ "port_short": "{{rates()[0]['port_short']}}", "port_type": "crypto", "port_sell": "{{rates()[0]['sell_rate']}}", "port_buy": "{{rates()[0]['buy_rate']}}" }, { "port_short": "{{rates()[1]['port_short']}}", "port_type": "ecurrency", "port_sell": "{{rates()[1]['sell_rate']}}", "port_buy": "{{rates()[1]['buy_rate']}}" }, { "port_short": "{{rates()[2]['port_short']}}", "port_type": "crypto", "port_sell": "{{rates()[2]['sell_rate']}}", "port_buy": "{{rates()[2]['buy_rate']}}" }, { "port_short": "{{rates()[3]['port_short']}}", "port_type": "crypto", "port_sell": "{{rates()[3]['sell_rate']}}", "port_buy": "{{rates()[3]['buy_rate']}}" }, { "port_short": "{{rates()[4]['port_short']}}", "port_type": "crypto", "port_sell": "{{rates()[4]['sell_rate']}}", "port_buy": "{{rates()[4]['buy_rate']}}" }, { "port_short": "{{rates()[5]['port_short']}}", "port_type": "crypto", "port_sell": "{{rates()[5]['sell_rate']}}", "port_buy": "{{rates()[5]['buy_rate']}}" }];
             let counterfiat = 0;
             for (const obj of fiat_conversion_table) {
                 var cname = (obj.port_short).toLowerCase();

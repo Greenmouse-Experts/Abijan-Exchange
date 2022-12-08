@@ -18,17 +18,17 @@
                             <div class="white_card_header">
                                 <div class="box_header m-0">
                                     <div class="main-title">
-                                        <h4 class="m-0">Receive Ethereum</h4>
+                                        <h4 class="m-0">Receive USDT</h4>
                                         <br />
                                         <ul class="nav nav-pills custom_bootstrap_nav">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{route('ethereum')}}" data-toggle="tab">Send Eth</a>
+                                                <a class="nav-link" href="{{route('usdt')}}" data-toggle="tab">Send USDT</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link active" href="#bitdiv"> Receive USDT</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{route('eth_trans')}}"> Transactions</a>
+                                                <a class="nav-link" href="{{route('usdt_trans')}}"> Transactions</a>
                                             </li>
                                         </ul>
                                     </div>

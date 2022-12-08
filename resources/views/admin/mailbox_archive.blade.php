@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="email-sidebar white_box">
-                            {{-- <button data-toggle="modal" data-target="#messageModalCenter" class="btn_1 w-100 mb-2 btn-lg email-gradient gradient-9-hover email__btn waves-effect"><i class="ti-plus"></i>COMPOSE</button> --}}
+                            <button data-toggle="modal" data-target="#messageModalCenter" class="btn_1 w-100 mb-2 btn-lg email-gradient gradient-9-hover email__btn waves-effect"><i class="ti-plus"></i>COMPOSE</button>
                             <ul class="text-left mt-2">
                                 <li>
                                     <a href="{{route('message_center')}}">
@@ -127,6 +127,66 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="messageModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="messageModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="main-title">
+                                <h3 class="m-0">Compose a message</h3>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <p>Use this form to reply user.</p><br>
+                            </div>
+                            <div class="row">
+                                @php
+                                    $user_m = \App\Models\User::where('is_admin', 0)->orderBy('id', 'desc')->get();
+                                @endphp
+                                <div class="col-lg-12">
+                                    <div class="common_input mb_20">
+                                        <label>Subject</label>
+                                        <input name="subject" id="subject" type="text" maxlength="100"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Message To</label>
+                                    <div class="common_input mb_20">
+                                        <select class="form-control" id="user" name="user">
+                                            <option value="">Select User</option>
+                                            @foreach($user_m as $item)
+                                                <option value="{{$item->id}}">{{$item->email}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 forgotpasswordhide">
+                                    <div class="common_input mb_20">
+                                        <label>Message</label>
+                                        <textarea name="message" id="memo" rows="5" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 forgotpasswordhide">
+                                    <div class="common_input mb_20">
+                                        {{-- <input type="hidden" id="idread">
+                                    <input type="hidden" id="msgtyperead" value="compose"> --}}
+                                        <button type="submit" class="btn_1 w-100 col-md-5" id="ContinueCompose">Continue
+                                            <span class="spincompose fa fa-spinner fa-spin fa-2x"
+                                                style="display: none;"></span></button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 forgotpasswordshow" style="display:none;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
     <!-- [ content ] End -->
 
     <!-- [ Layout footer ] Start -->

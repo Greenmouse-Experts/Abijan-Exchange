@@ -145,7 +145,7 @@
                                                                     <p class="readMsgFn  {{ $item->id }}"
                                                                         style="cursor: pointer;"
                                                                         data-value="{{ $item->id }}">
-                                                                        {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
+                                                                        {{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}
                                                                     </p>
                                                                 </td>
                                                                 <td>

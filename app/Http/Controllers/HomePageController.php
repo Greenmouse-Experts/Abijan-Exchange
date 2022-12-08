@@ -45,7 +45,7 @@ class HomePageController extends Controller
             'email' => $request->email,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'affiliate_id' => Str::random(10),
+            'affiliate_id' => Str::random(4),
             'referred_by'   => $referred_by,
         ]);
 

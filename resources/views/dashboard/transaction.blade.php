@@ -63,20 +63,36 @@
                                                 <thead>
                                                     <tr role="row">
                                                         <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 67px;"></th>
-                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 173px;">Time</th>
+                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Time</th>
                                                         <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 308px;">Method</th>
                                                         <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 200px;">Status</th>
                                                         <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Amount</th>
-                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 240px;">Charges</th>
+                                                        <th scope="col" class="sorting_disabled" rowspan="1" colspan="1" style="width: 170px;">Charges</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @if ($trans->count() > 0)
                                                         @foreach ($trans as $item)
                                                                 <tr class="odd">
-                                                                    <td>#</td>
                                                                     <td>
-                                                                        <p class="" style="cursor: pointer;"">{{\Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</p>
+                                                                        @if($item->deposit_method == "Bank Transfer")
+                                                                        <div class="trade d-flex align-items-center">
+                                                                            <span class="idtbale"></span>
+                                                                            <span class="sold-thumb"><i class="ti-arrow-up"></i></span>
+                                                                            <span class="ml-3 badge badge-danger">Debit</span>
+                                                                        </div>
+                                                                        @else
+                                                                        <div class="trade d-flex align-items-center">
+                                                                            <span class="idtbale"></span>
+                                                                            <span class="buy-thumb"><i class="ti-arrow-down"></i></span>
+                                                                            <span class="ml-3 badge badge-success">Credit</span>
+                                                                        </div>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        <p class="" style="cursor: pointer;">
+                                                                            {{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}
+                                                                        </p>
                                                                     </td>
                                                                     <td>
                                                                         <div class="media align-items-center">
@@ -86,7 +102,7 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <p class="" style="cursor: pointer;"">
+                                                                        <p class="" style="cursor: pointer;">
                                                                             @if ($item->status == 0)
                                                                                 <span>Pending</span>
                                                                             @endif

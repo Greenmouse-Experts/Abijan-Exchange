@@ -44,22 +44,22 @@ class AdminController extends Controller
     }
 
     public function withdraw_request(){
-        $naira = NairaTransaction::where('deposit_method', 'Withdraw Naira')->paginate(10);
+        $naira = NairaTransaction::where('deposit_method', 'Withdraw Naira')->orderBy('id', 'desc')->paginate(10);
         return view('admin.withdraw-request', compact('naira'));
     }
 
     public function deposit_request(){
-        $naira = NairaTransaction::where('deposit_method', 'Bank Transfer')->paginate(10);
+        $naira = NairaTransaction::where('deposit_method', 'Bank Transfer')->orderBy('id', 'desc')->paginate(10);
         return view('admin.deposit-request', compact('naira'));
     }
 
     public function send_request(){
-        $btc = BtcTrans::where('fee_method', 'flat_rate')->paginate(10);
+        $btc = BtcTrans::where('fee_method', 'flat_rate')->orderBy('id', 'desc')->paginate(10);
         return view('admin.send-request', compact('btc'));
     }
 
     public function send_usdt(){
-        $btc = USDTTrans::where('fee_method', 'flat_rate')->paginate(10);
+        $btc = USDTTrans::where('fee_method', 'flat_rate')->orderBy('id', 'desc')->paginate(10);
         return view('admin.send-usdt', compact('btc'));
     }
 
@@ -69,7 +69,7 @@ class AdminController extends Controller
     }
 
     public function send_eth(){
-        $btc = EthTrans::where('fee_method', 'flat_rate')->paginate(10);
+        $btc = EthTrans::where('fee_method', 'flat_rate')->orderBy('id', 'desc')->paginate(10);
         return view('admin.send-eth', compact('btc'));
     }
 
@@ -96,6 +96,20 @@ class AdminController extends Controller
         Alert::success('Success', 'Name Updated Successfully!');
         return back();
     }
+    
+    public function admin_reply_msg(Request $request)
+    {
+        $msg = new MailBox();
+        $msg->message = $request->composeMem;
+        $msg->subject = $request->subject;
+        $msg->admin_to = $request->user;
+        $msg->user_id = $request->user;
+        $msg->reply_msg = 1;
+        $msg->save();
+        return response()->json([
+            "status"=>"success",
+        ]);
+    }
 
     public function UpdateSetting(Request $request)
     {
@@ -117,6 +131,7 @@ class AdminController extends Controller
         $set->receive_eth_wallet = $request->receive_eth_wallet;
         $set->bch_wallet = $request->bch_wallet;
         $set->usdt_wallet = $request->usdt_wallet;
+        $set->trn_wallet = $request->trn_wallet;
         $set->pm_name = $request->pm_name;
         $set->pm_number = $request->pm_number;
         if ($request->hasFile('btc_r_qr_code')) {
@@ -139,14 +154,14 @@ class AdminController extends Controller
 
     public function view_referral()
     {
-        $refer = User::where('Affiliate_id', '!=', null)->where('referred_by', '!=', null)->get();
+        $refer = User::where('Affiliate_id', '!=', null)->where('referred_by', '!=', null)->orderBy('id', 'desc')->get();
         return view('admin.view-referral', compact('refer'));
     }
 
     public function  buy_sell()
     {
-        $buy = Order::where('type', 'Buy')->paginate(5, ['*'], 'buy');
-        $sell = Order::where('type', 'sell')->paginate(5, ['*'], 'sell');
+        $buy = Order::where('type', 'Buy')->orderBy('id', 'desc')->paginate(5, ['*'], 'buy');
+        $sell = Order::where('type', 'Sell')->orderBy('id', 'desc')->paginate(5, ['*'], 'sell');
         $inv = Invoice::orderBy('id', 'desc')->paginate(5, ['*'], 'invoice');
         return view('admin.buy-sell', compact('buy', 'sell', 'inv'));
     }
@@ -184,7 +199,8 @@ class AdminController extends Controller
 
     public function sent_mails()
     {
-        return view('admin.sent-mail');
+        $msg = MailBox::orderBy('id', 'desc')->where('reply_msg', 1)->get();
+        return view('admin.sent-mail', compact('msg'));
     }
 
     public function  mailbox_trash()
@@ -202,7 +218,7 @@ class AdminController extends Controller
     }
 
     public function createUser(){
-        $users = User::where('is_admin', 1)->orderBy('id', 'desc')->get();
+        $users = User::where('is_admin', 1)->where('user_type', "!=", "Super Admin")->orderBy('id', 'desc')->get();
         $roles = Role::where('name', '!=', 'Super Admin')->get();
         return view('admin.create_user', compact('users', 'roles'));
     }
@@ -224,7 +240,7 @@ class AdminController extends Controller
         $user->email = $request->email;
         $user->is_admin = 1;
         $user->user_type = $role;
-        $user->affiliate_id = Str::random(5);
+        $user->affiliate_id = Str::random(4);
         $user->email_verified_at = \Carbon\Carbon::now();
         $user->password = Hash::make($request->password);
         $user->assignRole($request->input('role'));
@@ -253,7 +269,7 @@ class AdminController extends Controller
         $user->email = $request->email;
         $user->is_admin = 1;
         $user->user_type = $role;
-        $user->affiliate_id = Str::random(5);
+        $user->affiliate_id = Str::random(4);
         $user->email_verified_at = \Carbon\Carbon::now();
         $user->password = Hash::make($request->password);
         $user->assignRole($request->input('role'));

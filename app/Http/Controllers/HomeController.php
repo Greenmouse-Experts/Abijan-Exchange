@@ -669,8 +669,8 @@ class HomeController extends Controller
     }
     public function Inbox()
     {
-        $sent = MailBox::where('user_id', Auth::user()->id)->where('type', 3)->get();
-        return view('dashboard.mailbox', compact('sent'));
+        $inbox = MailBox::where('user_id', Auth::user()->id)->where('admin_to', Auth::user()->id)->where('reply_msg', 1)->get();
+        return view('dashboard.mailbox', compact('inbox'));
     }
 
     public function referral()

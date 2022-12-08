@@ -154,11 +154,11 @@
             </a>
             <ul>
                 @can('view-settings')
-                <li><a href="{{route('settings')}}">View Settings</a></li>
+                    <li><a href="{{route('settings')}}">View Settings</a></li>
                 @endcan
 
                 @can('support')
-                <li><a href="{{route('support')}}">Support</a></li>
+                    <li><a href="{{route('support')}}">Support</a></li>
                 @endcan
                 @can('view-referrals')
                     <li><a href="{{route('view_referral')}}">Referrals</a></li>

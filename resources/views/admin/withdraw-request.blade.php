@@ -83,7 +83,7 @@
                                                             {{$userB->account_num}}
                                                         </td>
                                                         <td>{{$item->deposit_fee}}%</td>
-                                                        <td>{{\Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</td>
+                                                        <td>{{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}</td>
                                                         <td>
                                                             @if ($item->status == 0)
                                                                 <form action="{{route('naira.updateWithdraw')}}" method="POST">

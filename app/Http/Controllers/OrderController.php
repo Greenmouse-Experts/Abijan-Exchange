@@ -139,6 +139,32 @@ class OrderController extends Controller
                 "msg"=>"You have insufficient balance to buy USDT TRC20"
             ]);
         }
+        
+        //TRON
+        if($request->currency_option == "Tron" AND $request->unit == "USD" AND $request->amount < 10){
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"The Tron you want to buy must be up to $10"
+            ]);
+        }
+        if($request->currency_option == "Tron" AND $request->unit == "NGN" AND $request->amount < (10*rates()[5]['buy_rate'])){
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"The Tron you want to buy must be up to $10"
+            ]);
+        }
+        if ($request->currency_option == "Tron" AND $request->unit == "USD" AND ($request->amount*rates()[5]['buy_rate']) > Auth::user()->wallet->naira) {
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"You have insufficient balance to buy Tron"
+            ]);
+        }
+        if($request->currency_option == "Tron" AND $request->unit == "NGN" AND ($request->amount*1) > Auth::user()->wallet->naira){
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"You have insufficient balance to buy Tron"
+            ]);
+        }
         //PM
         if($request->currency_option == "Perfect Money" AND $request->unit == "USD" AND $request->amount < 5){
             return response()->json([
@@ -204,8 +230,8 @@ class OrderController extends Controller
         }
         if($request->currency_option == "Perfect Money" AND $request->unit == "USD"){
             $new_amount = $user->naira - ($request->amount*rates()[1]['buy_rate']);
-            $d->pm_wallet   = $request->acctnameBuy;
-            $d->pm_wallet   = $request->acctnoBuy;
+            $d->pm_acctname   = $request->acctnameBuy;
+            $d->pm_acctnum   = $request->acctnoBuy;
         }
         else if($request->currency_option == "USDT TRC20" AND $request->unit == "USD"){
             $new_amount = $user->naira - ($request->amount*rates()[3]['buy_rate']);
@@ -220,6 +246,10 @@ class OrderController extends Controller
             $new_amount = $user->naira - ($request->amount*rates()[0]['buy_rate']);
             $d->btc_wallet  = $request->acctnameBuy;
         }
+        else if($request->currency_option == "Tron" AND $request->unit == "USD"){
+            $new_amount = $user->naira - ($request->amount*rates()[5]['buy_rate']);
+            $d->trn_wallet  = $request->acctnameBuy;
+        }
         else if($request->currency_option == "Bitcoin" AND $request->unit == "BTC"){
             $new_amount = $user->naira - ($request->amount*getCurrentBtcDollar());
             $d->btc_wallet  = $request->acctnameBuy;
@@ -231,6 +261,16 @@ class OrderController extends Controller
         $user->naira    = $new_amount;
         $user->update();
         $d->save();
+        
+        $i = new Invoice();
+        $i->invoice_id = Str::random(8);
+        $i->user_id = Auth::user()->id;
+        $i->order_id = $d->id;
+        $i->fund_method = $request->buy_from;
+        $i->order_amount = $request->amount;
+        $i->currency = $request->currency_option;
+        $i->unit = $request->unit;
+        $i->save();
 
         return response()->json([
             "status"=>"success",
@@ -261,17 +301,17 @@ class OrderController extends Controller
             ]);
         }
         if($request->currency_option == "Bitcoin" AND $request->unit == "USD" AND $request->amount > (5/rates()[0]['sell_rate'])){
-            $user = UserWallet::where('id', Auth::user()->id)->first();
+            $user = UserWallet::where('user_id', Auth::user()->id)->first();
             $curr = $user->btc;
                 if($curr < $request->amount/getCurrentBtcDollar()){
                     return response()->json([
                     "status"=>"error",
-                    "msg"=>"You have insufficient BTC balance to complete this transaction"
+                    "msg"=>"You have insufficient BTC balance to complete this transaction=="
                 ]);
             }
         }
         if($request->currency_option == "Bitcoin" AND $request->unit == "NGN" AND $request->amount > (5*rates()[0]['sell_rate'])){
-            $user = UserWallet::where('id', Auth::user()->id)->first();
+            $user = UserWallet::where('user_id', Auth::user()->id)->first();
             $curr = $user->btc;
                 if($curr < ($request->amount*rates()[0]['sell_rate'])*getCurrentBtcDollar()){
                     return response()->json([
@@ -281,7 +321,7 @@ class OrderController extends Controller
             }
         }
         if($request->currency_option == "Bitcoin" AND $request->unit == "BTC" AND $request->amount > (5/rates()[0]['sell_rate'])){
-            $user = UserWallet::where('id', Auth::user()->id)->first();
+            $user = UserWallet::where('user_id', Auth::user()->id)->first();
             $curr = $user->btc;
                 if($curr < $request->amount){
                     return response()->json([
@@ -290,23 +330,68 @@ class OrderController extends Controller
                 ]);
             }
         }
-        if($request->currency_option == "Bitcoin" AND $request->unit == "BTC" AND $request->sell_from == "Bitcoin Balance" AND $request->amount < Auth::user()->wallet->btc){
+        
+        //Biitcoin Balance
+        if($request->currency_option == "Bitcoin" AND $request->unit == "BTC" AND $request->sell_from == "Bitcoin Balance" AND $request->amount > Auth::user()->wallet->btc){
             return response()->json([
                 "status"=>"error",
                 "msg"=>"You have insufficient bitcoin balance to sell Bitcoin"
             ]);
         }
 
-        if($request->currency_option == "Bitcoin" AND $request->unit == "USD" AND $request->sell_from == "Bitcoin Balance" AND ($request->amount*getCurrentBtcDollar()) < Auth::user()->wallet->btc){
+        if($request->currency_option == "Bitcoin" AND $request->unit == "USD" AND $request->sell_from == "Bitcoin Balance" AND ($request->amount*getCurrentBtcDollar()) > Auth::user()->wallet->btc){
             return response()->json([
                 "status"=>"error",
                 "msg"=>"You have insufficient bitcoin balance to sell Bitcoin"
             ]);
         }
-        if($request->currency_option == "Bitcoin" AND $request->unit == "NGN" AND $request->sell_from == "Bitcoin Balance" AND (($request->amount/rates()[0]['sell_rate'])*getCurrentBtcDollar()) < Auth::user()->wallet->btc){
+        if($request->currency_option == "Bitcoin" AND $request->unit == "NGN" AND $request->sell_from == "Bitcoin Balance" AND (($request->amount/rates()[0]['sell_rate'])*getCurrentBtcDollar()) > Auth::user()->wallet->btc){
             return response()->json([
                 "status"=>"error",
                 "msg"=>"You have insufficient bitcoin balance to sell Bitcoin"
+            ]);
+        }
+        
+        //Ethereum Balance
+        if($request->currency_option == "Ethereum" AND $request->unit == "ETH" AND $request->sell_from == "Ethereum Balance" AND $request->amount > Auth::user()->wallet->eth){
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"You have insufficient Ethereum balance to complete this transaction"
+            ]);
+        }
+
+        if($request->currency_option == "Ethereum" AND $request->unit == "USD" AND $request->sell_from == "Ethereum Balance" AND ($request->amount*getCurrentEthDollar()) > Auth::user()->wallet->eth){
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"You have insufficient Ethereum balance to complete this transaction"
+            ]);
+        }
+        if($request->currency_option == "Ethereum" AND $request->unit == "NGN" AND $request->sell_from == "Ethereum Balance" AND (($request->amount/rates()[2]['sell_rate'])*getCurrentEthDollar()) > Auth::user()->wallet->eth){
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"You have insufficient Ethereum balance to complete this transaction"
+            ]);
+        }
+        
+        //USDT Balance
+        if($request->currency_option == "USDT TRC20" AND $request->unit == "USDT" AND $request->sell_from == "USDT Balance" AND $request->amount > Auth::user()->wallet->usdt){
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"You have insufficient USDT TRC20 balance to complete this transaction"
+            ]);
+        }
+        
+        if($request->currency_option == "USDT TRC20" AND $request->unit == "USD" AND $request->sell_from == "USDT Balance" AND $request->amount > Auth::user()->wallet->usdt){
+            
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"You have insufficient USDT TRC20 balance to complete this transaction"
+            ]);
+        }
+        if($request->currency_option == "USDT TRC20" AND $request->unit == "NGN" AND $request->sell_from == "USDT Balance" AND (($request->amount/rates()[3]['sell_rate'])*getCurrentUSDTDollar()) > Auth::user()->wallet->usdt){
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"You have insufficient USDT TRC20 balance to complete this transaction"
             ]);
         }
 
@@ -349,9 +434,44 @@ class OrderController extends Controller
                 "msg"=>"The bitcoin cash you want to buy must be up to $20"
             ]);
         }
+        
+        //TRN
+        if($request->currency_option == "Tron" AND $request->unit == "USD" AND $request->amount < 20){
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"The tron cash you want to buy must be up to $20"
+            ]);
+        }
+        if($request->currency_option == "Tron" AND $request->unit == "NGN" AND $request->amount < (20*rates()[5]['sell_rate'])){
+            return response()->json([
+                "status"=>"error",
+                "msg"=>"The Tron you want to buy must be up to $20"
+            ]);
+        }
 
         if($request->currency_option == "Perfect Money" AND $request->unit == "USD" AND $request->sell_from == "Automatic"){
-
+            $d              = new Order();
+            $d->type        = 'Sell';
+            $d->user_id     = Auth::user()->id;
+            $d->currency    = $request->currency_option;
+            $d->pay_with    = $request->sell_from;
+            $d->amount      = $request->amount;
+            $d->unit        = $request->unit;
+            $d->eth_wallet  = $request->acctnameBuy || '';
+            $d->btc_wallet  = $request->acctnameBuy || '';
+            $d->pm_wallet   = $request->acctnameBuy || '';
+            $d->usdt_wallet = $request->acctnameBuy || '';
+            $d->trn_wallet = $request->acctnameBuy || '';
+            $d->save();
+            $i = new Invoice();
+            $i->invoice_id = Str::random(8);
+            $i->user_id = Auth::user()->id;
+            $i->order_id = $d->id;
+            $i->fund_method = $request->sell_from;
+            $i->order_amount = $request->amount;
+            $i->currency = $request->currency_option;
+            $i->unit = $request->unit;
+            $i->save();
             return response()->json([
                 "status"=>"pm-auto",
                 "msg"=>"pm-auto",
@@ -372,23 +492,139 @@ class OrderController extends Controller
         $d->btc_wallet  = $request->acctnameBuy || '';
         $d->pm_wallet   = $request->acctnameBuy || '';
         $d->usdt_wallet = $request->acctnameBuy || '';
+        $d->trn_wallet = $request->acctnameBuy || '';
         $d->save();
         $user = UserWallet::where('user_id', Auth::user()->id)->first();
+        
+        //Bitcoin
         if($request->currency_option == "Bitcoin" AND $request->unit == "USD" AND $request->sell_from == "Bitcoin Balance"){
-            $new_amount = $user->btc - ($request->amount*getCurrentBtcDollar());
+            $new_amount = $user->btc - ($request->amount/getCurrentBtcDollar());
             $user->btc    = $new_amount;
             $user->update();
+            $i = new Invoice();
+            $i->invoice_id = Str::random(8);
+            $i->user_id = Auth::user()->id;
+            $i->order_id = $d->id;
+            $i->fund_method = "Automated";
+            $i->order_amount = $request->amount;
+            $i->currency = $request->currency_option;
+            $i->unit = $request->unit;
+            $i->save();
         }
         elseif($request->currency_option == "Bitcoin" AND $request->unit == "BTC" AND $request->sell_from == "Bitcoin Balance"){
             $new_amount = $user->btc - $request->amount;
             $user->btc    = $new_amount;
             $user->update();
+            $i = new Invoice();
+            $i->invoice_id = Str::random(8);
+            $i->user_id = Auth::user()->id;
+            $i->order_id = $d->id;
+            $i->fund_method = "Automated";
+            $i->order_amount = $request->amount;
+            $i->currency = $request->currency_option;
+            $i->unit = $request->unit;
+            $i->save();
         }
 
         elseif($request->currency_option == "Bitcoin" AND $request->unit == "NGN" AND $request->sell_from == "Bitcoin Balance"){
-            $new_amount = $user->btc - (($request->amount/rates()[0]['sell_rate'])*getCurrentBtcDollar());
+            $new_amount = $user->btc - (($request->amount*rates()[0]['sell_rate'])/(getCurrentBtcDollar() * rates()[0]['sell_rate']));
             $user->btc    = $new_amount;
             $user->update();
+            $i = new Invoice();
+            $i->invoice_id = Str::random(8);
+            $i->user_id = Auth::user()->id;
+            $i->order_id = $d->id;
+            $i->fund_method = "Automated";
+            $i->order_amount = $request->amount;
+            $i->currency = $request->currency_option;
+            $i->unit = $request->unit;
+            $i->save();
+        }
+        elseif($request->currency_option == "Ethereum" AND $request->unit == "USD" AND $request->sell_from == "Ethereum Balance"){
+            $new_amount = $user->eth - ($request->amount/getCurrentEthDollar());
+            $user->eth    = $new_amount;
+            $user->update();
+            $i = new Invoice();
+            $i->invoice_id = Str::random(8);
+            $i->user_id = Auth::user()->id;
+            $i->order_id = $d->id;
+            $i->fund_method = "Automated";
+            $i->order_amount = $request->amount;
+            $i->currency = $request->currency_option;
+            $i->unit = $request->unit;
+            $i->save();
+        }
+        elseif($request->currency_option == "Ethereum" AND $request->unit == "ETH" AND $request->sell_from == "Ethereum Balance"){
+            $new_amount = $user->eth - $request->amount;
+            $user->eth    = $new_amount;
+            $user->update();
+            $i = new Invoice();
+            $i->invoice_id = Str::random(8);
+            $i->user_id = Auth::user()->id;
+            $i->order_id = $d->id;
+            $i->fund_method = "Automated";
+            $i->order_amount = $request->amount;
+            $i->currency = $request->currency_option;
+            $i->unit = $request->unit;
+            $i->save();
+        }
+
+        elseif($request->currency_option == "Ethereum" AND $request->unit == "NGN" AND $request->sell_from == "Ethereum Balance"){
+            $new_amount = $user->eth - (($request->amount*rates()[2]['sell_rate'])/(getCurrentEthDollar() * rates()[2]['sell_rate']));
+            $user->eth    = $new_amount;
+            $user->update();
+            $i = new Invoice();
+            $i->invoice_id = Str::random(8);
+            $i->user_id = Auth::user()->id;
+            $i->order_id = $d->id;
+            $i->fund_method = "Automated";
+            $i->order_amount = $request->amount;
+            $i->currency = $request->currency_option;
+            $i->unit = $request->unit;
+            $i->save();
+        }
+        elseif($request->currency_option == "USDT TRC20" AND $request->unit == "USD" AND $request->sell_from == "USDT Balance"){
+            $new_amount = $user->usdt - ($request->amount/getCurrentUSDTDollar());
+            $user->usdt    = $new_amount;
+            $user->update();
+            $i = new Invoice();
+            $i->invoice_id = Str::random(8);
+            $i->user_id = Auth::user()->id;
+            $i->order_id = $d->id;
+            $i->fund_method = "Automated";
+            $i->order_amount = $request->amount;
+            $i->currency = $request->currency_option;
+            $i->unit = $request->unit;
+            $i->save();
+        }
+        elseif($request->currency_option == "USDT TRC20" AND $request->unit == "USDT" AND $request->sell_from == "USDT Balance"){
+            $new_amount = $user->usdt - $request->amount;
+            $user->usdt    = $new_amount;
+            $user->update();
+            $i = new Invoice();
+            $i->invoice_id = Str::random(8);
+            $i->user_id = Auth::user()->id;
+            $i->order_id = $d->id;
+            $i->fund_method = "Automated";
+            $i->order_amount = $request->amount;
+            $i->currency = $request->currency_option;
+            $i->unit = $request->unit;
+            $i->save();
+        }
+
+        elseif($request->currency_option == "USDT TRC20" AND $request->unit == "NGN" AND $request->sell_from == "USDT Balance"){
+            $new_amount = $user->usdt - (($request->amount*rates()[3]['sell_rate'])/(getCurrentUSDTDollar() * rates()[3]['sell_rate']));
+            $user->usdt    = $new_amount;
+            $user->update();
+            $i = new Invoice();
+            $i->invoice_id = Str::random(8);
+            $i->user_id = Auth::user()->id;
+            $i->order_id = $d->id;
+            $i->fund_method = "Automated";
+            $i->order_amount = $request->amount;
+            $i->currency = $request->currency_option;
+            $i->unit = $request->unit;
+            $i->save();
         }
         else{
             $i = new Invoice();
@@ -422,7 +658,51 @@ class OrderController extends Controller
 
     public function cancel_sell(Request $request){
         $id = $request->inv;
+        $user = UserWallet::where('user_id', Auth::user()->id)->first();
         $o = Order::findOrFail($id);
+        //dd($o->type);
+        if($o->type == "Buy" AND $o->currency == "bitcoin Cash" AND $o->unit == "USD"){
+            $new_amount = $user->naira + ($o->amount*rates()[4]['buy_rate']);
+            $user->naira = $new_amount;
+            $user->update();
+        }
+        if($o->type == "Buy" AND $o->currency == "Perfect Money" AND $o->unit == "USD"){
+            $new_amount = $user->naira + ($o->amount*rates()[1]['buy_rate']);
+            $user->naira = $new_amount;
+            $user->update();
+        }
+        else if($o->type == "Buy" AND $o->currency == "USDT TRC20" AND $o->unit == "USD"){
+            $new_amount = $user->naira + ($o->amount*rates()[3]['buy_rate']);
+            $user->naira = $new_amount;
+            $user->update();
+        }
+        else if($o->type == "Buy" AND $o->currency == "Ethereum" AND $o->unit == "USD"){
+            $new_amount = $user->naira + ($o->amount*rates()[2]['buy_rate']);
+            $user->naira = $new_amount;
+            $user->update();
+            //dd($new_amount, ($request->amount*rates()[2]['buy_rate']));
+        }
+        else if($o->type == "Buy" AND $o->currency == "Bitcoin" AND $o->unit == "USD"){
+            $new_amount = $user->naira + ($o->amount*rates()[0]['buy_rate']);
+            $user->naira = $new_amount;
+            $user->update();
+        }
+        else if($o->type == "Buy" AND $o->currency == "Tron" AND $o->unit == "USD"){
+            $new_amount = $user->naira + ($o->amount*rates()[5]['buy_rate']);
+            $user->naira = $new_amount;
+            $user->update();
+        }
+        else if($o->type == "Buy" AND $o->currency == "Bitcoin" AND $o->unit == "USD"){
+            $new_amount = $user->naira + ($o->amount*rates()[0]['buy_rate']);
+            $user->naira = $new_amount;
+            $user->update();
+        }
+        else if($o->type == "Buy" AND $o->currency == "Bitcoin" AND $o->unit == "BTC"){
+            $new_amount = $user->naira + ($o->amount*getCurrentBtcDollar());
+            $user->naira = $new_amount;
+            $user->update();
+        }
+        
         $o->status = 3;
         $o->save();
         return response()->json([
@@ -442,6 +722,7 @@ class OrderController extends Controller
         $o = Order::where('id', $inv->order_id)->first();
         $inv->amount_sent = $request->amount_sent;
         $inv->fund_date = $request->funding_date;
+        $inv->memo = $request->memo;
         $inv->status = 2;
         $o->status = 2;
         $inv->update();
@@ -449,7 +730,7 @@ class OrderController extends Controller
         Mail::to(Auth::user()->email)->send(new \App\Mail\ExchangeBTC($inv));
         return response()->json([
             "status"=>"success",
-            "msg"=>"You sell fund posted successfully, please, wait for te administrator approval!"
+            "msg"=>"You sell fund posted successfully, please, wait for the administrator approval!"
         ]);
     }
 

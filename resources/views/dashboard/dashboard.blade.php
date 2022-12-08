@@ -72,7 +72,7 @@
                                 <div class="white_card_body">
                                     <div class="row justify-content-center mb_30  ">
                                         <div class="col-12 text-center">
-                                            <h4 class="f_s_22 f_w_700 mb-0"><span class="totalbal balspan">₦0.00</span></h4>
+                                            <h4 class="f_s_22 f_w_700 mb-0"><span class="totalbal balspan">₦{{ number_format(Auth::user()->wallet->naira, 2) }}</span></h4>
                                             <p class="f_s_11 f_w_400">Total Balance</p>
                                         </div>
                                     </div>
@@ -83,11 +83,11 @@
                                             <span class="earning_amount">
                                                 <a href="javascript: void(0)" title="">
                                                     <h4><span
-                                                            class="btcbal balspan">{{ Auth::user()->wallet->btc ?? '0.00' }}
+                                                            class="btcbal balspan">{{ Auth::user()->wallet->btc }}
                                                             BTC</span></h4>
                                                 </a>
                                                 <p><span
-                                                        class="usdbal balspan">${{ round(Auth::user()->wallet->btc * getCurrentBtcDollar(), 2) ?? '0.00' }}</span>
+                                                        class="usdbal balspan">${{ round(Auth::user()->wallet->btc * getCurrentBtcDollar(), 2) }}</span>
                                                 </p>
                                             </span>
                                         </div>
@@ -97,11 +97,11 @@
                                             <span class="earning_amount">
                                                 <a href="javascript: void(0)" title="">
                                                     <h4><span
-                                                            class="btcbal balspan">{{ Auth::user()->wallet->eth ?? '0.00' }}
+                                                            class="ethbal balspan">{{ Auth::user()->wallet->eth }}
                                                             ETH</span></h4>
                                                 </a>
                                                 <p><span
-                                                        class="usdbal balspan">${{ round(Auth::user()->wallet->eth * getCurrentEthDollar(), 2) ?? '0.00' }}</span>
+                                                        class="ethusdbal balspan">${{ round(Auth::user()->wallet->eth * getCurrentEthDollar(), 2) }}</span>
                                                 </p>
                                             </span>
                                         </div>
@@ -112,11 +112,11 @@
                                             <span class="earning_amount">
                                                 <a href="javascript: void(0)" title="">
                                                     <h4><span
-                                                            class="btcbal balspan">{{ Auth::user()->wallet->usdt ?? '0.00' }}
+                                                            class="usdtbal balspan">{{ Auth::user()->wallet->usdt }}
                                                             USDT</span></h4>
                                                 </a>
                                                 <p><span
-                                                        class="usdbal balspan">${{ round(Auth::user()->wallet->usdt * getCurrentUSDTDollar(), 2) ?? '0.00' }}</span>
+                                                        class="usdbal balspan">${{ round(Auth::user()->wallet->usdt * getCurrentUSDTDollar(), 2) }}</span>
                                                 </p>
                                             </span>
                                         </div>
@@ -126,7 +126,7 @@
                                             <span class="earning_amount">
                                                 <a href="javascript: void(0)" title="">
                                                     <h4><span
-                                                            class="ngnbal balspan">₦{{ number_format(Auth::user()->wallet->naira, 2) ?? '0.00' }}</span>
+                                                            class="ngnbal balspan">₦{{ number_format(Auth::user()->wallet->naira, 2) }}</span>
                                                     </h4>
                                                 </a>
                                             </span>
@@ -151,12 +151,13 @@
                                 <div class="white_card_body pt-0">
                                     <div class="QA_section">
                                         @if ($order->count() > 0)
-                                            @foreach ($order as $item)
+                                            
                                                 <div class="QA_table mb-0 transaction-table">
                                                     <!-- table-responsive -->
                                                     <div class="table-responsive">
                                                         <table class="table  ">
                                                             <tbody>
+                                                                @foreach ($order as $item)
                                                                 <tr>
                                                                     @if ($item->type == 'Sell')
                                                                         <td scope="row">
@@ -190,7 +191,7 @@
                                                                                     $ins = false;
                                                                                 }
                                                                             @endphp
-                                                                            @if ($ins == true and $item->status == 0)
+                                                                            @if ($ins == true AND $item->status == 0 AND $item->type == "Sell" AND $item->pay_with == "External Wallet")
                                                                                 <a href="#"
                                                                                     data-value="{{ $in->invoice_id }}"
                                                                                     class="invoice_me"
@@ -203,7 +204,14 @@
                                                                                     title="Order Canceled">Order
                                                                                     Cancelled</a>
                                                                             @endif
-                                                                            @if ($item->status == 0)
+                                                                            @if ($item->status == 0 AND $item->type == "Buy")
+                                                                                <a href="#"
+                                                                                    class="status_btn cancel_btn cancel_me_sell"
+                                                                                    data-value="{{ $item->id }}"
+                                                                                    title="Click here to cancel this order">Cancel
+                                                                                    Order</a>
+                                                                            @endif
+                                                                            @if ($item->status == 0 AND $item->pay_with == "External Wallet")
                                                                                 <a href="#"
                                                                                     class="status_btn cancel_btn cancel_me_sell"
                                                                                     data-value="{{ $item->id }}"
@@ -216,7 +224,22 @@
                                                                                     title="Order Succeeded">Order
                                                                                     Succeeded</a>
                                                                             @endif
-                                                                            @if ($item->status == 2)
+                                                                            @if ($item->status == 2 AND $item->pay_with != "Bitcoin Balance")
+                                                                                <a href="#"
+                                                                                    class="status_btn success_btn"
+                                                                                    title="Order Succeeded">In-Process</a>
+                                                                            @endif
+                                                                            @if ($item->status == 0 AND $item->currency == "Bitcoin" AND $item->pay_with == "Bitcoin Balance")
+                                                                                <a href="#"
+                                                                                    class="status_btn success_btn"
+                                                                                    title="Order Succeeded">In-Process</a>
+                                                                            @endif
+                                                                            @if ($item->status == 0 AND $item->currency == "Ethereum" AND $item->pay_with == "Ethereum Balance")
+                                                                                <a href="#"
+                                                                                    class="status_btn success_btn"
+                                                                                    title="Order Succeeded">In-Process</a>
+                                                                            @endif
+                                                                            @if ($item->status == 0 AND $item->currency == "USDT TRC20" AND $item->pay_with == "USDT Balance")
                                                                                 <a href="#"
                                                                                     class="status_btn success_btn"
                                                                                     title="Order Succeeded">In-Process</a>
@@ -245,11 +268,12 @@
                                                                                 alt="">
                                                                             {{ $item->currency }}</span></td>
                                                                 </tr>
+                                                                @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
-                                            @endforeach
+                                            
                                         @else
                                             <div class="QA_table mb-0 transaction-table">
                                                 <!-- table-responsive -->
@@ -288,7 +312,7 @@
                                     <div class="row justify-content-center mb_30  ">
                                         <div class="col-12 text-center">
                                             <h4 class="f_s_22 f_w_700 mb-0"><span
-                                                    class="totalbal balspan">₦{{ number_format(Auth::user()->wallet->naira, 2) ?? '0.00' }}</span>
+                                                    class="totalbal balspan">₦{{ number_format(Auth::user()->wallet->naira, 2) }}</span>
                                             </h4>
                                             <p class="f_s_11 f_w_400">Total Balance</p>
                                         </div>
@@ -300,11 +324,11 @@
                                             <span class="earning_amount">
                                                 <a href="javascript: void(0)" title="">
                                                     <h4><span
-                                                            class="btcbal balspan">{{ Auth::user()->wallet->btc ?? '0.00' }}
+                                                            class="btcbal balspan">{{ number_format(Auth::user()->wallet->btc, 8) }}
                                                             BTC</span></h4>
                                                 </a>
                                                 <p><span
-                                                        class="usdbal balspan">${{ round(Auth::user()->wallet->btc * getCurrentBtcDollar(), 2) ?? '0.00' }}</span>
+                                                        class="usdbal balspan">${{ round(Auth::user()->wallet->btc * getCurrentBtcDollar(), 2) }}</span>
                                                 </p>
                                             </span>
                                         </div>
@@ -314,11 +338,11 @@
                                             <span class="earning_amount">
                                                 <a href="javascript: void(0)" title="">
                                                     <h4><span
-                                                            class="btcbal balspan">{{ Auth::user()->wallet->eth ?? '0.00' }}
+                                                            class="ethbal balspan">{{ number_format(Auth::user()->wallet->eth, 8)}}
                                                             ETH</span></h4>
                                                 </a>
                                                 <p><span
-                                                        class="usdbal balspan">${{ round(Auth::user()->wallet->eth * getCurrentEthDollar(), 2) ?? '0.00' }}</span>
+                                                        class="ethusdbal balspan">${{ round(Auth::user()->wallet->eth * getCurrentEthDollar(), 2)}}</span>
                                                 </p>
                                             </span>
                                         </div>
@@ -329,11 +353,11 @@
                                             <span class="earning_amount">
                                                 <a href="javascript: void(0)" title="">
                                                     <h4><span
-                                                            class="btcbal balspan">{{ Auth::user()->wallet->usdt ?? '0.00' }}
+                                                            class="usdtbal balspan">{{ Auth::user()->wallet->usdt }}
                                                             USDT</span></h4>
                                                 </a>
                                                 <p><span
-                                                        class="usdbal balspan">${{ round(Auth::user()->wallet->usdt * getCurrentUSDTDollar(), 2) ?? '0.00' }}</span>
+                                                        class="usdtusdbal balspan">${{ round(Auth::user()->wallet->usdt * getCurrentUSDTDollar(), 2) }}</span>
                                                 </p>
                                             </span>
                                         </div>
@@ -343,7 +367,7 @@
                                             <span class="earning_amount">
                                                 <a href="javascript: void(0)" title="">
                                                     <h4><span
-                                                            class="ngnbal balspan">₦{{ number_format(Auth::user()->wallet->naira, 2) ?? '0.00' }}</span>
+                                                            class="ngnbal balspan">₦{{ number_format(Auth::user()->wallet->naira, 2) }}</span>
                                                     </h4>
                                                 </a>
                                             </span>
@@ -375,7 +399,7 @@
                                 </div>
                                 @if (Auth::user()->bank->bvn == null)
                                     <div class="tab-content">
-                                        <div class="white_card_body tab-pane fade active show" id="quickselldiv">
+                                        <div class="white_card_body tab-pane fade" id="quickselldiv">
                                             <div class="exchange_widget">
                                                 <form id="mySellform" class="currency_validate">
                                                     <div class="form-group buyprice">Sell 1 BTC @ ₦{{ number_format(getCurrentBtcDollar() * rates()[0]['sell_rate'], 2) }}</div>
@@ -395,6 +419,8 @@
                                                                 </option>
                                                                 <option data-value="BCH" value="bitcoin Cash">bitcoin Cash
                                                                 </option>
+                                                                <option data-value="TRN" value="Tron">Tron
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -410,6 +436,24 @@
                                                                     Balance</option>
                                                                 <option value="External Wallet">External Wallet</option>
                                                             </select>
+                                                        </div>
+                                                        <div class="input-group" id="sellfrom_eth">
+                                                            <select name="sell_from" id="sell_from_eth"
+                                                                class="form-control nice_Select" style="display: none;">
+                                                                <option data-display="Ethereum Balance" value="Ethereum Balance"
+                                                                    selected="selected">Ethereum Balance</option>
+                                                                <option value="External Wallet">External Wallet</option>
+                                                            </select>
+    
+                                                        </div>
+                                                        <div class="input-group" id="sellfrom_usdt">
+                                                            <select name="sell_from" id="sell_from_usdt"
+                                                                class="form-control nice_Select" style="display: none;">
+                                                                <option data-display="USDT Balance" value="USDT Balance"
+                                                                    selected="selected">USDT Balance</option>
+                                                                <option value="External Wallet">External Wallet</option>
+                                                            </select>
+    
                                                         </div>
                                                         <div class="input-group" style="display: none;"
                                                             id="sellfrom_account">
@@ -502,6 +546,22 @@
                                                             </p>
                                                         </div>
                                                     </div>
+                                                    <div class="form-group usdtavailsale" style="">
+                                                        <div class="d-flex justify-content-between mt-3 ">
+                                                            <p class="mb-0 usdtavailsale" style=""><b>USDT
+                                                                    Balance</b></p>
+                                                            <p class="mb-0 usdtavailsale usdtbal balspan" style="">0 USDT
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ethavailsale" style="">
+                                                        <div class="d-flex justify-content-between mt-3 ">
+                                                            <p class="mb-0 ethavailsale" style=""><b>Ethereum
+                                                                    Balance</b></p>
+                                                            <p class="mb-0 ethavailsale ethbal balspan" style="">0 ETH
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                     <button type="button" name="sellNowbtn"
                                                         class="btn_1 w-100 sellNowbtn" id="sellNowbtn">Sell Now <span
                                                             class="loadingText fa fa-spinner fa-spin fa-2x"
@@ -567,6 +627,8 @@
                                                                 </option>
                                                                 <option data-value="BCH" value="bitcoin Cash">bitcoin Cash
                                                                 </option>
+                                                                <option data-value="TRN" value="Tron">Tron
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -582,6 +644,24 @@
                                                                     Balance</option>
                                                                 <option value="External Wallet">External Wallet</option>
                                                             </select>
+                                                        </div>
+                                                        <div class="input-group" id="sellfrom_eth">
+                                                            <select name="sell_from" id="sell_from_eth"
+                                                                class="form-control nice_Select" style="display: none;">
+                                                                <option data-display="Ethereum Balance" value="Ethereum Balance"
+                                                                    selected="selected">Ethereum Balance</option>
+                                                                <option value="External Wallet">External Wallet</option>
+                                                            </select>
+    
+                                                        </div>
+                                                        <div class="input-group" id="sellfrom_usdt">
+                                                            <select name="sell_from" id="sell_from_usdt"
+                                                                class="form-control nice_Select" style="display: none;">
+                                                                <option data-display="USDT Balance" value="USDT Balance"
+                                                                    selected="selected">USDT Balance</option>
+                                                                <option value="External Wallet">External Wallet</option>
+                                                            </select>
+    
                                                         </div>
                                                         <div class="input-group" style="display: none;"
                                                             id="sellfrom_account">
@@ -667,7 +747,23 @@
                                                         <div class="d-flex justify-content-between mt-3 ">
                                                             <p class="mb-0 availsale" style=""><b>Bitcoin
                                                                     Balance</b></p>
-                                                            <p class="mb-0 availsale btcbal balspan" style="">0 BTC
+                                                            <p class="mb-0 availsale btcbal balspan" style="">{{number_format(Auth::user()->wallet->btc, 8)}} BTC
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group usdtavailsale" style="">
+                                                        <div class="d-flex justify-content-between mt-3 ">
+                                                            <p class="mb-0 usdtavailsale" style=""><b>USDT
+                                                                    Balance</b></p>
+                                                            <p class="mb-0 usdtavailsale usdtbal balspan" style="">{{Auth::user()->wallet->usdt}} USDT
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ethavailsale" style="">
+                                                        <div class="d-flex justify-content-between mt-3 ">
+                                                            <p class="mb-0 ethavailsale" style=""><b>Ethereum
+                                                                    Balance</b></p>
+                                                            <p class="mb-0 ethavailsale ethbal balspan" style="">{{number_format(Auth::user()->wallet->eth, 8)}} ETH
                                                             </p>
                                                         </div>
                                                     </div>
@@ -699,6 +795,8 @@
                                                                 <option data-value="TRC20" value="USDT TRC20">USDT TRC20
                                                                 </option>
                                                                 <option data-value="BCH" value="bitcoin Cash">bitcoin Cash
+                                                                </option>
+                                                                <option data-value="TRN" value="Tron">Tron
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -930,7 +1028,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="formText">
-                                                    <a href="settings?type=verify_me"><b>Click here</b></a><b> to verify
+                                                    <a href="/dashboard/settings?type=verify_me"><b>Click here</b></a><b> to verify
                                                         your
                                                         identity to be able to send bitcoin.</b>
                                                 </p>
@@ -941,25 +1039,23 @@
                                         <div class="white_card_body tab-pane fade active show" id="nairadiv">
                                             <div class="exchange_widget">
                                                 <div class="form-group" id="bankacctdiv">
-                                                    <select name="bank_name" id="bank_name"
-                                                        class="form-control nice_Select" style="display: none;">
-
-                                                        <option value="">Verify your identity to withdraw money
-                                                        </option>
-                                                    </select>
-                                                    <div class="nice-select form-control nice_Select" tabindex="0">
-                                                        <span class="current">Verify your identity to withdraw
-                                                            money</span>
-                                                        <div class="nice-select-search-box"><input type="text"
-                                                                class="nice-select-search" placeholder="Search...">
-                                                        </div>
-                                                        <ul class="list">
-                                                            <li data-value="" class="option selected">Verify your
-                                                                identity
-                                                                to withdraw money</li>
-                                                        </ul>
+                                                    <label id="header_trf_wallet">Select Bank</label>
+                                                    <div class="input-group">
+                                                        <select name="bank_name" id="bank_name"
+                                                            class="form-control nice_Select" style="display: none;">
+                                                            <option value="Verify your identity to withdraw money">Verify your identity to withdraw money
+                                                            </option>
+                                                        </select>
                                                     </div>
-
+                                                </div>
+                                                <div>
+                                                    <p class="formText">
+                                                        <a href="/dashboard/settings?type=verify_me"><b>Click here</b></a><b> to verify
+                                                            your
+                                                            identity to be able to withdraw naira.</b>
+                                                    </p>
+                                                    <p class="formText">After verification, you can withdraw naira to your
+                                                        account comfortably.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -1149,8 +1245,8 @@
                                                                 <tr class="odd">
                                                                     <td>#</td>
                                                                     <td>
-                                                                        <p class="" style="cursor: pointer;"">
-                                                                            {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
+                                                                        <p class="" style="cursor: pointer;">
+                                                                            {{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}
                                                                         </p>
                                                                     </td>
                                                                     <td>
@@ -1161,7 +1257,7 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <p class="" style="cursor: pointer;"">
+                                                                        <p class="" style="cursor: pointer;">
                                                                             @if ($item->status == 0)
                                                                                 <span>pending</span>
                                                                             @endif
