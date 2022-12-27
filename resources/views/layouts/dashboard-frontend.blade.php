@@ -1629,6 +1629,7 @@
         }
     });
     $('.hidebalspan').click(function() {
+        console.log('hello2');
         var txn_ngn1 = parseFloat(txn_ngn).toFixed(2);
         var txn_ngn_show = formatter.format(txn_ngn1);
 
@@ -1642,14 +1643,24 @@
 
         if ($(this).hasClass('showbal')) {
             //Show the balance
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
+            $('.hidebal').show();
+            $('.showbal').hide();
+            $('.totalbal').html(txn_total_show);
+            $('.btcbal').html(txn_btc + " BTC");
+            $('.ethbal').html(txn_eth + " ETH");
+            $('.ethusdbal').html("$"+txn_ethusd);
+            $('.usdtusdbal').html("$"+txn_usdtusd);
+            
+            $('.usdtbal').html(txn_usdt + "USDT");
+            $('.btcbal_upto').html(txn_btc_upto + " BTC");
+            $('.ngnbal_upto').html("₦ " + txn_ngn_upto);
+            $('.ngnbal').html(txn_ngn_show);
+            $('.usdbal').html(txn_usd_show);
+            var url = window.location.href.split('#')[0];
+            history.replaceState('', document.title, url);
+            /* $.ajax({
                 type: "POST",
-                url: "/dashboard/hidebal",
+                url: "readnotice",
                 data: {
                     bal: 'yes'
                 },
@@ -1668,26 +1679,27 @@
                     }
 
                 }
-            });
+            }); */
         } else {
             //Hide the balance
-            $.ajax({
+            $('.showbal').show();
+            $('.hidebal').hide();
+            $('.balspan').html('***');
+            var url = window.location.href.split('#')[0];
+            history.replaceState('', document.title, url);
+            /* $.ajax({
                 type: "POST",
-                url: "dashboard/hidebal",
+                url: "readnotice",
                 data: {
                     bal: 'no'
                 },
                 success: function(result) {
                     if (result) {
-                        $('.showbal').show();
-                        $('.hidebal').hide();
-                        $('.balspan').html('***');
-                        var url = window.location.href.split('#')[0];
-                        history.replaceState('', document.title, url);
+
                     }
 
                 }
-            });
+            }); */
         }
     });
     $("#bit_amount").on('keyup', function() {
@@ -2000,47 +2012,7 @@
             });
         }
     });
-        $('#ContinueCompose').click(function(){
-                var category = $('#category').val();
-        var subject = $('#subject').val();
-        var memo = $('#memo').val();
-        //var composetype = $('#msgtyperead').val();
-
-        if (memo != "") {
-
-            $('.spincompose').show();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: "POST",
-                url: "{{route('send.mail')}}",
-                data: {
-                    category: category,
-                    subject: subject,
-                    message: memo,
-                },
-                success: function(result) {
-                    $('.spincompose').hide();
-                    if (result != "") {
-                        $('#messageModalCenter').modal('hide');
-                        $('#msgtyperead').val('compose');
-                        $('#idread').val('');
-                        $('#category').val('');
-                        $('#memo').val('');
-                        swal({
-                            title: "Message sent",
-                            text: 'Your Message has been sent successfully to Support.',
-                            type: 'success',
-                            icon: "success",
-                        });
-                    }
-                }
-            });
-        }
-            })
+        
         })
     </script>
     <script>

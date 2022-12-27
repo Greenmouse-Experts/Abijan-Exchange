@@ -460,6 +460,7 @@ $(function() {
     });
 
     $('.hidebalspan').click(function() {
+        console.log('hello4');
         var txn_ngn1 = parseFloat(txn_ngn).toFixed(2);
         var txn_ngn_show = formatter.format(txn_ngn1);
 
@@ -1187,7 +1188,7 @@ $(function() {
             });
             $.ajax({
                 type: "POST",
-                url: "{{route('send.mail')}}",
+                url: "/dashboard/mail/send",
                 data: {
                     category: category,
                     subject: subject,

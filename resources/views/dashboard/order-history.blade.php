@@ -106,9 +106,44 @@
                                                                         <span>{{ $i->created_at->format('d/M/Y') }} at
                                                                             {{ $i->created_at->format('h:m:s a') }}</span>
                                                                     </td>
-                                                                    <td><img class="small_img" src="../images/pm.png"
-                                                                            alt="">
-                                                                        {{ $i->currency }} </td>
+                                                                    <td>
+                                                                        @if($i->currency == "Bitcoin")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[0]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $i->currency }}</span>
+                                                                        @endif
+                                                                        @if($i->currency == "Perfect Money")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[1]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $i->currency }}</span>
+                                                                        @endif
+                                                                        @if($i->currency == "Ethereum")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[2]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $i->currency }}</span>
+                                                                        @endif
+                                                                        @if($i->currency == "USDT TRC20")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[3]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $i->currency }}</span>
+                                                                        @endif
+                                                                        @if($i->currency == "bitcoin Cash")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[4]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $i->currency }}</span>
+                                                                        @endif
+                                                                        @if($i->currency == "Tron")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[5]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $i->currency }}</span>
+                                                                        @endif
+                                                                        
                                                                     <td>
                                                                         <span>
                                                                             @php
@@ -121,7 +156,7 @@
                                                                                     $ins = false;
                                                                                 }
                                                                             @endphp
-                                                                            @if ($ins == true AND $i->status == 0 AND $i->type == "Sell" AND $i->pay_with == "External Wallet")
+                                                                            @if ($ins == true AND $i->status == 0 AND $i->type == "Sell")
                                                                                 <a href="#"
                                                                                     data-value="{{ $in->invoice_id }}"
                                                                                     class="invoice_me"
@@ -137,11 +172,11 @@
                                                                              @if ($i->status == 0 AND $i->type == "Buy")
                                                                                 <a href="#"
                                                                                     class="status_btn cancel_btn cancel_me_sell"
-                                                                                    data-value="{{ $item->id }}"
+                                                                                    data-value="{{ $i->id }}"
                                                                                     title="Click here to cancel this order">Cancel
                                                                                     Order</a>
                                                                             @endif
-                                                                            @if ($i->status == 0 AND $i->pay_with == "External Wallet")
+                                                                            @if ($i->status == 0)
                                                                                 <a href="#"
                                                                                     class="status_btn cancel_btn cancel_me_sell"
                                                                                     data-value="{{ $i->id }}"
