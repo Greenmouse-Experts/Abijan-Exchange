@@ -196,7 +196,7 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a class="action_btn" href="/dashboard/settings?type=verify_me"><i class="far fa-edit"></i></a>
+                                                            <a class="action_btn" href="/dashboard/settings?type=bank"><i class="far fa-edit"></i></a>
                                                         </td>
                                                     </tr>
 

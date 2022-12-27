@@ -191,7 +191,7 @@
                                                                                     $ins = false;
                                                                                 }
                                                                             @endphp
-                                                                            @if ($ins == true AND $item->status == 0 AND $item->type == "Sell" AND $item->pay_with == "External Wallet")
+                                                                            @if ($ins == true AND $item->status == 0 AND $item->type == "Sell")
                                                                                 <a href="#"
                                                                                     data-value="{{ $in->invoice_id }}"
                                                                                     class="invoice_me"
@@ -211,7 +211,7 @@
                                                                                     title="Click here to cancel this order">Cancel
                                                                                     Order</a>
                                                                             @endif
-                                                                            @if ($item->status == 0 AND $item->pay_with == "External Wallet")
+                                                                            @if ($item->status == 0)
                                                                                 <a href="#"
                                                                                     class="status_btn cancel_btn cancel_me_sell"
                                                                                     data-value="{{ $item->id }}"
@@ -263,10 +263,44 @@
                                                                             @endif
                                                                         </span>
                                                                     </td>
-                                                                    <td><span title=""><img
-                                                                                class="small_img" src=""
+                                                                    <td>
+                                                                        @if($item->currency == "Bitcoin")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[0]->currency_img}}"
                                                                                 alt="">
-                                                                            {{ $item->currency }}</span></td>
+                                                                            {{ $item->currency }}</span>
+                                                                        @endif
+                                                                        @if($item->currency == "Perfect Money")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[1]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $item->currency }}</span>
+                                                                        @endif
+                                                                        @if($item->currency == "Ethereum")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[2]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $item->currency }}</span>
+                                                                        @endif
+                                                                        @if($item->currency == "USDT TRC20")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[3]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $item->currency }}</span>
+                                                                        @endif
+                                                                        @if($item->currency == "bitcoin Cash")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[4]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $item->currency }}</span>
+                                                                        @endif
+                                                                        @if($item->currency == "Tron")
+                                                                        <span title=""><img
+                                                                                class="small_img" src="{{rates()[5]->currency_img}}"
+                                                                                alt="">
+                                                                            {{ $item->currency }}</span>
+                                                                        @endif
+                                                                    </td>
                                                                 </tr>
                                                                 @endforeach
                                                             </tbody>
@@ -971,13 +1005,171 @@
                                         <div class="main-title">
                                             <h3 class="m-0">Order History</h3>
                                         </div>
-                                        <a href="orders">
+                                        <a href="{{ route('orders') }}">
                                             <p>View all</p>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="white_card_body pt-0">
                                     <div class="QA_section">
+                                        @if ($order->count() > 0)
+                                            <div class="QA_table mb-0 transaction-table">
+                                                <!-- table-responsive -->
+                                                <div class="table-responsive">
+                                                    <table class="table  ">
+                                                        <tbody>
+                                                            @foreach ($order as $item)
+                                                            <tr>
+                                                                @if ($item->type == 'Sell')
+                                                                    <td scope="row">
+                                                                        <span class="sold-thumb"><i
+                                                                                class="ti-arrow-down"></i></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span
+                                                                            class="badge badge-danger">{{ $item->type }}</span>
+                                                                    </td>
+                                                                @endif
+                                                                @if ($item->type == 'Buy')
+                                                                    <td scope="row">
+                                                                        <span class="buy-thumb"><i
+                                                                                class="ti-arrow-up"></i></span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span
+                                                                            class="badge badge-success">{{ $item->type }}</span>
+                                                                    </td>
+                                                                @endif
+                                                                <td>
+                                                                    <span>
+                                                                        @php
+                                                                            $in = App\Models\Invoice::where('user_id', Auth::user()->id)
+                                                                                ->where('order_id', $item->id)
+                                                                                ->first();
+                                                                            if ($in != null) {
+                                                                                $ins = true;
+                                                                            } else {
+                                                                                $ins = false;
+                                                                            }
+                                                                        @endphp
+                                                                        @if ($ins == true AND $item->status == 0 AND $item->type == "Sell")
+                                                                            <a href="#"
+                                                                                data-value="{{ $in->invoice_id }}"
+                                                                                class="invoice_me"
+                                                                                title="Send Notice">Send Notice</a>
+                                                                            OR
+                                                                        @endif
+                                                                        @if ($item->status == 3)
+                                                                            <a href="#"
+                                                                                class="status_btn cancel_btn"
+                                                                                title="Order Canceled">Order
+                                                                                Cancelled</a>
+                                                                        @endif
+                                                                        @if ($item->status == 0 AND $item->type == "Buy")
+                                                                            <a href="#"
+                                                                                class="status_btn cancel_btn cancel_me_sell"
+                                                                                data-value="{{ $item->id }}"
+                                                                                title="Click here to cancel this order">Cancel
+                                                                                Order</a>
+                                                                        @endif
+                                                                        @if ($item->status == 0)
+                                                                            <a href="#"
+                                                                                class="status_btn cancel_btn cancel_me_sell"
+                                                                                data-value="{{ $item->id }}"
+                                                                                title="Click here to cancel this order">Cancel
+                                                                                Order</a>
+                                                                        @endif
+                                                                        @if ($item->status == 1)
+                                                                            <a href="#"
+                                                                                class="status_btn success_btn"
+                                                                                title="Order Succeeded">Order
+                                                                                Succeeded</a>
+                                                                        @endif
+                                                                        @if ($item->status == 2 AND $item->pay_with != "Bitcoin Balance")
+                                                                            <a href="#"
+                                                                                class="status_btn success_btn"
+                                                                                title="Order Succeeded">In-Process</a>
+                                                                        @endif
+                                                                        @if ($item->status == 0 AND $item->currency == "Bitcoin" AND $item->pay_with == "Bitcoin Balance")
+                                                                            <a href="#"
+                                                                                class="status_btn success_btn"
+                                                                                title="Order Succeeded">In-Process</a>
+                                                                        @endif
+                                                                        @if ($item->status == 0 AND $item->currency == "Ethereum" AND $item->pay_with == "Ethereum Balance")
+                                                                            <a href="#"
+                                                                                class="status_btn success_btn"
+                                                                                title="Order Succeeded">In-Process</a>
+                                                                        @endif
+                                                                        @if ($item->status == 0 AND $item->currency == "USDT TRC20" AND $item->pay_with == "USDT Balance")
+                                                                            <a href="#"
+                                                                                class="status_btn success_btn"
+                                                                                title="Order Succeeded">In-Process</a>
+                                                                        @endif
+                                                                    </span>
+                                                                </td>
+                                                                <td><span
+                                                                        title="Order Placed on 06/Nov/2022 09:11 AM">-</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span
+                                                                        title="{{ $item->amount }} {{ $item->unit }}">
+                                                                        @if ($item->unit == 'USD')
+                                                                            {{ $item->amount }} USD
+                                                                        @endif
+                                                                        @if ($item->unit == 'NGN')
+                                                                            {{ $item->amount }} NGN
+                                                                        @endif
+                                                                        @if ($item->unit == 'BTC')
+                                                                            {{ $item->amount }} BTC
+                                                                        @endif
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    @if($item->currency == "Bitcoin")
+                                                                    <span title=""><img
+                                                                            class="small_img" src="{{rates()[0]->currency_img}}"
+                                                                            alt="">
+                                                                        {{ $item->currency }}</span>
+                                                                    @endif
+                                                                    @if($item->currency == "Perfect Money")
+                                                                    <span title=""><img
+                                                                            class="small_img" src="{{rates()[1]->currency_img}}"
+                                                                            alt="">
+                                                                        {{ $item->currency }}</span>
+                                                                    @endif
+                                                                    @if($item->currency == "Ethereum")
+                                                                    <span title=""><img
+                                                                            class="small_img" src="{{rates()[2]->currency_img}}"
+                                                                            alt="">
+                                                                        {{ $item->currency }}</span>
+                                                                    @endif
+                                                                    @if($item->currency == "USDT TRC20")
+                                                                    <span title=""><img
+                                                                            class="small_img" src="{{rates()[3]->currency_img}}"
+                                                                            alt="">
+                                                                        {{ $item->currency }}</span>
+                                                                    @endif
+                                                                    @if($item->currency == "bitcoin Cash")
+                                                                    <span title=""><img
+                                                                            class="small_img" src="{{rates()[4]->currency_img}}"
+                                                                            alt="">
+                                                                        {{ $item->currency }}</span>
+                                                                    @endif
+                                                                    @if($item->currency == "Tron")
+                                                                    <span title=""><img
+                                                                            class="small_img" src="{{rates()[5]->currency_img}}"
+                                                                            alt="">
+                                                                        {{ $item->currency }}</span>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        
+                                    @else
                                         <div class="QA_table mb-0 transaction-table">
                                             <!-- table-responsive -->
                                             <div class="table-responsive">
@@ -991,6 +1183,7 @@
                                                 </table>
                                             </div>
                                         </div>
+                                    @endif
                                     </div>
                                 </div>
                             </div>
@@ -1215,7 +1408,7 @@
                                                         id="DataTables_Table_0" role="grid"
                                                         aria-describedby="DataTables_Table_0_info"
                                                         style="width: 1140px;">
-                                                        <thead>
+                                                        <!--<thead>
                                                             <tr role="row">
                                                                 <th scope="col" class="sorting_disabled"
                                                                     rowspan="1" colspan="1"
@@ -1238,17 +1431,20 @@
                                                                     style="width: 240px;">
                                                                     Amount</th>
                                                             </tr>
-                                                        </thead>
+                                                        </thead>-->
                                                         <tbody>
                                                             @foreach ($trans as $item)
                                                                 <tr>
                                                                 <tr class="odd">
-                                                                    <td>#</td>
-                                                                    <td>
-                                                                        <p class="" style="cursor: pointer;">
-                                                                            {{ $item->created_at->format('d/M/Y') }} at {{ $item->created_at->format('h:m a') }}
-                                                                        </p>
+                                                                    <td scope="row">
+                                                                        <span class="badge badge-danger">Sent</span><br>
+                                                                        <span class="datetd">{{ $item->created_at->format('d/M/Y') }}</span>
                                                                     </td>
+                                                                    {{--<td>
+                                                                        <p class="" style="cursor: pointer;">
+                                                                             at {{ $item->created_at->format('h:m a') }}
+                                                                        </p>
+                                                                    </td>--}}
                                                                     <td>
                                                                         <div class="media align-items-center">
                                                                             <div class="media-body">
@@ -1335,7 +1531,87 @@
 
             <!-- [ Layout footer ] Start -->
             @includeIf('layouts.dashboard-footer')
+            <script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+  crossorigin="anonymous"></script>
             <!-- [ Layout footer ] End -->
+            <script>
+                $('.hidebalspan').click(function() {
+                    console.log('hello');
+        var txn_ngn1 = parseFloat(txn_ngn).toFixed(2);
+        var txn_ngn_show = formatter.format(txn_ngn1);
+
+        var txn_usd1 = parseFloat(txn_usd).toFixed(2);
+        var txn_usd_show = formatter_usd.format(txn_usd1);
+
+        //var txn_btc = parseFloat(txn_btc).toFixed(8);
+
+        var txn_total1 = parseFloat(txn_total).toFixed(2);
+        var txn_total_show = formatter.format(txn_total1);
+
+        if ($(this).hasClass('showbal')) {
+            //Show the balance
+            $('.hidebal').show();
+            $('.showbal').hide();
+            $('.totalbal').html(txn_total_show);
+            $('.btcbal').html(txn_btc + " BTC");
+            $('.ethbal').html(txn_eth + " ETH");
+            $('.ethusdbal').html("$"+txn_ethusd);
+            $('.usdtusdbal').html("$"+txn_usdtusd);
+            
+            $('.usdtbal').html(txn_usdt + "USDT");
+            $('.btcbal_upto').html(txn_btc_upto + " BTC");
+            $('.ngnbal_upto').html("₦ " + txn_ngn_upto);
+            $('.ngnbal').html(txn_ngn_show);
+            $('.usdbal').html(txn_usd_show);
+            var url = window.location.href.split('#')[0];
+            history.replaceState('', document.title, url);
+            /* $.ajax({
+                type: "POST",
+                url: "readnotice",
+                data: {
+                    bal: 'yes'
+                },
+                success: function(result) {
+                    if (result) {
+                        $('.hidebal').show();
+                        $('.showbal').hide();
+                        $('.totalbal').html(txn_total_show);
+                        $('.btcbal').html(txn_btc + " BTC");
+                        $('.btcbal_upto').html(txn_btc_upto + " BTC");
+                        $('.ngnbal_upto').html("₦ " + txn_ngn_upto);
+                        $('.ngnbal').html(txn_ngn_show);
+                        $('.usdbal').html(txn_usd_show);
+                        var url = window.location.href.split('#')[0];
+                        history.replaceState('', document.title, url);
+                    }
+
+                }
+            }); */
+        } else {
+            //Hide the balance
+            $('.showbal').show();
+            $('.hidebal').hide();
+            $('.balspan').html('***');
+            var url = window.location.href.split('#')[0];
+            history.replaceState('', document.title, url);
+            /* $.ajax({
+                type: "POST",
+                url: "readnotice",
+                data: {
+                    bal: 'no'
+                },
+                success: function(result) {
+                    if (result) {
+
+                    }
+
+                }
+            }); */
+        }
+    });
+            </script>
         </div>
         <!-- [ Layout content ] Start -->
     </div>

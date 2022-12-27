@@ -315,8 +315,8 @@
                                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                                             data-parent="#accordion_ex">
                                             <div class="card-body">
-                                                <p>If you have sent the perfect money, your naira wallet will be credited
-                                                    after confirming the perfect money.</p>
+                                                <p>If you have sent the {{$o->currency}}, your naira wallet will be credited
+                                                    after confirming the {{$o->currency}}.</p>
 
                                             </div>
                                         </div>

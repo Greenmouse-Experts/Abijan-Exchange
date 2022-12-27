@@ -239,15 +239,28 @@ class HomeController extends Controller
         }
         $question = UserSecurityQuestion::where('user_id', Auth::user()->id)->where('id', $request->question_id)->first();
         if($question->answer == $request->answer1){
-            $user = UserProfile::findOrFail(Auth::user()->profile->id);
-            $response = cloudinary()->upload($request->file('photo_sett')->getRealPath())->getSecurePath();
-            $user->photo = $response;
-            if($user->save()){
+            if($request->prof == 'bank'){
+                $bn = UserBank::where('user_id', Auth::user()->id)->first();
+                $bn->bank_name = $request->bank_name_sett;
+                $bn->account_num = $request->acct_no_sett;
+                $bn->update();
                 return response()->json([
                     "status"=>"success",
-                    "msg"=>"User Picture Updated Sucessfully!"
+                    "msg"=>"Bank Account Updated Sucessfully!"
                 ]);
             }
+            if($request->prof == 'photo'){
+                $user = UserProfile::findOrFail(Auth::user()->profile->id);
+                $response = cloudinary()->upload($request->file('photo_sett')->getRealPath())->getSecurePath();
+                $user->photo = $response;
+                if($user->save()){
+                    return response()->json([
+                        "status"=>"success",
+                        "msg"=>"User Picture Updated Sucessfully!"
+                    ]);
+                }
+            }
+            
         }
         else{
             return response()->json([
